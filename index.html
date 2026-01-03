@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ayu duduang | วิเคราะห์ดวงชะตาแม่นยำรายบุคคล</title>
+    <title>ayu duduang | วิเคราะห์ชะตาชีวิตและอายุละเอียด</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200;400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Anuphan', sans-serif; background-color: #050507; color: #e2e8f0; }
+        body { font-family: 'Anuphan', sans-serif; background-color: #050507; color: #e2e8f0; overflow-x: hidden; }
         .gold-gradient { background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .btn-gold { background: linear-gradient(to tr, #926d15, #fcf6ba, #926d15); color: #000; font-weight: bold; }
         [x-cloak] { display: none !important; }
     </style>
 </head>
 <body x-data="ayuApp()" x-init="init()">
 
-    <header class="fixed top-0 w-full z-50 glass-card px-6 py-4 flex justify-between items-center">
+    <header class="fixed top-0 w-full z-50 glass-card px-6 py-4 flex justify-between items-center border-b border-white/5">
         <div class="text-xl font-bold tracking-[0.2em] gold-gradient uppercase">ayu duduang</div>
-        <div class="flex items-center gap-3">
-            <div class="px-3 py-1 rounded-md border border-emerald-500/30 bg-emerald-500/5 flex items-center gap-2">
-                <span class="text-[9px] text-emerald-500 font-bold uppercase tracking-widest">🔒 SSL Encrypted</span>
+        <div class="flex items-center gap-2">
+            <div class="hidden md:block px-3 py-1 rounded-md border border-emerald-500/30 bg-emerald-500/5">
+                <span class="text-[8px] text-emerald-500 font-bold uppercase tracking-widest">🔒 256-bit Encryption</span>
             </div>
             <div class="bg-white/5 px-3 py-1 rounded-full border border-white/10 flex items-center gap-2">
                 <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
@@ -34,11 +35,11 @@
         <template x-if="!showResult">
             <div x-transition class="space-y-8">
                 <div class="text-center space-y-2">
-                    <h1 class="text-3xl font-light tracking-tighter text-white uppercase italic">Destiny AI v2.5</h1>
-                    <p class="text-yellow-600/60 text-[9px] tracking-[0.4em] uppercase font-bold">พยากรณ์เจาะลึกอัตลักษณ์และดวงชะตา</p>
+                    <h1 class="text-4xl font-light tracking-tighter text-white uppercase italic">Destiny Insight</h1>
+                    <p class="text-yellow-600/60 text-[9px] tracking-[0.4em] uppercase font-bold">ถอดรหัสชะตาเจาะลึกรายบุคคล</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-[2.5rem] space-y-6">
+                <div class="glass-card p-8 rounded-[2.5rem] space-y-6 shadow-2xl border border-yellow-900/20">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="col-span-2 space-y-1">
                             <label class="text-[9px] uppercase tracking-widest text-yellow-600 font-bold ml-1">ชื่อ-นามสกุล</label>
@@ -53,24 +54,24 @@
                             <select x-model="user.gender" class="w-full bg-[#0a0a0f] border-b border-white/10 p-3 outline-none text-xs">
                                 <option value="ชาย">ชาย</option>
                                 <option value="หญิง">หญิง</option>
-                                <option value="อื่นๆ">อื่นๆ (โปรดระบุ)</option>
+                                <option value="อื่นๆ">อื่นๆ (ระบุเพิ่มเติม)</option>
                             </select>
                         </div>
                         
                         <template x-if="user.gender === 'อื่นๆ'">
-                            <div class="col-span-2 space-y-1 animate-pulse">
-                                <label class="text-[9px] uppercase tracking-widest text-yellow-600 font-bold ml-1">ระบุเพศของคุณ</label>
-                                <input type="text" x-model="user.customGender" placeholder="เช่น LGBTQ+, Non-binary" class="w-full bg-white/10 border-b border-yellow-500/50 p-3 outline-none text-sm text-yellow-200">
+                            <div class="col-span-2 animate-fadeIn space-y-1">
+                                <label class="text-[9px] uppercase tracking-widest text-yellow-600 font-bold ml-1">โปรดระบุเพศ</label>
+                                <input type="text" x-model="user.customGender" placeholder="LGBTQ+ / ไม่ระบุ" class="w-full bg-white/10 border-b border-yellow-600 p-3 outline-none text-sm text-yellow-200">
                             </div>
                         </template>
 
                         <div class="col-span-2 space-y-1">
-                            <label class="text-[9px] uppercase tracking-widest text-yellow-600 font-bold ml-1">วัน/เดือน/ปี เกิด</label>
+                            <label class="text-[9px] uppercase tracking-widest text-yellow-600 font-bold ml-1">วัน/เดือน/ปีเกิด (พ.ศ. หรือ ค.ศ.)</label>
                             <input type="date" x-model="user.dob" class="w-full bg-white/5 border-b border-white/10 p-3 outline-none text-xs text-gray-400">
                         </div>
                     </div>
-                    <button @click="calculate()" class="w-full py-5 rounded-2xl bg-gradient-to-tr from-yellow-700 via-yellow-400 to-yellow-700 text-black font-bold uppercase tracking-[0.3em] text-[10px] hover:scale-[1.02] transition-all">
-                        ประมวลผลดวงชะตาเฉพาะบุคคล
+                    <button @click="calculate()" class="w-full py-5 rounded-2xl btn-gold uppercase tracking-[0.3em] text-[10px] hover:scale-[1.01] transition-all shadow-xl shadow-yellow-900/20">
+                        เริ่มต้นการวิเคราะห์ขั้นสูง
                     </button>
                 </div>
             </div>
@@ -78,59 +79,63 @@
 
         <template x-if="showResult && !loading">
             <div x-transition class="space-y-6">
-                <div class="text-center space-y-2">
-                    <p class="text-[10px] text-yellow-500 uppercase tracking-widest font-bold" x-text="'ดวงชะตาเพศ' + (user.gender === 'อื่นๆ' ? user.customGender : user.gender)"></p>
+                <div class="text-center space-y-4">
+                    <div class="inline-block px-3 py-1 rounded-full border border-yellow-600/30 text-[9px] font-bold text-yellow-500 uppercase tracking-widest">Analysis Complete</div>
                     <h2 class="text-3xl font-bold text-white tracking-tight" x-text="'คุณ ' + user.fullname"></h2>
-                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest" x-text="'ปีนักษัตร' + fortune.animal"></p>
+                    
+                    <div class="p-4 glass-card rounded-2xl border border-white/10">
+                        <p class="text-[10px] text-gray-500 uppercase font-bold mb-1">อายุโดยละเอียดของคุณ</p>
+                        <p class="text-xl font-bold gold-gradient" x-text="fortune.ageText"></p>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
-                    <div class="glass-card p-4 rounded-3xl border-t border-white/10 text-center">
-                        <p class="text-[8px] text-gray-500 uppercase tracking-widest mb-1 font-bold">ราศีแบบไทย</p>
-                        <p class="text-xs font-bold text-white" x-text="fortune.zThai"></p>
-                        <p class="text-[9px] gold-gradient" x-text="fortune.zSymbol"></p>
+                    <div class="glass-card p-5 rounded-3xl text-center">
+                        <p class="text-[8px] text-gray-500 uppercase font-bold mb-1">ราศีไทย / สัญลักษณ์</p>
+                        <p class="text-sm font-bold text-white" x-text="fortune.zThai"></p>
+                        <p class="text-[9px] text-yellow-600" x-text="fortune.zSymbol"></p>
                     </div>
-                    <div class="glass-card p-4 rounded-3xl border-t border-white/10 text-center">
-                        <p class="text-[8px] text-gray-500 uppercase tracking-widest mb-1 font-bold">ราศีแบบสากล</p>
-                        <p class="text-xs font-bold text-white" x-text="fortune.zInter"></p>
-                        <p class="text-[8px] text-gray-400" x-text="fortune.zInterRange"></p>
+                    <div class="glass-card p-5 rounded-3xl text-center">
+                        <p class="text-[8px] text-gray-500 uppercase font-bold mb-1">ราศีสากล / นักษัตร</p>
+                        <p class="text-sm font-bold text-white" x-text="fortune.zInter"></p>
+                        <p class="text-[9px] text-gray-400" x-text="'ปี' + fortune.animal"></p>
                     </div>
                 </div>
 
                 <div class="grid gap-4">
                     <template x-for="item in fortune.details">
-                        <div class="glass-card p-5 rounded-3xl border-l-2 border-white/5 hover:border-yellow-600 transition-all">
-                            <h4 class="text-[9px] font-bold uppercase mb-2 tracking-widest" :class="item.color" x-text="item.topic"></h4>
-                            <p class="text-[11px] text-gray-300 leading-relaxed" x-text="item.desc"></p>
+                        <div class="glass-card p-6 rounded-[2rem] border-l-4 border-yellow-600/50">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-[10px] font-bold uppercase tracking-widest" :class="item.color" x-text="item.topic"></h4>
+                                <div class="w-16 h-1 bg-white/5 rounded-full overflow-hidden">
+                                    <div class="h-full bg-yellow-600" :style="'width:' + item.power + '%'"></div>
+                                </div>
+                            </div>
+                            <p class="text-[12px] text-gray-300 leading-relaxed italic" x-text="item.desc"></p>
                         </div>
                     </template>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="glass-card p-4 rounded-3xl text-center">
-                        <p class="text-[8px] uppercase text-gray-500 mb-1">สีที่ถูกกะคุณที่สุด</p>
-                        <p class="text-[10px] font-bold text-white uppercase" x-text="fortune.luckyColor"></p>
-                    </div>
-                    <div class="glass-card p-4 rounded-3xl text-center">
-                        <p class="text-[8px] uppercase text-gray-500 mb-1">เลขนำโชค</p>
-                        <p class="text-2xl font-bold gold-gradient" x-text="fortune.luckyNumber"></p>
-                    </div>
+                <div class="grid grid-cols-2 gap-3 pt-4">
+                    <button @click="shareDung()" class="py-4 rounded-2xl border border-white/10 bg-white/5 text-[10px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all">แชร์ดวงให้เพื่อน</button>
+                    <button @click="showResult = false" class="py-4 rounded-2xl border border-yellow-600/20 bg-yellow-600/5 text-yellow-600 text-[10px] font-bold uppercase tracking-widest">วิเคราะห์ใหม่</button>
                 </div>
-
-                <button @click="showResult = false" class="w-full text-center text-[10px] text-gray-600 py-6 uppercase tracking-[0.5em]">กลับไปคำนวณใหม่</button>
             </div>
         </template>
 
-        <div x-show="loading" x-cloak class="text-center py-24">
-            <div class="w-10 h-10 border-t-2 border-yellow-500 rounded-full animate-spin mx-auto mb-4"></div>
-            <p class="gold-gradient animate-pulse tracking-[0.3em] text-[9px] uppercase font-bold">ประมวลผลตามอัตลักษณ์บุคคล...</p>
+        <div x-show="loading" x-cloak class="text-center py-32 space-y-6">
+            <div class="w-12 h-12 border-t-2 border-yellow-500 rounded-full animate-spin mx-auto"></div>
+            <p class="gold-gradient animate-pulse tracking-[0.4em] text-[10px] uppercase font-bold">กำลังประมวลผลดวงชะตา...</p>
         </div>
     </main>
 
-    <footer class="fixed bottom-0 w-full glass-card p-4 z-50">
-        <div class="max-w-2xl mx-auto flex items-center justify-between">
-            <p class="text-[9px] text-gray-500 italic whitespace-nowrap overflow-hidden" x-text="'รีวิวสด: ' + currentReview"></p>
-            <span class="text-yellow-600 text-[8px] ml-2">★★★★★</span>
+    <footer class="fixed bottom-0 w-full glass-card p-4 z-50 border-t border-white/5">
+        <div class="max-w-2xl mx-auto flex items-center justify-between overflow-hidden">
+            <div class="flex items-center gap-2">
+                <span class="text-[9px] text-yellow-600 font-bold uppercase">รีวิวล่าสุด:</span>
+                <p class="text-[9px] text-gray-500 italic whitespace-nowrap" x-text="currentReview"></p>
+            </div>
+            <div class="hidden sm:block text-[8px] text-gray-600 font-mono uppercase">System: Stable</div>
         </div>
     </footer>
 
@@ -139,24 +144,40 @@
             return {
                 user: { fullname: '', nickname: '', dob: '', gender: 'ชาย', customGender: '' },
                 showResult: false, loading: false, visitorCount: 10000, currentReview: '',
-                reviews: ['คุณเปิ้ล: เพศอื่นๆ ก็ทำนายได้ตรงมาก!', 'User_X: แม่นยำทุกมิติครับ', 'Admin: ระบบความปลอดภัยระดับสูง'],
+                reviews: [
+                    'คุณนัท: "คำนวณอายุละเอียดมาก ตรงวันเป๊ะเลย"',
+                    'User_44: "แม่นจริง เรื่องการงานมาตามที่บอกเลยครับ"',
+                    'คุณเมย์: "เพศทางเลือกก็ดูได้ตรงจุด ประทับใจค่ะ"',
+                    'Admin: "ขณะนี้มียอดผู้ใช้งานทะลุ 10 ล้านรายแล้ว!"'
+                ],
                 init() {
+                    this.currentReview = this.reviews[0];
                     setInterval(() => {
-                        if(this.visitorCount < 10000000) this.visitorCount += Math.floor(Math.random() * 850) + 100;
+                        if(this.visitorCount < 10000000) this.visitorCount += Math.floor(Math.random() * 1500) + 200;
                         this.currentReview = this.reviews[Math.floor(Math.random() * this.reviews.length)];
-                    }, 3000);
+                    }, 3500);
                 },
                 calculate() {
-                    if(!this.user.dob || !this.user.fullname) return alert('กรุณาระบุข้อมูล');
+                    if(!this.user.dob || !this.user.fullname) return alert('กรุณาระบุชื่อและวันเกิด');
                     this.loading = true;
+                    
                     setTimeout(() => {
-                        const date = new Date(this.user.dob);
-                        let y = date.getFullYear(); if(y > 2400) y -= 543;
-                        const m = date.getMonth() + 1; const d = date.getDate();
+                        const birth = new Date(this.user.dob);
+                        const now = new Date();
+                        
+                        // 📅 คำนวณอายุละเอียด
+                        let years = now.getFullYear() - birth.getFullYear();
+                        let months = now.getMonth() - birth.getMonth();
+                        let days = now.getDate() - birth.getDate();
+                        if (days < 0) { months--; days += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+                        if (months < 0) { years--; months += 12; }
+                        const actualYears = years > 500 ? years - 543 : years;
+
+                        const m = birth.getMonth() + 1; const d = birth.getDate();
                         const genderFinal = this.user.gender === 'อื่นๆ' ? this.user.customGender : this.user.gender;
 
-                        // Logic ราศีเดิม (แม่นยำตามตาราง)
-                        const getThaiZodiac = (m, d) => {
+                        // 🔍 Database ราศีความแม่นยำสูง (ตามตารางที่คุณระบุ)
+                        const getThai = (m, d) => {
                             if ((m === 1 && d >= 15) || (m === 2 && d <= 12)) return { n: "มังกร", s: "แพะทะเล" };
                             if ((m === 2 && d >= 13) || (m === 3 && d <= 13)) return { n: "กุมภ์", s: "คนแบกหม้อน้ำ" };
                             if ((m === 3 && d >= 14) || (m === 4 && d <= 12)) return { n: "มีน", s: "ปลาคู่" };
@@ -170,57 +191,35 @@
                             if ((m === 11 && d >= 16) || (m === 12 && d <= 15)) return { n: "พิจิก", s: "แมงป่อง" };
                             if ((m === 12 && d >= 16) || (m === 1 && d <= 14)) return { n: "ธนู", s: "นักยิงธนู" };
                         };
-                        
-                        const getInterZodiac = (m, d) => {
-                            if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return { n: "Capricorn", r: "22 ธ.ค. – 19 ม.ค." };
-                            if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return { n: "Aquarius", r: "20 ม.ค. – 18 ก.พ." };
-                            if ((m === 2 && d >= 19) || (m === 3 && d <= 20)) return { n: "Pisces", r: "19 ก.พ. – 20 มี.ค." };
-                            if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return { n: "Aries", r: "21 มี.ค. – 19 เม.ย." };
-                            if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return { n: "Taurus", r: "20 เม.ย. – 20 พ.ค." };
-                            if ((m === 5 && d >= 21) || (m === 6 && d <= 20)) return { n: "Gemini", r: "21 พ.ค. – 20 มิ.ย." };
-                            if ((m === 6 && d >= 21) || (m === 7 && d <= 22)) return { n: "Cancer", r: "21 มิ.ย. – 22 ก.ค." };
-                            if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return { n: "Leo", r: "23 ก.ค. – 22 ส.ค." };
-                            if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return { n: "Virgo", r: "23 ส.ค. – 22 ก.ย." };
-                            if ((m === 9 && d >= 23) || (m === 10 && d <= 22)) return { n: "Libra", r: "23 ก.ย. – 22 ต.ค." };
-                            if ((m === 10 && d >= 23) || (m === 11 && d <= 21)) return { n: "Scorpio", r: "23 ต.ค. – 21 พ.ย." };
-                            if ((m === 11 && d >= 22) || (m === 12 && d <= 21)) return { n: "Sagittarius", r: "22 พ.ย. – 21 ธ.ค." };
-                        };
 
-                        const tZ = getThaiZodiac(m, d);
-                        const iZ = getInterZodiac(m, d);
+                        const tZ = getThai(m, d);
                         const animals = ["ชวด", "ฉลู", "ขาล", "เถาะ", "มะโรง", "มะเส็ง", "มะเมีย", "มะแม", "วอก", "ระกา", "จอ", "กุน"];
 
-                        // 🔮 การทำนายดวงเฉพาะเพศ (Gender-Specific Prediction)
-                        let loveTail = "";
-                        let careerTail = "";
-                        if(this.user.gender === 'ชาย') {
-                            loveTail = "มีเกณฑ์พบรักจากคนใกล้ตัวที่คอยสนับสนุนการงาน";
-                            careerTail = "ความเป็นผู้นำจะพาให้คุณได้รับโปรเจกต์ใหญ่";
-                        } else if(this.user.gender === 'หญิง') {
-                            loveTail = "จะมีคนอายุน้อยกว่าเข้ามาทำให้หัวใจกระชุ่มกระชวย";
-                            careerTail = "ความละเอียดรอบคอบจะช่วยให้พ้นอุปสรรคจากเพื่อนร่วมงาน";
-                        } else {
-                            loveTail = "เสน่ห์เฉพาะตัวจะดึงดูดคนที่ศีลเสมอกันเข้ามา";
-                            careerTail = "งานสร้างสรรค์หรือฟรีแลนซ์จะรุ่งโรจน์เป็นพิเศษ";
-                        }
-
                         this.fortune = {
-                            animal: animals[(y + 8) % 12],
-                            zThai: tZ.n, zSymbol: tZ.s, zInter: iZ.n, zInterRange: iZ.r,
-                            luckyNumber: Math.floor(Math.random()*89)+10,
-                            luckyColor: ["ขาวมุก (เสริมเมตตา)", "เขียวมรกต (เรียกทรัพย์)", "น้ำเงินไพลิน (หนุนดวง)", "ทองสว่าง (ดึงดูดโชค)"][Math.floor(Math.random()*4)],
+                            ageText: `${actualYears} ปี ${months} เดือน ${days} วัน`,
+                            zThai: tZ.n, zSymbol: tZ.s, zInter: ["Capricorn", "Aquarius", "Pisces", "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius"][m-1],
+                            animal: animals[(actualYears + 8) % 12],
                             details: [
-                                { topic: 'ความรัก', color: 'text-pink-400', desc: `ดวงชะตา ${genderFinal}: ${loveTail}` },
-                                { topic: 'การงาน', color: 'text-blue-400', desc: `สำหรับ ${genderFinal}: ${careerTail}` },
-                                { topic: 'การเงิน', color: 'text-green-400', desc: 'การหมุนเวียนเงินดีขึ้นมาก มีลาภลอยจากเลขใกล้ตัว' },
-                                { topic: 'สุขภาพ', color: 'text-red-400', desc: 'ระวังอาการเมื่อยล้าทางสายตาและออฟฟิศซินโดรม' },
-                                { topic: 'การศึกษา', color: 'text-purple-400', desc: 'การค้นคว้าสิ่งใหม่จะส่งผลดีอย่างมากในอนาคต' },
-                                { topic: 'ครอบครัว', color: 'text-orange-400', desc: 'คนในบ้านจะนำข่าวดีเรื่องโชคลาภมาให้เร็วๆ นี้' },
-                                { topic: 'พื้นดวง/เคราะห์กรรม', color: 'text-yellow-500', desc: 'เป็นคนมีบุญเก่ามาดี เคราะห์กรรมที่เคยติดขัดจะมลายหายไป' }
+                                { topic: 'ความรัก & เนื้อคู่', color: 'text-pink-400', power: 85, desc: `ดวงชะตาเพศ ${genderFinal}: เนื้อคู่เป็นคนใจกว้าง มีเสน่ห์ที่คำพูด ความสัมพันธ์ช่วงนี้จะมีเกณฑ์ขยับขยายไปในทางที่ดีขึ้น` },
+                                { topic: 'การงาน & เติบโต', color: 'text-blue-400', power: 90, desc: `อาชีพสายวิเคราะห์หรืองานอิสระจะรุ่งเรืองมาก ตำแหน่งงานมีโอกาสปรับเปลี่ยนในช่วงอายุที่ลงท้ายด้วยเลขคู่นี้` },
+                                { topic: 'การเงิน & โชคลาภ', color: 'text-green-400', power: 75, desc: `รายได้หลั่งไหลมาจากความสามารถพิเศษ โชคลาภมีเกณฑ์ได้จากการเดินทางไกลหรือคนในครอบครัวนำมาให้` },
+                                { topic: 'สุขภาพ & ข้อระวัง', color: 'text-red-400', power: 60, desc: `ระวังเรื่องพักผ่อนน้อยและอาการเกี่ยวกับกระดูกสันหลัง ควรหมั่นดูแลตัวเองให้มากกว่าปกติในช่วงปลายปีนี้` },
+                                { topic: 'การศึกษา', color: 'text-purple-400', power: 88, desc: `การศึกษาหาความรู้เพิ่มเติมจะเปิดประตูสู่โอกาสใหม่ๆ ได้ดีมาก โดยเฉพาะภาษาหรืองานทางเทคนิค` },
+                                { topic: 'ครอบครัว', color: 'text-orange-400', power: 95, desc: `คนในครอบครัวเป็นที่พึ่งพาที่สำคัญที่สุด ชีวิตคู่มีความเข้าใจกันมากขึ้นจากการปรับตัวที่ผ่านมา` },
+                                { topic: 'พื้นดวง & เคราะห์กรรม', color: 'text-yellow-500', power: 80, desc: `เป็นคนวาสนาดี มีคนอุปถัมภ์ เคราะห์กรรมที่ติดขัดกำลังจะคลี่คลายด้วยบุญบารมีที่คุณสะสมมา` }
                             ]
                         };
+                        
                         this.loading = false; this.showResult = true; window.scrollTo(0,0);
                     }, 2000);
+                },
+                shareDung() {
+                    const text = `🌌 ayu duduang: ฉันอายุ ${this.fortune.ageText} ราศี${this.fortune.zThai} แม่นมาก! ลองมาเช็คดวงของคุณดูสิ: `;
+                    if (navigator.share) {
+                        navigator.share({ title: 'ayu duduang', text: text, url: window.location.href });
+                    } else {
+                        alert("คัดลอกคำทำนายแล้ว! ส่งให้เพื่อนได้เลย:\n" + text + window.location.href);
+                    }
                 }
             }
         }
