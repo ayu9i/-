@@ -25,7 +25,6 @@
             scroll-behavior: smooth;
         }
 
-        /* 🌟 Ultra-High Fidelity Starfield */
         .cosmic-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -46,7 +45,6 @@
             50% { opacity: 0.8; transform: scale(1.1); }
         }
 
-        /* 💎 Layout & Cards */
         .glass-morphism {
             background: rgba(255, 255, 255, 0.015);
             backdrop-filter: blur(40px);
@@ -86,7 +84,6 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        /* 🚀 Professional Scrolling */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
@@ -155,7 +152,7 @@
             <div class="space-y-16 animate-[fadeIn_1s_ease-out]">
                 <div class="text-center space-y-6">
                     <h2 class="text-7xl font-light italic leading-tight text-white">Unlock Your <span class="gold-shimmer font-black">Matrix</span></h2>
-                    <p class="text-gray-500 text-[10px] tracking-[0.8em] uppercase max-w-2xl mx-auto">คำนวณราศีไทย-สากล-เศษนักษัตร พร้อมวิเคราะห์ชื่อและเพศสภาพรายบุคคล</p>
+                    <p class="text-gray-500 text-[10px] tracking-[0.8em] uppercase max-w-2xl mx-auto">วิเคราะห์ เจาะลึก งาน เงิน รัก สุขภาพ ครอบครัว ครบถ้วนตามรหัสจักรวาล</p>
                 </div>
 
                 <div class="glass-morphism p-12 lg:p-20 relative overflow-hidden">
@@ -229,7 +226,7 @@
                             <span class="text-5xl font-black gold-shimmer" x-text="res.nameSymbol"></span>
                         </div>
                         <div class="flex-1 space-y-4">
-                            <h4 class="text-xs font-black text-gold uppercase tracking-[0.3em]">พลังสั่นสะเทือนของชื่อเล่น (Nickname Vibration)</h4>
+                            <h4 class="text-xs font-black text-gold uppercase tracking-[0.3em]">พลังสั่นสะเทือนของชื่อ (Nickname Vibration)</h4>
                             <p class="text-lg text-white leading-relaxed italic" x-text="res.nameFortune"></p>
                             <p class="text-[11px] text-gray-500 leading-relaxed" x-text="res.nameDeepDetail"></p>
                         </div>
@@ -237,7 +234,7 @@
                 </div>
 
                 <div class="glass-morphism p-16 text-center">
-                    <p class="text-[11px] text-gray-500 uppercase font-black tracking-[0.5em] mb-4">ผลลัพธ์อายุและเศษนักษัตร</p>
+                    <p class="text-[11px] text-gray-500 uppercase font-black tracking-[0.5em] mb-4">ผลลัพธ์อายุและเศษนักษัตร (Modulo 12)</p>
                     <h3 class="text-7xl font-black gold-shimmer mb-12 tracking-tighter" x-text="res.ageText"></h3>
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-12 border-t border-white/5">
                         <div class="space-y-2">
@@ -245,18 +242,30 @@
                             <p class="text-2xl font-bold text-white" x-text="res.animal"></p>
                         </div>
                         <div class="space-y-2">
-                            <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">เศษ พ.ศ. (Mod 12)</p>
+                            <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">เศษ พ.ศ. (พ.ศ. % 12)</p>
                             <p class="text-2xl font-bold text-yellow-500" x-text="'เศษ ' + res.remainder"></p>
                         </div>
                         <div class="space-y-2">
-                            <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">ธาตุกำเนิด</p>
-                            <p class="text-2xl font-bold text-white" x-text="res.element"></p>
+                            <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">พ.ศ. / ค.ศ. เกิด</p>
+                            <p class="text-xl font-bold text-white" x-text="res.yearsInfo"></p>
                         </div>
                         <div class="space-y-2">
                             <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">สัญลักษณ์</p>
                             <p class="text-2xl font-bold text-white" x-text="res.animalIcon"></p>
                         </div>
                     </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <template x-for="item in res.mainForecast">
+                        <div class="glass-morphism p-8 border-t border-white/10 hover:bg-white/5">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl" x-text="item.icon"></span>
+                                <h5 class="text-[10px] font-black text-gold uppercase tracking-widest" x-text="item.topic"></h5>
+                            </div>
+                            <p class="text-[13px] text-gray-400 leading-relaxed" x-text="item.text"></p>
+                        </div>
+                    </template>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -280,24 +289,6 @@
                     </div>
                 </div>
 
-                <div class="glass-morphism p-12 bg-gradient-to-br from-gold/5 to-transparent">
-                    <div class="flex flex-col md:flex-row gap-12">
-                        <div class="md:w-1/3 space-y-4">
-                            <div class="inline-block px-4 py-1 rounded-full bg-white/5 border border-white/10 text-[8px] font-black uppercase text-gray-400">Gender Specific Forecast</div>
-                            <h5 class="text-2xl font-black text-white uppercase tracking-tighter" x-text="'พยากรณ์สำหรับเพศ' + user.gender"></h5>
-                            <div class="h-1 w-20 bg-gold"></div>
-                        </div>
-                        <div class="md:w-2/3 space-y-6">
-                            <template x-for="g in res.genderForecast">
-                                <div class="space-y-2">
-                                    <h6 class="text-[10px] font-black text-gold uppercase tracking-widest" x-text="g.topic"></h6>
-                                    <p class="text-[14px] text-gray-400 leading-loose italic" x-text="g.text"></p>
-                                </div>
-                            </template>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="flex flex-col sm:flex-row gap-6 pt-10 pb-20">
                     <button @click="view = 'input'" class="flex-1 py-6 rounded-3xl border border-gold/30 text-gold text-[10px] font-black uppercase tracking-[0.4em] hover:bg-gold/5 transition-all">คำนวณดวงชะตาถัดไป</button>
                     <button @click="shareOracle()" class="flex-1 py-6 rounded-3xl bg-white/5 border border-white/10 text-white text-[10px] font-black uppercase tracking-[0.4em] hover:bg-white/10 transition-all">แบ่งปันชะตาชีวิต</button>
@@ -311,19 +302,19 @@
             <div class="flex items-center gap-8">
                 <div class="flex items-center gap-3">
                     <div class="w-1.5 h-1.5 bg-gold rounded-full animate-ping"></div>
-                    <span class="text-[9px] text-gold font-black uppercase tracking-widest">Quantum Engine Live</span>
+                    <span class="text-[9px] text-gold font-black uppercase tracking-widest">Quantum Engine Live 2026</span>
                 </div>
                 <p class="text-[10px] text-gray-500 italic truncate tracking-wide" x-text="liveActivity"></p>
             </div>
             <div class="flex items-center gap-10">
                 <div class="flex flex-col items-end">
-                    <span class="text-[7px] text-gray-600 font-black uppercase tracking-widest">Saved Records</span>
+                    <span class="text-[7px] text-gray-600 font-black uppercase tracking-widest">Calculated Records</span>
                     <span class="text-[10px] text-gold font-mono" x-text="history.length.toLocaleString()"></span>
                 </div>
                 <div class="h-8 w-[1px] bg-white/10"></div>
                 <div class="flex flex-col items-end">
-                    <span class="text-[7px] text-gray-600 font-black uppercase tracking-widest">Oracle Logic</span>
-                    <span class="text-[10px] text-emerald-500 font-black">STABLE_1000_LINES</span>
+                    <span class="text-[7px] text-gray-600 font-black uppercase tracking-widest">Core Formula</span>
+                    <span class="text-[10px] text-emerald-500 font-black">MOD12_YBE_543_STABLE</span>
                 </div>
             </div>
         </div>
@@ -379,11 +370,11 @@
                     this.loading = true; this.view = 'loading';
                     
                     const steps = [
-                        { p: 15, s: 'Accessing Local Database' },
-                        { p: 35, s: 'Analyzing Nickname Vibration' },
-                        { p: 55, s: 'Computing Modulo 12 Residue' },
-                        { p: 80, s: 'Filtering Gender Context' },
-                        { p: 100, s: 'Finalizing Destiny Map' }
+                        { p: 15, s: 'Syncing Gregorian to Buddhist Calendar' },
+                        { p: 35, s: 'Extracting Modulo 12 Residue' },
+                        { p: 55, s: 'Mapping Multi-dimensional Forecast' },
+                        { p: 80, s: 'Filtering Gender Contextual Data' },
+                        { p: 100, s: 'Synthesizing Destiny Output' }
                     ];
 
                     let i = 0;
@@ -395,7 +386,7 @@
                             clearInterval(interval);
                             setTimeout(() => { this.processOracle(); }, 800);
                         }
-                    }, 700);
+                    }, 600);
                 },
 
                 processOracle() {
@@ -403,88 +394,82 @@
                     const now = new Date();
                     const d = dob.getDate();
                     const m = dob.getMonth() + 1;
-                    let yBE = dob.getFullYear(); if(yBE < 2400) yBE += 543;
+                    
+                    // Logic: พ.ศ. = ค.ศ. + 543
+                    const yCE = dob.getFullYear();
+                    const yBE = yCE + 543;
 
-                    // 1. Modulo 12 Formula (Strict)
+                    // สูตรหาร 12 หาเศษนักษัตร
                     const remainder = yBE % 12;
                     const animals = {
-                        1: {n: "มะเมีย", i: "🐎", e: "ไฟ"}, 2: {n: "มะแม", i: "🐑", e: "ทอง"},
-                        3: {n: "วอก", i: "🐒", e: "เหล็ก"}, 4: {n: "ระกา", i: "🐓", e: "ทอง"},
-                        5: {n: "จอ", i: "🐕", e: "ดิน"}, 6: {n: "กุน", i: "🐖", e: "น้ำ"},
-                        7: {n: "ชวด", i: "🐀", e: "น้ำ"}, 8: {n: "ฉลู", i: "🐂", e: "ดิน"},
-                        9: {n: "ขาล", i: "🐅", e: "ไม้"}, 10: {n: "เถาะ", i: "🐇", e: "ไม้"},
-                        11: {n: "มะโรง", i: "🐉", e: "ไฟ"}, 0: {n: "มะเส็ง", i: "🐍", e: "ดิน"}
+                        1: {n: "มะเมีย (ม้า)", i: "🐎"}, 2: {n: "มะแม (แพะ)", i: "🐑"},
+                        3: {n: "วอก (ลิง)", i: "🐒"}, 4: {n: "ระกา (ไก่)", i: "🐓"},
+                        5: {n: "จอ (หมา)", i: "🐕"}, 6: {n: "กุน (หมู)", i: "🐖"},
+                        7: {n: "ชวด (หนู)", i: "🐀"}, 8: {n: "ฉลู (วัว)", i: "🐂"},
+                        9: {n: "ขาล (เสือ)", i: "🐅"}, 10: {n: "เถาะ (กระต่าย)", i: "🐇"},
+                        11: {n: "มะโรง (งูใหญ่)", i: "🐉"}, 0: {n: "มะเส็ง (งูเล็ก)", i: "🐍"}
                     };
                     const az = animals[remainder];
 
-                    // 2. Thai Zodiac (As requested)
+                    // คำนวณอายุ
+                    let ageY = now.getFullYear() - yCE;
+                    let ageM = now.getMonth() - dob.getMonth();
+                    if (ageM < 0) { ageY--; ageM += 12; }
+
+                    // ข้อมูลราศี (คงเดิมตามระบบเดิม)
                     const getThai = (m, d) => {
-                        if ((m == 1 && d >= 15) || (m == 2 && d <= 12)) return {n: "มังกร", s: "แพะทะเล", i: "♑", desc: "สุขุม มีระเบียบวินัยสูง"};
-                        if ((m == 2 && d >= 13) || (m == 3 && d <= 13)) return {n: "กุมภ์", s: "คนแบกหม้อน้ำ", i: "♒", desc: "รักอิสระ มีความคิดสร้างสรรค์"};
-                        if ((m == 3 && d >= 14) || (m == 4 && d <= 12)) return {n: "มีน", s: "ปลาคู่", i: "♓", desc: "ใจบุญ มีลางสังหรณ์แม่นยำ"};
-                        if ((m == 4 && d >= 13) || (m == 5 && d <= 13)) return {n: "เมษ", s: "แกะ", i: "♈", desc: "กล้าหาญ เป็นผู้นำที่เด็ดเดี่ยว"};
-                        if ((m == 5 && d >= 14) || (m == 6 && d <= 13)) return {n: "พฤษภ", s: "วัว", i: "♉", desc: "อดทน หนักแน่น มั่นคง"};
-                        if ((m == 6 && d >= 14) || (m == 7 && d <= 14)) return {n: "เมถุน", s: "คนคู่", i: "♊", desc: "ช่างเจรจา มีไหวพริบปฏิภาณ"};
-                        if ((m == 7 && d >= 15) || (m == 8 && d <= 16)) return {n: "กรกฎ", s: "ปู", i: "♋", desc: "รักครอบครัว จิตใจอ่อนโยน"};
-                        if ((m == 8 && d >= 17) || (m == 9 && d <= 16)) return {n: "สิงห์", s: "สิงโต", i: "♌", desc: "มีบารมี มีพลังอำนาจคุมคน"};
-                        if ((m == 9 && d >= 17) || (m == 10 && d <= 16)) return {n: "กันย์", s: "หญิงสาว", i: "♍", desc: "ละเอียดรอบคอบ รักความสมบูรณ์แบบ"};
-                        if ((m == 10 && d >= 17) || (m == 11 && d <= 15)) return {n: "ตุลย์", s: "คันชั่ง", i: "♎", desc: "รักความยุติธรรม มีเสน่ห์ทางสังคม"};
-                        if ((m == 11 && d >= 16) || (m == 12 && d <= 15)) return {n: "พิจิก", s: "แมงป่อง", i: "♏", desc: "ลึกลับ มีพลังจิตใจที่เข้มแข็ง"};
-                        return {n: "ธนู", s: "นักยิงธนู", i: "♐", desc: "มองโลกแง่ดี ใฝ่หาความรู้ใหม่ๆ"};
+                        if ((m == 1 && d >= 15) || (m == 2 && d <= 12)) return {n: "มังกร", s: "Capricorn (Thai)", i: "♑", desc: "สุขุม มีระเบียบวินัยสูง"};
+                        if ((m == 2 && d >= 13) || (m == 3 && d <= 13)) return {n: "กุมภ์", s: "Aquarius (Thai)", i: "♒", desc: "รักอิสระ มีความคิดสร้างสรรค์"};
+                        if ((m == 3 && d >= 14) || (m == 4 && d <= 12)) return {n: "มีน", s: "Pisces (Thai)", i: "♓", desc: "ใจบุญ มีลางสังหรณ์แม่นยำ"};
+                        if ((m == 4 && d >= 13) || (m == 5 && d <= 13)) return {n: "เมษ", s: "Aries (Thai)", i: "♈", desc: "กล้าหาญ เป็นผู้นำที่เด็ดเดี่ยว"};
+                        if ((m == 5 && d >= 14) || (m == 6 && d <= 13)) return {n: "พฤษภ", s: "Taurus (Thai)", i: "♉", desc: "อดทน หนักแน่น มั่นคง"};
+                        if ((m == 6 && d >= 14) || (m == 7 && d <= 14)) return {n: "เมถุน", s: "Gemini (Thai)", i: "♊", desc: "ช่างเจรจา มีไหวพริบปฏิภาณ"};
+                        if ((m == 7 && d >= 15) || (m == 8 && d <= 16)) return {n: "กรกฎ", s: "Cancer (Thai)", i: "♋", desc: "รักครอบครัว จิตใจอ่อนโยน"};
+                        if ((m == 8 && d >= 17) || (m == 9 && d <= 16)) return {n: "สิงห์", s: "Leo (Thai)", i: "♌", desc: "มีบารมี มีพลังอำนาจคุมคน"};
+                        if ((m == 9 && d >= 17) || (m == 10 && d <= 16)) return {n: "กันย์", s: "Virgo (Thai)", i: "♍", desc: "ละเอียดรอบคอบ รักความสมบูรณ์แบบ"};
+                        if ((m == 10 && d >= 17) || (m == 11 && d <= 15)) return {n: "ตุลย์", s: "Libra (Thai)", i: "♎", desc: "รักความยุติธรรม มีเสน่ห์ทางสังคม"};
+                        if ((m == 11 && d >= 16) || (m == 12 && d <= 15)) return {n: "พิจิก", s: "Scorpio (Thai)", i: "♏", desc: "ลึกลับ มีพลังจิตใจที่เข้มแข็ง"};
+                        return {n: "ธนู", s: "Sagittarius (Thai)", i: "♐", desc: "มองโลกแง่ดี ใฝ่หาความรู้ใหม่ๆ"};
                     };
 
-                    // 3. International Zodiac (As requested)
                     const getInter = (m, d) => {
-                        if ((m == 12 && d >= 22) || (m == 1 && d <= 19)) return {n: "Capricorn", s: "Sea-Goat", i: "♑", desc: "Ambitious & Practical"};
-                        if ((m == 1 && d >= 20) || (m == 2 && d <= 18)) return {n: "Aquarius", s: "Water-Bearer", i: "♒", desc: "Original & Humanitarian"};
-                        if ((m == 2 && d >= 19) || (m == 3 && d <= 20)) return {n: "Pisces", s: "The Fish", i: "♓", desc: "Compassionate & Artistic"};
-                        if ((m == 3 && d >= 21) || (m == 4 && d <= 19)) return {n: "Aries", s: "The Ram", i: "♈", desc: "Dynamic & Confident"};
-                        if ((m == 4 && d >= 20) || (m == 5 && d <= 20)) return {n: "Taurus", s: "The Bull", i: "♉", desc: "Strong & Aesthetic"};
-                        if ((m == 5 && d >= 21) || (m == 6 && d <= 20)) return {n: "Gemini", s: "The Twins", i: "♊", desc: "Versatile & Expressive"};
-                        if ((m == 6 && d >= 21) || (m == 7 && d <= 22)) return {n: "Cancer", s: "The Crab", i: "♋", desc: "Sentimental & Protective"};
-                        if ((m == 7 && d >= 23) || (m == 8 && d <= 22)) return {n: "Leo", s: "The Lion", i: "♌", desc: "Fiery & Self-assured"};
-                        if ((m == 8 && d >= 23) || (m == 9 && d <= 22)) return {n: "Virgo", s: "The Virgin", i: "♍", desc: "Loyal & Analytical"};
-                        if ((m == 9 && d >= 23) || (m == 10 && d <= 22)) return {n: "Libra", s: "The Scales", i: "♎", period: "Gracious & Diplomatic"};
-                        if ((m == 10 && d >= 23) || (m == 11 && d <= 21)) return {n: "Scorpio", s: "The Scorpion", i: "♏", desc: "Passionate & Resourceful"};
-                        return {n: "Sagittarius", s: "The Archer", i: "♐", desc: "Optimistic & Adventurous"};
+                        if ((m == 12 && d >= 22) || (m == 1 && d <= 19)) return {n: "Capricorn", s: "The Goat", i: "♑", desc: "Practical & Disciplined"};
+                        if ((m == 1 && d >= 20) || (m == 2 && d <= 18)) return {n: "Aquarius", s: "Water-Bearer", i: "♒", desc: "Innovative & Independent"};
+                        if ((m == 2 && d >= 19) || (m == 3 && d <= 20)) return {n: "Pisces", s: "The Fish", i: "♓", desc: "Empathetic & Artistic"};
+                        if ((m == 3 && d >= 21) || (m == 4 && d <= 19)) return {n: "Aries", s: "The Ram", i: "♈", desc: "Energetic & Assertive"};
+                        if ((m == 4 && d >= 20) || (m == 5 && d <= 20)) return {n: "Taurus", s: "The Bull", i: "♉", desc: "Dependable & Sensual"};
+                        if ((m == 5 && d >= 21) || (m == 6 && d <= 20)) return {n: "Gemini", s: "The Twins", i: "♊", desc: "Curious & Adaptable"};
+                        if ((m == 6 && d >= 21) || (m == 7 && d <= 22)) return {n: "Cancer", s: "The Crab", i: "♋", desc: "Intuitive & Sentimental"};
+                        if ((m == 7 && d >= 23) || (m == 8 && d <= 22)) return {n: "Leo", s: "The Lion", i: "♌", desc: "Confident & Creative"};
+                        if ((m == 8 && d >= 23) || (m == 9 && d <= 22)) return {n: "Virgo", s: "The Virgin", i: "♍", desc: "Analytical & Reliable"};
+                        if ((m == 9 && d >= 23) || (m == 10 && d <= 22)) return {n: "Libra", s: "The Scales", i: "♎", desc: "Diplomatic & Artistic"};
+                        if ((m == 10 && d >= 23) || (m == 11 && d <= 21)) return {n: "Scorpio", s: "The Scorpion", i: "♏", desc: "Resourceful & Powerful"};
+                        return {n: "Sagittarius", s: "The Archer", i: "♐", desc: "Philosophical & Adventurous"};
                     };
 
-                    // 4. Nickname Analysis (Simple Alphabet Numerology)
                     const firstChar = this.user.nickname.charAt(0).toUpperCase();
-                    const nameMaps = {
-                        'A': 'มีความทะเยอทะยานสูง เป็นผู้นำ', 'B': 'จิตใจอ่อนโยน รักความสงบ', 'C': 'ร่าเริงแจ่มใส เข้ากับคนง่าย',
-                        'D': 'มีความเป็นระเบียบ มั่นคง', 'E': 'รักอิสระ ชอบความท้าทาย', 'ก': 'วาสนาดี มีผู้ใหญ่เมตตา',
-                        'ข': 'มีไหวพริบ เอาตัวรอดเก่ง', 'ค': 'สติปัญญาดี เลี้ยงตัวรอด', 'จ': 'มุ่งมั่น ตั้งใจจริง',
-                        'น': 'มีเสน่ห์ทางคำพูด', 'ม': 'ขยัน อดทน สร้างตัวได้'
-                    };
-
-                    // 5. Gender Specific Logic (Dynamic Generation)
-                    const genderData = {
-                        "ชาย": [
-                            { topic: "อำนาจบารมี", text: `ดวงบุรุษปี${az.n} มีเกณฑ์ได้รับความนิยมยกย่องในวงสังคม ตำแหน่งงานจะขยับขึ้นสู่ระดับบริหาร` },
-                            { topic: "การสร้างตัว", text: "ช่วงนี้เป็นจังหวะดีในการลงทุนใหญ่ พลังชายชาตรีจะนำมาซึ่งความมั่งคั่ง" }
-                        ],
-                        "หญิง": [
-                            { topic: "เมตตามหานิยม", text: `ดวงสตรีปี${az.n} มีเสน่ห์เย้ายวนใจ ผู้ใหญ่จะให้ความเอ็นดูเป็นพิเศษ การเจรจาค้าขายจะสำเร็จราบรื่น` },
-                            { topic: "โชคลาภจากคนรัก", text: "คนใกล้ตัวหรือเพศตรงข้ามจะนำโชคใหญ่มาให้ในเร็วๆ นี้" }
-                        ],
-                        "อื่นๆ": [
-                            { topic: "ความคิดสร้างสรรค์", text: `ชาวปี${az.n} ที่มีหัวใจอิสระ จะประสบความสำเร็จจากงานด้านศิลปะหรือนวัตกรรมใหม่ๆ` },
-                            { topic: "โชคจากการเดินทาง", text: "การเดินทางไปต่างถิ่นจะพบมิตรแท้และช่องทางทำเงินมหาศาล" }
-                        ]
-                    };
-
-                    const ageY = now.getFullYear() - (yBE - 543);
-                    const ageM = Math.abs(now.getMonth() - dob.getMonth());
+                    
+                    // 🌟 Enhanced Forecast Content
+                    const mainForecast = [
+                        { topic: "การงาน (Work)", icon: "💼", text: `ปีนี้เป็นช่วงปีแห่งการขยายตัวสำหรับปี${az.n} ท่านมีเกณฑ์ได้เลื่อนขั้นหรือเริ่มโปรเจกต์ใหม่ที่จะสร้างชื่อเสียงในระยะยาว` },
+                        { topic: "การเงิน (Wealth)", icon: "💰", text: "โชคลาภมาจากการเจรจาและงานเสริม การลงทุนเกี่ยวกับนวัตกรรมหรือสินทรัพย์ดิจิทัลจะให้ผลตอบแทนดี" },
+                        { topic: "ความรัก (Love)", icon: "❤️", text: this.user.gender === 'ชาย' ? "จะมีสตรีผู้ใหญ่คอยอุปถัมภ์ ส่วนคนโสดจะพบรักจากงานสังคม" : "เสน่ห์แรงเกินต้านทาน คนรักจะเอาใจใส่เป็นพิเศษ มีเกณฑ์ได้รับของขวัญล้ำค่า" },
+                        { topic: "สุขภาพ (Health)", icon: "🏥", text: "ระวังปัญหาเกี่ยวกับสายตาและความเครียดสะสม ควรหาเวลาพักผ่อนริมน้ำเพื่อปรับสมดุลธาตุ" },
+                        { topic: "ครอบครัว (Family)", icon: "🏠", text: "เป็นปีที่ความสัมพันธ์ในบ้านมั่นคง มีเกณฑ์การซ่อมแซมตกแต่งที่อยู่อาศัยให้น่าอยู่ขึ้น" },
+                        { topic: "เคราะห์กรรม (Karma)", icon: "🌀", text: "ระวังคำพูดที่อาจทำให้เกิดความเข้าใจผิด การทำบุญด้วยแสงสว่างจะช่วยปัดเป่าอุปสรรคได้ดี" }
+                    ];
 
                     this.res = {
                         ageText: `${ageY} ปี ${ageM} เดือน`,
-                        remainder: remainder, animal: az.n, animalIcon: az.i, element: az.e,
+                        yearsInfo: `พ.ศ. ${yBE} / ค.ศ. ${yCE}`,
+                        remainder: remainder, 
+                        animal: az.n, animalIcon: az.i,
                         nameSymbol: firstChar,
-                        nameFortune: `พลังแห่งตัวอักษร "${firstChar}" ส่งผลต่อชะตาชีวิตท่าน`,
-                        nameDeepDetail: nameMaps[firstChar] || "ชื่อของท่านมีแรงสั่นสะเทือนแห่งความสำเร็จและการปรับตัวที่ยอดเยี่ยม",
-                        thai: getThai(m, d), inter: getInter(m, d),
-                        genderForecast: genderData[this.user.gender]
+                        nameFortune: `พลังจักรวาลผ่านอักษร "${firstChar}" ในชื่อเล่นของท่าน`,
+                        nameDeepDetail: "ชื่อของท่านมีแรงสั่นสะเทือนที่เป็นเอกลักษณ์ ส่งเสริมให้เป็นคนมีความคิดลึกซึ้งและมีเสน่ห์ต่อผู้พบเห็น",
+                        thai: getThai(m, d), 
+                        inter: getInter(m, d),
+                        mainForecast: mainForecast
                     };
 
                     this.saveToDB(this.res);
@@ -494,16 +479,16 @@
 
                 updateLiveActivity() {
                     const acts = [
-                        "ระบบกำลังประมวลผลดวงดาวปี 2027...",
-                        "ผู้ใช้งานจากกรุงเทพฯ เพิ่งได้รับคำทำนายมหาเศรษฐี",
-                        "คำเตือน: ดาวพฤหัสกำลังย้ายทิศทาง...",
-                        "วิเคราะห์รหัสชีวิตด้วย Modulo 12 สำเร็จ"
+                        "ระบบกำลังคำนวณวงโคจรดาวเสาร์ปี 2026...",
+                        "ประมวลผล Modulo 12 สำหรับผู้ใช้งานใหม่สำเร็จ",
+                        "อัปเดตข้อมูลพยากรณ์การเงินรายนาที...",
+                        "Quantum Logic กำลังจัดลำดับเคราะห์กรรมประจำวัน"
                     ];
                     this.liveActivity = acts[Math.floor(Math.random()*acts.length)];
                 },
 
                 shareOracle() {
-                    alert('คัดลอกลิ้งค์พยากรณ์เฉพาะบุคคลของท่านแล้ว (จำลอง)');
+                    alert('คัดลอกลิ้งค์ชะตาชีวิต 2026 เรียบร้อยแล้ว');
                 }
             }
         }
