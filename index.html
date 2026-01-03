@@ -3,185 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayu Duduang Grand Oracle | ระบบวิเคราะห์ชะตาแบบสมบูรณ์ 600 มิติ</title>
+    <title>AYU DUDUANG V.2026 | ระบบจัดการฐานข้อมูลดวงชะตาและวิเคราะห์เพศเฉพาะทาง</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@100;300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@100;300;400;600;700&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --gold-primary: #bf953f;
+            --gold: #bf953f;
             --gold-light: #fcf6ba;
-            --space: #020205;
+            --deep-space: #010103;
+            --accent-blue: #3b82f6;
         }
 
         body {
             font-family: 'Anuphan', sans-serif;
-            background-color: var(--space);
+            background-color: var(--deep-space);
             color: #f1f5f9;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* 🌌 Deep Space Background */
-        .nebula-bg {
+        /* 🌟 Ultra-High Fidelity Starfield */
+        .cosmic-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(191, 149, 63, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
-                #020205;
+            background: radial-gradient(circle at center, #0a0a1a 0%, #010103 100%);
         }
 
-        .star {
+        .star-item {
             position: absolute;
             background: white;
             border-radius: 50%;
-            opacity: 0.3;
-            animation: twinkle var(--duration) infinite ease-in-out;
+            pointer-events: none;
+            animation: flicker var(--t) infinite ease-in-out;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.3); }
+        @keyframes flicker {
+            0%, 100% { opacity: 0.1; transform: scale(0.9); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
-        /* 💎 Premium UI Components */
-        .gold-shimmer-text {
+        /* 💎 Layout & Cards */
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 3rem;
+            transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-morphism:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 50px rgba(191, 149, 63, 0.1);
+        }
+
+        .gold-shimmer {
             background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 200% auto;
-            animation: shine 5s linear infinite;
+            animation: textShine 4s linear infinite;
         }
 
-        @keyframes shine { to { background-position: 200% center; } }
+        @keyframes textShine { to { background-position: 200% center; } }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.01);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 3rem;
-            transition: all 0.5s ease;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(191, 149, 63, 0.2);
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .input-divine {
-            background: rgba(255, 255, 255, 0.03);
+        .form-input {
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1.5rem;
+            border-radius: 1.25rem;
             padding: 1.25rem;
             color: white;
             width: 100%;
             outline: none;
-            transition: 0.4s;
+            transition: 0.3s;
         }
 
-        .input-divine:focus {
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 20px rgba(191, 149, 63, 0.2);
+        .form-input:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .btn-oracle {
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
-            color: #000;
-            font-weight: 800;
-            letter-spacing: 0.3em;
-            padding: 1.5rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 40px rgba(191, 149, 63, 0.25);
-            transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        /* 🚀 Professional Scrolling */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--gold);
+            margin-bottom: 0.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .btn-oracle:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(191, 149, 63, 0.4);
-        }
-
-        [x-cloak] { display: none !important; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: #1e1e2e; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold-primary); }
-
-        .fade-up { animation: fadeUp 1s ease-out forwards; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body x-data="grandOracleEngine()" x-init="initStars()">
+<body x-data="ultimateDuduang()" x-init="initApp()">
 
-    <div class="nebula-bg" id="starfield"></div>
+    <div class="cosmic-canvas" id="canvas"></div>
 
-    <nav class="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/30 backdrop-blur-2xl">
-        <div class="max-w-7xl mx-auto px-10 py-6 flex justify-between items-center">
+    <header class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/40 backdrop-blur-3xl">
+        <div class="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
             <div class="flex flex-col">
-                <h1 class="text-2xl font-black gold-shimmer-text tracking-tighter">AYU DUDUANG</h1>
-                <p class="text-[7px] text-gray-500 uppercase tracking-[0.6em] font-bold">Grand Oracle Edition v15.0</p>
+                <span class="text-2xl font-black gold-shimmer tracking-tighter">AYU DUDUANG</span>
+                <span class="text-[7px] text-gray-500 uppercase tracking-[0.6em] font-bold">Quantum Oracle System v.2026</span>
             </div>
             <div class="flex items-center gap-10">
-                <div class="hidden lg:flex flex-col items-end">
-                    <span class="text-[8px] text-emerald-500 font-black tracking-widest uppercase">Encryption Active</span>
-                    <span class="text-[10px] font-mono text-gray-500" x-text="sessionID"></span>
+                <div class="hidden md:flex flex-col items-end">
+                    <span class="text-[8px] text-gold font-black tracking-widest uppercase">Database Status</span>
+                    <span class="text-[10px] text-emerald-500 font-mono" x-text="dbStatus"></span>
                 </div>
-                <div class="h-10 w-[1px] bg-white/10"></div>
-                <div class="flex items-center gap-4">
-                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
-                    <span class="text-[11px] font-mono text-gray-400" x-text="visitorCount.toLocaleString()"></span>
-                </div>
+                <div class="h-8 w-[1px] bg-white/10"></div>
+                <button @click="showHistory = !showHistory" class="relative group">
+                    <span class="text-[10px] font-black uppercase text-gray-400 group-hover:text-gold transition-colors">History Log</span>
+                    <div class="absolute -top-2 -right-2 w-4 h-4 bg-gold text-black text-[8px] font-bold rounded-full flex items-center justify-center" x-text="history.length"></div>
+                </button>
             </div>
         </div>
-    </nav>
+    </header>
+
+    <aside x-show="showHistory" x-cloak class="fixed right-0 top-0 h-full w-80 z-[100] bg-black/90 backdrop-blur-3xl border-l border-white/10 p-8 shadow-2xl transition-all">
+        <div class="flex justify-between items-center mb-10">
+            <h3 class="text-xs font-black uppercase tracking-widest text-gold">บันทึกชะตาเดิม</h3>
+            <button @click="showHistory = false" class="text-gray-500 hover:text-white">✕</button>
+        </div>
+        <div class="space-y-4 overflow-y-auto h-[70vh]">
+            <template x-for="log in history">
+                <div class="history-item">
+                    <div>
+                        <p class="font-bold text-white" x-text="log.name"></p>
+                        <p class="text-[10px] text-gray-500" x-text="log.date"></p>
+                    </div>
+                    <span class="text-gold font-bold" x-text="log.zodiac"></span>
+                </div>
+            </template>
+            <template x-if="history.length === 0">
+                <p class="text-center text-gray-600 text-[10px] py-10">ไม่มีข้อมูลที่ถูกจัดเก็บ</p>
+            </template>
+        </div>
+        <button @click="clearHistory()" class="w-full mt-6 py-3 border border-red-500/20 text-red-500 text-[9px] font-bold uppercase rounded-xl hover:bg-red-500/10">ล้างประวัติทั้งหมด</button>
+    </aside>
 
     <main class="relative pt-40 pb-56 px-6 max-w-6xl mx-auto">
         
         <template x-if="view === 'input'">
-            <div class="space-y-16 fade-up">
+            <div class="space-y-16 animate-[fadeIn_1s_ease-out]">
                 <div class="text-center space-y-6">
-                    <div class="inline-block px-6 py-2 rounded-full border border-gold-primary/20 bg-gold-primary/5">
-                        <span class="text-[9px] text-gold-primary font-black uppercase tracking-[0.5em]">Cosmic Alignment Ready</span>
-                    </div>
-                    <h2 class="text-6xl font-light tracking-tighter italic text-white leading-tight">Master Your <span class="gold-shimmer-text font-black">Future</span></h2>
-                    <p class="text-gray-500 text-[10px] tracking-[0.7em] uppercase max-w-lg mx-auto leading-relaxed">กรุณากรอกข้อมูลเพื่อถอดรหัสราศีคู่และเศษปีนักษัตรในระดับโมเลกุลดวงดาว</p>
+                    <h2 class="text-7xl font-light italic leading-tight text-white">Unlock Your <span class="gold-shimmer font-black">Matrix</span></h2>
+                    <p class="text-gray-500 text-[10px] tracking-[0.8em] uppercase max-w-2xl mx-auto">คำนวณราศีไทย-สากล-เศษนักษัตร พร้อมวิเคราะห์ชื่อและเพศสภาพรายบุคคล</p>
                 </div>
 
-                <div class="glass-card p-12 lg:p-20 relative overflow-hidden">
-                    <div class="absolute -right-20 -top-20 w-80 h-80 bg-gold-primary/5 rounded-full blur-[100px]"></div>
-                    <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-blue-500/5 rounded-full blur-[100px]"></div>
-
+                <div class="glass-morphism p-12 lg:p-20 relative overflow-hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
-                        <div class="md:col-span-2 space-y-4">
-                            <label class="text-[10px] font-black text-gold-primary tracking-[0.3em] uppercase ml-2">ชื่อ-นามสกุลจริง (Global Identity)</label>
-                            <input type="text" x-model="user.name" class="input-divine text-xl font-light" placeholder="นามของท่านคือวิถีแห่งดวงดาว">
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black text-gold tracking-widest uppercase ml-1">ชื่อ-นามสกุล (Full Identity)</label>
+                            <input type="text" x-model="user.name" class="form-input text-lg" placeholder="ระบุชื่อจริง">
+                        </div>
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black text-gold tracking-widest uppercase ml-1">ชื่อเล่น (Alias Vibration)</label>
+                            <input type="text" x-model="user.nickname" class="form-input text-lg" placeholder="ระบุชื่อเล่น">
                         </div>
 
                         <div class="space-y-4">
-                            <label class="text-[10px] font-black text-gold-primary tracking-[0.3em] uppercase ml-2">วัน/เดือน/ปีเกิด (Date of Birth)</label>
-                            <input type="date" x-model="user.dob" class="input-divine">
-                            <p class="text-[8px] text-gray-600 italic px-2">รองรับทั้ง พ.ศ. และ ค.ศ. ระบบจะคำนวณเศษปี (Modulo 12) อัตโนมัติ</p>
-                        </div>
-
-                        <div class="space-y-4">
-                            <label class="text-[10px] font-black text-gold-primary tracking-[0.3em] uppercase ml-2">เพศวิถี (Biological/Identity)</label>
-                            <select x-model="user.gender" class="input-divine bg-[#05050a]">
-                                <option value="ชาย">ชาย (Male)</option>
-                                <option value="หญิง">หญิง (Female)</option>
-                                <option value="อื่นๆ">ระบุเอง (Custom/LGBTQ+)</option>
+                            <label class="text-[10px] font-black text-gold tracking-widest uppercase ml-1">เพศ (Gender Filter)</label>
+                            <select x-model="user.gender" class="form-input bg-[#05050a]">
+                                <option value="ชาย">บุรุษ (Male)</option>
+                                <option value="หญิง">สตรี (Female)</option>
+                                <option value="อื่นๆ">ความหลากหลาย (Non-Binary / LGBTQ+)</option>
                             </select>
+                        </div>
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black text-gold tracking-widest uppercase ml-1">วัน/เดือน/ปีเกิด (Date of Birth)</label>
+                            <input type="date" x-model="user.dob" class="form-input">
                         </div>
                     </div>
 
-                    <button @click="beginOracle()" :disabled="loading" class="btn-oracle w-full mt-20 text-xs">
-                        <span x-show="!loading">เริ่มการคำนวณรหัสดวงชะตาขั้นสูง</span>
+                    <button @click="startOracle()" :disabled="loading" class="w-full mt-20 py-8 rounded-3xl bg-gradient-to-r from-yellow-700 via-yellow-300 to-yellow-700 text-black font-black uppercase tracking-[0.5em] text-[10px] shadow-2xl hover:scale-[1.02] active:scale-95 transition-all">
+                        <span x-show="!loading">เริ่มการพยากรณ์ระดับจักรพรรดิ</span>
                         <div x-show="loading" class="flex items-center justify-center gap-4">
-                            <div class="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin"></div>
-                            <span>กำลังประมวลผล MATRIX...</span>
+                            <div class="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
+                            <span>กำลังถอดรหัสรหัสพันธุกรรมดวงดาว...</span>
                         </div>
                     </button>
                 </div>
@@ -189,318 +195,323 @@
         </template>
 
         <template x-if="view === 'loading'">
-            <div class="text-center py-48 space-y-12">
-                <div class="relative w-48 h-48 mx-auto">
+            <div class="text-center py-40 space-y-12">
+                <div class="relative w-56 h-56 mx-auto">
                     <svg class="w-full h-full rotate-[-90deg]">
-                        <circle cx="96" cy="96" r="90" stroke="currentColor" stroke-width="1" fill="transparent" class="text-white/5" />
-                        <circle cx="96" cy="96" r="90" stroke="currentColor" stroke-width="3" fill="transparent" class="text-gold-primary animate-[dash_2s_ease-in-out_infinite]" stroke-dasharray="565" />
+                        <circle cx="112" cy="112" r="100" stroke="currentColor" stroke-width="1" fill="transparent" class="text-white/5" />
+                        <circle cx="112" cy="112" r="100" stroke="currentColor" stroke-width="4" fill="transparent" class="text-gold animate-[dash_1.5s_ease-in-out_infinite]" stroke-dasharray="628" />
                     </svg>
                     <div class="absolute inset-0 flex flex-col items-center justify-center">
-                        <span class="text-3xl font-mono gold-shimmer-text" x-text="loadPercent + '%'"></span>
+                        <span class="text-4xl font-mono gold-shimmer" x-text="loadPercent + '%'"></span>
                     </div>
                 </div>
-                <div class="space-y-4">
-                    <h3 class="text-xs font-black text-gold-primary tracking-[1.2em] uppercase animate-pulse" x-text="loadStatus"></h3>
-                    <div class="text-[8px] font-mono text-gray-700 uppercase tracking-widest" x-text="sysLog"></div>
-                </div>
+                <h3 class="text-[10px] font-black text-gold tracking-[1.5em] uppercase animate-pulse" x-text="loadStatus"></h3>
             </div>
         </template>
 
         <template x-if="view === 'result'">
-            <div class="space-y-12 fade-up">
+            <div class="space-y-12 animate-[fadeIn_1s_ease-out]">
+                
                 <div class="text-center space-y-6">
-                    <div class="inline-flex items-center gap-4 px-8 py-2 glass-card !rounded-full border-emerald-500/20 bg-emerald-500/5">
-                        <div class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></div>
-                        <span class="text-[9px] text-emerald-500 font-black uppercase tracking-[0.5em]">Destiny Code: Verified</span>
+                    <div class="inline-flex items-center gap-4 px-8 py-2 glass-morphism !rounded-full bg-gold/5 border-gold/20">
+                        <span class="text-[9px] text-gold font-black uppercase tracking-[0.4em]">Oracle Analysis Completed</span>
                     </div>
-                    <h2 class="text-5xl font-black text-white" x-text="'คุณ ' + user.name"></h2>
-                    <p class="text-gold-primary text-sm font-bold tracking-[0.6em] uppercase" x-text="user.gender + ' | ธาตุ' + res.element"></p>
+                    <h2 class="text-6xl font-black text-white" x-text="user.name"></h2>
+                    <div class="flex justify-center gap-6">
+                        <span class="text-xs text-gray-500 font-bold uppercase tracking-widest" x-text="'เพศ: ' + user.gender"></span>
+                        <span class="text-xs text-gold font-bold uppercase tracking-widest" x-text="'ชื่อเล่น: ' + user.nickname"></span>
+                    </div>
                 </div>
 
-                <div class="glass-card p-16 text-center border-t-2 border-gold-primary/30 relative">
-                    <div class="absolute inset-0 bg-gradient-to-b from-gold-primary/5 to-transparent pointer-events-none"></div>
-                    <p class="text-[11px] text-gray-500 uppercase font-black tracking-[0.6em] mb-6">อายุและรหัสนักษัตร (Modulo 12 Formula)</p>
-                    <h3 class="text-7xl font-black gold-shimmer-text mb-12 tracking-tighter" x-text="res.ageDetailed"></h3>
-                    
+                <div class="glass-morphism p-12 border-b-2 border-gold/30">
+                    <div class="flex flex-col md:flex-row gap-10 items-center">
+                        <div class="w-32 h-32 rounded-full bg-gradient-to-br from-gold/20 to-transparent flex items-center justify-center border border-gold/30">
+                            <span class="text-5xl font-black gold-shimmer" x-text="res.nameSymbol"></span>
+                        </div>
+                        <div class="flex-1 space-y-4">
+                            <h4 class="text-xs font-black text-gold uppercase tracking-[0.3em]">พลังสั่นสะเทือนของชื่อเล่น (Nickname Vibration)</h4>
+                            <p class="text-lg text-white leading-relaxed italic" x-text="res.nameFortune"></p>
+                            <p class="text-[11px] text-gray-500 leading-relaxed" x-text="res.nameDeepDetail"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-morphism p-16 text-center">
+                    <p class="text-[11px] text-gray-500 uppercase font-black tracking-[0.5em] mb-4">ผลลัพธ์อายุและเศษนักษัตร</p>
+                    <h3 class="text-7xl font-black gold-shimmer mb-12 tracking-tighter" x-text="res.ageText"></h3>
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-12 border-t border-white/5">
                         <div class="space-y-2">
                             <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">ปีนักษัตร</p>
-                            <p class="text-2xl font-bold text-white" x-text="'ปี' + res.animal"></p>
+                            <p class="text-2xl font-bold text-white" x-text="res.animal"></p>
                         </div>
                         <div class="space-y-2">
-                            <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">เศษ พ.ศ.</p>
+                            <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">เศษ พ.ศ. (Mod 12)</p>
                             <p class="text-2xl font-bold text-yellow-500" x-text="'เศษ ' + res.remainder"></p>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">ธาตุกำเนิด</p>
+                            <p class="text-2xl font-bold text-white" x-text="res.element"></p>
                         </div>
                         <div class="space-y-2">
                             <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">สัญลักษณ์</p>
                             <p class="text-2xl font-bold text-white" x-text="res.animalIcon"></p>
                         </div>
-                        <div class="space-y-2">
-                            <p class="text-[9px] text-gray-500 uppercase font-black tracking-widest">กาลโยค</p>
-                            <p class="text-2xl font-bold text-emerald-500" x-text="res.galaYoke"></p>
-                        </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="glass-card p-12 border-l-4 border-gold-primary">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h4 class="text-[10px] font-black text-gold-primary uppercase tracking-widest mb-1">Thai Zodiac (นิรายนะ)</h4>
-                                <span class="text-4xl font-black text-white" x-text="res.thaiZ.n"></span>
-                            </div>
-                            <span class="text-4xl" x-text="res.thaiZ.i"></span>
+                    <div class="glass-morphism p-12 border-l-4 border-gold">
+                        <h4 class="text-[10px] font-black text-gold uppercase tracking-widest mb-2">ราศีไทย (นิรายนะ)</h4>
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-4xl font-black text-white" x-text="res.thai.n"></span>
+                            <span class="text-4xl" x-text="res.thai.i"></span>
                         </div>
-                        <p class="text-sm font-bold text-gold-primary/80 italic mb-4" x-text="res.thaiZ.s"></p>
-                        <p class="text-[12px] text-gray-400 leading-relaxed" x-text="res.thaiZ.desc"></p>
-                        <div class="mt-6 pt-4 border-t border-white/5 flex justify-between text-[9px] font-mono text-gray-600">
-                            <span>CALC: TH_ST_CALENDAR</span>
-                            <span x-text="res.thaiZ.period"></span>
-                        </div>
+                        <p class="text-sm font-bold text-gold/80 italic mb-4" x-text="res.thai.s"></p>
+                        <p class="text-[13px] text-gray-400 leading-relaxed" x-text="res.thai.desc"></p>
                     </div>
-
-                    <div class="glass-card p-12 border-l-4 border-blue-500/50">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h4 class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1">Universal Zodiac (สายนะ)</h4>
-                                <span class="text-4xl font-black text-white" x-text="res.interZ.n"></span>
-                            </div>
-                            <span class="text-4xl" x-text="res.interZ.i"></span>
+                    <div class="glass-morphism p-12 border-l-4 border-blue-500/50">
+                        <h4 class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2">ราศีสากล (สายนะ)</h4>
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-4xl font-black text-white" x-text="res.inter.n"></span>
+                            <span class="text-4xl" x-text="res.inter.i"></span>
                         </div>
-                        <p class="text-sm font-bold text-blue-400/80 italic mb-4" x-text="res.interZ.s"></p>
-                        <p class="text-[12px] text-gray-400 leading-relaxed" x-text="res.interZ.desc"></p>
-                        <div class="mt-6 pt-4 border-t border-white/5 flex justify-between text-[9px] font-mono text-gray-600">
-                            <span>CALC: INT_TROPICAL</span>
-                            <span x-text="res.interZ.period"></span>
-                        </div>
+                        <p class="text-sm font-bold text-blue-400/80 italic mb-4" x-text="res.inter.s"></p>
+                        <p class="text-[13px] text-gray-400 leading-relaxed" x-text="res.inter.desc"></p>
                     </div>
                 </div>
 
-                <div class="glass-card p-12">
-                    <h4 class="text-center text-[10px] font-black text-gold-primary uppercase tracking-[0.5em] mb-10">Life Energy Distribution (Matrix)</h4>
-                    <div class="grid grid-cols-5 md:grid-cols-10 gap-3">
-                        <template x-for="i in 50">
-                            <div class="h-12 rounded-lg transition-all duration-700 hover:scale-110" :class="Math.random() > 0.4 ? 'bg-gold-primary/20' : 'bg-white/5'"></div>
-                        </template>
-                    </div>
-                </div>
-
-                <div class="space-y-6">
-                    <h3 class="text-center text-[11px] text-gold-primary font-black uppercase tracking-[0.8em] py-12">พยากรณ์เจาะลึก 12 มิติ (Grand Forecast)</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <template x-for="item in res.forecasts">
-                            <div class="glass-card p-10 hover:-translate-y-2 transition-transform">
-                                <div class="flex justify-between items-center mb-6">
-                                    <div class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-xl" x-text="item.icon"></div>
-                                    <span class="text-[9px] font-mono text-gray-600 uppercase" x-text="'IDX: ' + item.power + '%'"></span>
+                <div class="glass-morphism p-12 bg-gradient-to-br from-gold/5 to-transparent">
+                    <div class="flex flex-col md:flex-row gap-12">
+                        <div class="md:w-1/3 space-y-4">
+                            <div class="inline-block px-4 py-1 rounded-full bg-white/5 border border-white/10 text-[8px] font-black uppercase text-gray-400">Gender Specific Forecast</div>
+                            <h5 class="text-2xl font-black text-white uppercase tracking-tighter" x-text="'พยากรณ์สำหรับเพศ' + user.gender"></h5>
+                            <div class="h-1 w-20 bg-gold"></div>
+                        </div>
+                        <div class="md:w-2/3 space-y-6">
+                            <template x-for="g in res.genderForecast">
+                                <div class="space-y-2">
+                                    <h6 class="text-[10px] font-black text-gold uppercase tracking-widest" x-text="g.topic"></h6>
+                                    <p class="text-[14px] text-gray-400 leading-loose italic" x-text="g.text"></p>
                                 </div>
-                                <h5 class="text-[11px] font-black uppercase tracking-widest mb-4" :class="'text-' + item.color + '-400'" x-text="item.topic"></h5>
-                                <p class="text-[13px] text-gray-400 leading-relaxed italic" x-text="item.desc"></p>
-                            </div>
-                        </template>
+                            </template>
+                        </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <div class="glass-card p-10 text-center border-b border-pink-500/20">
-                        <p class="text-[9px] text-gray-500 uppercase font-black mb-3">สีมงคลเสริมอำนาจ</p>
-                        <p class="text-base font-bold text-pink-400 uppercase tracking-widest" x-text="res.luckyColor"></p>
-                    </div>
-                    <div class="glass-card p-10 text-center border-b border-gold-primary/30">
-                        <p class="text-[9px] text-gray-500 uppercase font-black mb-3">เลขมหาจักรพรรดิ</p>
-                        <p class="text-5xl font-black gold-shimmer-text" x-text="res.luckyNum"></p>
-                    </div>
-                    <div class="glass-card p-10 text-center border-b border-blue-500/20">
-                        <p class="text-[9px] text-gray-500 uppercase font-black mb-3">ทิศมั่งคั่ง</p>
-                        <p class="text-base font-bold text-blue-400 uppercase tracking-widest" x-text="res.luckyDir"></p>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-6 pt-16 pb-24">
-                    <button @click="view = 'input'" class="flex-1 py-6 rounded-3xl border border-gold-primary/30 text-gold-primary text-[10px] font-black uppercase tracking-[0.4em] hover:bg-gold-primary/5 transition-all">คำนวณดวงชะตาใหม่</button>
-                    <button @click="share()" class="flex-1 py-6 rounded-3xl bg-white/5 border border-white/10 text-white text-[10px] font-black uppercase tracking-[0.4em] hover:bg-white/10 flex items-center justify-center gap-4">
-                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
-                        ส่งออกคำพยากรณ์
-                    </button>
+                <div class="flex flex-col sm:flex-row gap-6 pt-10 pb-20">
+                    <button @click="view = 'input'" class="flex-1 py-6 rounded-3xl border border-gold/30 text-gold text-[10px] font-black uppercase tracking-[0.4em] hover:bg-gold/5 transition-all">คำนวณดวงชะตาถัดไป</button>
+                    <button @click="shareOracle()" class="flex-1 py-6 rounded-3xl bg-white/5 border border-white/10 text-white text-[10px] font-black uppercase tracking-[0.4em] hover:bg-white/10 transition-all">แบ่งปันชะตาชีวิต</button>
                 </div>
             </div>
         </template>
     </main>
 
-    <footer class="fixed bottom-0 w-full bg-black/60 backdrop-blur-xl border-t border-white/5 p-6 z-[100]">
-        <div class="max-w-7xl mx-auto flex flex-col md:grow lg:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-8 overflow-hidden">
-                <div class="px-4 py-1.5 rounded bg-gold-primary/10 border border-gold-primary/20">
-                    <span class="text-[8px] text-gold-primary font-black uppercase">Grand Oracle Live</span>
+    <footer class="fixed bottom-0 w-full glass-morphism !rounded-none p-6 border-t border-white/5 z-50 bg-black/80">
+        <div class="max-w-7xl mx-auto flex flex-col lg:grow lg:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-1.5 h-1.5 bg-gold rounded-full animate-ping"></div>
+                    <span class="text-[9px] text-gold font-black uppercase tracking-widest">Quantum Engine Live</span>
                 </div>
-                <p class="text-[10px] text-gray-500 italic truncate tracking-wide animate-pulse" x-text="liveStatus"></p>
+                <p class="text-[10px] text-gray-500 italic truncate tracking-wide" x-text="liveActivity"></p>
             </div>
             <div class="flex items-center gap-10">
-                <div class="text-right">
-                    <p class="text-[7px] text-gray-600 font-black uppercase tracking-widest">Global Compute</p>
-                    <p class="text-[11px] text-gold-primary font-mono" x-text="(visitorCount * 60).toLocaleString()"></p>
+                <div class="flex flex-col items-end">
+                    <span class="text-[7px] text-gray-600 font-black uppercase tracking-widest">Saved Records</span>
+                    <span class="text-[10px] text-gold font-mono" x-text="history.length.toLocaleString()"></span>
                 </div>
                 <div class="h-8 w-[1px] bg-white/10"></div>
-                <div class="text-right">
-                    <p class="text-[7px] text-gray-600 font-black uppercase tracking-widest">Logic Engine</p>
-                    <p class="text-[11px] text-emerald-500 font-black">600_DIMENSIONS_OK</p>
+                <div class="flex flex-col items-end">
+                    <span class="text-[7px] text-gray-600 font-black uppercase tracking-widest">Oracle Logic</span>
+                    <span class="text-[10px] text-emerald-500 font-black">STABLE_1000_LINES</span>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        function grandOracleEngine() {
+        function ultimateDuduang() {
             return {
-                view: 'input', user: { name: '', dob: '', gender: 'ชาย' },
-                loading: false, loadPercent: 0, loadStatus: '', sysLog: '',
-                visitorCount: 1259042, sessionID: '', liveStatus: 'กำลังรอการเชื่อมต่อจิตวิญญาณ...',
+                view: 'input', user: { name: '', nickname: '', dob: '', gender: 'ชาย' },
+                loading: false, loadPercent: 0, loadStatus: '', history: [], 
+                showHistory: false, dbStatus: 'CONNECTED', liveActivity: 'เตรียมพร้อมสำหรับการถอดรหัส...',
                 
-                statusUpdates: [
-                    "คุณจอย: 'แม่นมากค่ะ เศษปีตรงเป๊ะ สัญลักษณ์ราศีก็ตรงตามตำราเลย'",
-                    "User_X77: 'วิเคราะห์ 12 มิติละเอียดมาก ชอบกราฟ Life Matrix ครับ'",
-                    "System: 'คำนวณฐานข้อมูลปีนักษัตร 2570 เรียบร้อย'",
-                    "คุณอาร์ต: 'ข้อมูลราศีไทยและสากลช่วยให้ตัดสินใจเรื่องงานได้ดีมาก'",
-                    "Oracle: 'ดวงดาวมีการเคลื่อนย้ายครั้งใหญ่ในทิศตะวันออก...'"
-                ],
-
-                initStars() {
-                    const container = document.getElementById('starfield');
-                    for(let i=0; i<180; i++) {
-                        const star = document.createElement('div');
-                        star.className = 'star';
-                        const size = Math.random() * 2 + 0.5;
-                        star.style.width = size + 'px'; star.style.height = size + 'px';
-                        star.style.left = Math.random() * 100 + '%';
-                        star.style.top = Math.random() * 100 + '%';
-                        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                        container.appendChild(star);
-                    }
-                    this.sessionID = 'ORACLE-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-                    setInterval(() => { this.visitorCount += Math.floor(Math.random()*5); }, 4000);
-                    setInterval(() => { this.liveStatus = this.statusUpdates[Math.floor(Math.random()*this.statusUpdates.length)]; }, 7000);
+                initApp() {
+                    this.loadHistory();
+                    this.spawnStars();
+                    setInterval(() => { this.updateLiveActivity(); }, 8000);
                 },
 
-                beginOracle() {
-                    if(!this.user.name || !this.user.dob) return alert('กรุณาระบุข้อมูลให้ครบถ้วน');
+                loadHistory() {
+                    const saved = localStorage.getItem('duduang_history');
+                    this.history = saved ? JSON.parse(saved) : [];
+                },
+
+                saveToDB(data) {
+                    const entry = { name: this.user.name, zodiac: data.animal, date: new Date().toLocaleDateString('th-TH') };
+                    this.history.unshift(entry);
+                    if(this.history.length > 50) this.history.pop();
+                    localStorage.setItem('duduang_history', JSON.stringify(this.history));
+                },
+
+                clearHistory() {
+                    this.history = [];
+                    localStorage.removeItem('duduang_history');
+                    this.showHistory = false;
+                },
+
+                spawnStars() {
+                    const canvas = document.getElementById('canvas');
+                    for(let i=0; i<200; i++) {
+                        const s = document.createElement('div');
+                        s.className = 'star-item';
+                        const size = Math.random() * 2 + 0.5;
+                        s.style.width = size + 'px'; s.style.height = size + 'px';
+                        s.style.left = Math.random() * 100 + '%';
+                        s.style.top = Math.random() * 100 + '%';
+                        s.style.setProperty('--t', (Math.random() * 5 + 2) + 's');
+                        canvas.appendChild(s);
+                    }
+                },
+
+                startOracle() {
+                    if(!this.user.name || !this.user.dob || !this.user.nickname) return alert('กรุณาระบุข้อมูลให้ครบถ้วน');
                     this.loading = true; this.view = 'loading';
                     
-                    const timeline = [
-                        { p: 15, s: 'Syncing Cosmic Waves', l: 'SOCKET_ESTABLISHED' },
-                        { p: 35, s: 'Computing Modulo 12', l: 'YBE_REMAINDER_SOLVED' },
-                        { p: 55, s: 'Mapping Dual Zodiacs', l: 'ZOD_TH_INT_SYNC' },
-                        { p: 80, s: 'Decoding 12 Dimensions', l: 'GRAND_FORECAST_GEN' },
-                        { p: 100, s: 'Finalizing Oracle', l: 'READY_TO_REVEAL' }
+                    const steps = [
+                        { p: 15, s: 'Accessing Local Database' },
+                        { p: 35, s: 'Analyzing Nickname Vibration' },
+                        { p: 55, s: 'Computing Modulo 12 Residue' },
+                        { p: 80, s: 'Filtering Gender Context' },
+                        { p: 100, s: 'Finalizing Destiny Map' }
                     ];
 
                     let i = 0;
-                    const timer = setInterval(() => {
-                        this.loadPercent = timeline[i].p;
-                        this.loadStatus = timeline[i].s;
-                        this.sysLog = timeline[i].l;
+                    const interval = setInterval(() => {
+                        this.loadPercent = steps[i].p;
+                        this.loadStatus = steps[i].s;
                         i++;
-                        if(i >= timeline.length) {
-                            clearInterval(timer);
-                            setTimeout(() => { this.processResult(); }, 800);
+                        if(i >= steps.length) {
+                            clearInterval(interval);
+                            setTimeout(() => { this.processOracle(); }, 800);
                         }
                     }, 700);
                 },
 
-                processResult() {
+                processOracle() {
                     const dob = new Date(this.user.dob);
                     const now = new Date();
                     const d = dob.getDate();
                     const m = dob.getMonth() + 1;
-                    let yBE = dob.getFullYear();
-                    if(yBE < 2400) yBE += 543;
+                    let yBE = dob.getFullYear(); if(yBE < 2400) yBE += 543;
 
-                    // 📐 Logic 1: Modulo 12 (นักษัตร)
+                    // 1. Modulo 12 Formula (Strict)
                     const remainder = yBE % 12;
                     const animals = {
-                        1: {n: "มะเมีย", i: "🐎", e: "ไฟ", desc: "ธาตุไฟแรงกล้า มีความกระตือรือร้นสูง"},
-                        2: {n: "มะแม", i: "🐑", e: "ทอง", desc: "ธาตุทองอ่อนโยน มีเมตตาธรรมสูง"},
-                        3: {n: "วอก", i: "🐒", e: "เหล็ก", desc: "ธาตุเหล็กแข็งแกร่ง ฉลาดหลักแหลม"},
-                        4: {n: "ระกา", i: "🐓", e: "ทอง", desc: "ธาตุทองสง่างาม มีระเบียบวินัย"},
-                        5: {n: "จอ", i: "หมา", e: "ดิน", desc: "ธาตุดินซื่อสัตย์ มีความรับผิดชอบ"},
-                        6: {n: "กุน", i: "หมู", e: "น้ำ", desc: "ธาตุน้ำเยือกเย็น ปรับตัวได้เก่ง"},
-                        7: {n: "ชวด", i: "หนู", e: "น้ำ", desc: "ธาตุน้ำว่องไว มีไหวพริบดีเลิศ"},
-                        8: {n: "ฉลู", i: "วัว", e: "ดิน", desc: "ธาตุดินมั่นคง มีความอดทนสูง"},
-                        9: {n: "ขาล", i: "เสือ", e: "ไม้", desc: "ธาตุไม้เติบโต มีบารมีน่าเกรงขาม"},
-                        10: {n: "เถาะ", i: "กระต่าย", e: "ไม้", desc: "ธาตุไม้อ่อนช้อย มีจินตนาการสูง"},
-                        11: {n: "มะโรง", i: "งูใหญ่", e: "ไฟ", desc: "ธาตุไฟสว่างไสว มีอำนาจวาสนา"},
-                        0: {n: "มะเส็ง", i: "งูเล็ก", e: "ดิน", desc: "ธาตุดินสุขุม มีความลึกลับและเสน่ห์"}
+                        1: {n: "มะเมีย", i: "🐎", e: "ไฟ"}, 2: {n: "มะแม", i: "🐑", e: "ทอง"},
+                        3: {n: "วอก", i: "🐒", e: "เหล็ก"}, 4: {n: "ระกา", i: "🐓", e: "ทอง"},
+                        5: {n: "จอ", i: "🐕", e: "ดิน"}, 6: {n: "กุน", i: "🐖", e: "น้ำ"},
+                        7: {n: "ชวด", i: "🐀", e: "น้ำ"}, 8: {n: "ฉลู", i: "🐂", e: "ดิน"},
+                        9: {n: "ขาล", i: "🐅", e: "ไม้"}, 10: {n: "เถาะ", i: "🐇", e: "ไม้"},
+                        11: {n: "มะโรง", i: "🐉", e: "ไฟ"}, 0: {n: "มะเส็ง", i: "🐍", e: "ดิน"}
                     };
                     const az = animals[remainder];
 
-                    // 📐 Logic 2: ราศีไทย (นิรายนะ)
+                    // 2. Thai Zodiac (As requested)
                     const getThai = (m, d) => {
-                        if ((m == 1 && d >= 15) || (m == 2 && d <= 12)) return {n: "มังกร", s: "แพะทะเล", i: "♑", period: "15 ม.ค. - 12 ก.พ.", desc: "มีความเป็นระเบียบ และมุ่งมั่นสู่ความสำเร็จ"};
-                        if ((m == 2 && d >= 13) || (m == 3 && d <= 13)) return {n: "กุมภ์", s: "คนแบกหม้อน้ำ", i: "♒", period: "13 ก.พ. - 13 มี.ค.", desc: "มีความคิดสร้างสรรค์ รักอิสระ และชอบช่วยเหลือสังคม"};
-                        if ((m == 3 && d >= 14) || (m == 4 && d <= 12)) return {n: "มีน", s: "ปลาคู่", i: "♓", period: "14 มี.ค. - 12 เม.ย.", desc: "มีลางสังหรณ์ดี จิตใจอ่อนโยน และมีความเห็นอกเห็นใจ"};
-                        if ((m == 4 && d >= 13) || (m == 5 && d <= 13)) return {n: "เมษ", s: "แกะ", i: "♈", period: "13 เม.ย. - 13 พ.ค.", desc: "มีความเป็นผู้นำ กล้าหาญ และชอบการเริ่มต้นใหม่"};
-                        if ((m == 5 && d >= 14) || (m == 6 && d <= 13)) return {n: "พฤษภ", s: "วัว", i: "♉", period: "14 พ.ค. - 13 มิ.ย.", desc: "มีความอดทน รักความสวยงาม และให้ความสำคัญกับความมั่นคง"};
-                        if ((m == 6 && d >= 14) || (m == 7 && d <= 14)) return {n: "เมถุน", s: "คนคู่", i: "♊", period: "14 มิ.ย. - 14 ก.ค.", desc: "ช่างพูดช่างเจรจา ปรับตัวเก่ง และชอบเรียนรู้สิ่งใหม่"};
-                        if ((m == 7 && d >= 15) || (m == 8 && d <= 16)) return {n: "กรกฎ", s: "ปู", i: "♋", period: "15 ก.ค. - 16 ส.ค.", desc: "รักครอบครัว มีสัญชาตญาณปกป้อง และความจำดีเยี่ยม"};
-                        if ((m == 8 && d >= 17) || (m == 9 && d <= 16)) return {n: "สิงห์", s: "สิงโต", i: "♌", period: "17 ส.ค. - 16 ก.ย.", desc: "มีความภาคภูมิใจ มีพลังอำนาจ และชอบเป็นจุดสนใจ"};
-                        if ((m == 9 && d >= 17) || (m == 10 && d <= 16)) return {n: "กันย์", s: "หญิงสาว", i: "♍", period: "17 ก.ย. - 16 ต.ค.", desc: "ละเอียดรอบคอบ รักความสะอาด และมีความเป็นระเบียบ"};
-                        if ((m == 10 && d >= 17) || (m == 11 && d <= 15)) return {n: "ตุลย์", s: "คันชั่ง", i: "♎", period: "17 ต.ค. - 15 พ.ย.", desc: "รักความยุติธรรม มีรสนิยมดี และชอบความสมดุล"};
-                        if ((m == 11 && d >= 16) || (m == 12 && d <= 15)) return {n: "พิจิก", s: "แมงป่อง", i: "♏", period: "16 พ.ย. - 15 ธ.ค.", desc: "มีความลับ มีพลังอำนาจลึกลับ และมีความจริงจังต่อชีวิต"};
-                        return {n: "ธนู", s: "นักยิงธนู", i: "♐", period: "16 ธ.ค. - 14 ม.ค.", desc: "มองโลกในแง่ดี รักการผจญภัย และใฝ่หาความรู้"};
+                        if ((m == 1 && d >= 15) || (m == 2 && d <= 12)) return {n: "มังกร", s: "แพะทะเล", i: "♑", desc: "สุขุม มีระเบียบวินัยสูง"};
+                        if ((m == 2 && d >= 13) || (m == 3 && d <= 13)) return {n: "กุมภ์", s: "คนแบกหม้อน้ำ", i: "♒", desc: "รักอิสระ มีความคิดสร้างสรรค์"};
+                        if ((m == 3 && d >= 14) || (m == 4 && d <= 12)) return {n: "มีน", s: "ปลาคู่", i: "♓", desc: "ใจบุญ มีลางสังหรณ์แม่นยำ"};
+                        if ((m == 4 && d >= 13) || (m == 5 && d <= 13)) return {n: "เมษ", s: "แกะ", i: "♈", desc: "กล้าหาญ เป็นผู้นำที่เด็ดเดี่ยว"};
+                        if ((m == 5 && d >= 14) || (m == 6 && d <= 13)) return {n: "พฤษภ", s: "วัว", i: "♉", desc: "อดทน หนักแน่น มั่นคง"};
+                        if ((m == 6 && d >= 14) || (m == 7 && d <= 14)) return {n: "เมถุน", s: "คนคู่", i: "♊", desc: "ช่างเจรจา มีไหวพริบปฏิภาณ"};
+                        if ((m == 7 && d >= 15) || (m == 8 && d <= 16)) return {n: "กรกฎ", s: "ปู", i: "♋", desc: "รักครอบครัว จิตใจอ่อนโยน"};
+                        if ((m == 8 && d >= 17) || (m == 9 && d <= 16)) return {n: "สิงห์", s: "สิงโต", i: "♌", desc: "มีบารมี มีพลังอำนาจคุมคน"};
+                        if ((m == 9 && d >= 17) || (m == 10 && d <= 16)) return {n: "กันย์", s: "หญิงสาว", i: "♍", desc: "ละเอียดรอบคอบ รักความสมบูรณ์แบบ"};
+                        if ((m == 10 && d >= 17) || (m == 11 && d <= 15)) return {n: "ตุลย์", s: "คันชั่ง", i: "♎", desc: "รักความยุติธรรม มีเสน่ห์ทางสังคม"};
+                        if ((m == 11 && d >= 16) || (m == 12 && d <= 15)) return {n: "พิจิก", s: "แมงป่อง", i: "♏", desc: "ลึกลับ มีพลังจิตใจที่เข้มแข็ง"};
+                        return {n: "ธนู", s: "นักยิงธนู", i: "♐", desc: "มองโลกแง่ดี ใฝ่หาความรู้ใหม่ๆ"};
                     };
 
-                    // 📐 Logic 3: ราศีสากล (สายนะ)
+                    // 3. International Zodiac (As requested)
                     const getInter = (m, d) => {
-                        if ((m == 12 && d >= 22) || (m == 1 && d <= 19)) return {n: "Capricorn", s: "Sea-Goat", i: "♑", period: "22 Dec - 19 Jan", desc: "Strategic, disciplined, and destined for leadership."};
-                        if ((m == 1 && d >= 20) || (m == 2 && d <= 18)) return {n: "Aquarius", s: "Water-Bearer", i: "♒", period: "20 Jan - 18 Feb", desc: "Visionary, eccentric, and humanitarian."};
-                        if ((m == 2 && d >= 19) || (m == 3 && d <= 20)) return {n: "Pisces", s: "The Fish", i: "♓", period: "19 Feb - 20 Mar", desc: "Intuitive, artistic, and deeply emotional."};
-                        if ((m == 3 && d >= 21) || (m == 4 && d <= 19)) return {n: "Aries", s: "The Ram", i: "♈", period: "21 Mar - 19 Apr", desc: "Bold, ambitious, and highly energetic."};
-                        if ((m == 4 && d >= 20) || (m == 5 && d <= 20)) return {n: "Taurus", s: "The Bull", i: "♉", period: "20 Apr - 20 May", desc: "Reliable, aesthetic, and determined."};
-                        if ((m == 5 && d >= 21) || (m == 6 && d <= 20)) return {n: "Gemini", s: "The Twins", i: "♊", period: "21 May - 20 Jun", desc: "Versatile, expressive, and curious."};
-                        if ((m == 6 && d >= 21) || (m == 7 && d <= 22)) return {n: "Cancer", s: "The Crab", i: "♋", period: "21 Jun - 22 Jul", desc: "Nurturing, protective, and imaginative."};
-                        if ((m == 7 && d >= 23) || (m == 8 && d <= 22)) return {n: "Leo", s: "The Lion", i: "♌", period: "23 Jul - 22 Aug", desc: "Charismatic, loyal, and dramatic."};
-                        if ((m == 8 && d >= 23) || (m == 9 && d <= 22)) return {n: "Virgo", s: "The Virgin", i: "♍", period: "23 Aug - 22 Sep", desc: "Analytical, hardworking, and practical."};
-                        if ((m == 9 && d >= 23) || (m == 10 && d <= 22)) return {n: "Libra", s: "The Scales", i: "♎", period: "23 Sep - 22 Oct", desc: "Diplomatic, fair, and social."};
-                        if ((m == 10 && d >= 23) || (m == 11 && d <= 21)) return {n: "Scorpio", s: "The Scorpion", i: "♏", period: "23 Oct - 21 Nov", desc: "Passionate, resourceful, and brave."};
-                        return {n: "Sagittarius", s: "The Archer", i: "♐", period: "22 Nov - 21 Dec", desc: "Adventurous, philosophical, and honest."};
+                        if ((m == 12 && d >= 22) || (m == 1 && d <= 19)) return {n: "Capricorn", s: "Sea-Goat", i: "♑", desc: "Ambitious & Practical"};
+                        if ((m == 1 && d >= 20) || (m == 2 && d <= 18)) return {n: "Aquarius", s: "Water-Bearer", i: "♒", desc: "Original & Humanitarian"};
+                        if ((m == 2 && d >= 19) || (m == 3 && d <= 20)) return {n: "Pisces", s: "The Fish", i: "♓", desc: "Compassionate & Artistic"};
+                        if ((m == 3 && d >= 21) || (m == 4 && d <= 19)) return {n: "Aries", s: "The Ram", i: "♈", desc: "Dynamic & Confident"};
+                        if ((m == 4 && d >= 20) || (m == 5 && d <= 20)) return {n: "Taurus", s: "The Bull", i: "♉", desc: "Strong & Aesthetic"};
+                        if ((m == 5 && d >= 21) || (m == 6 && d <= 20)) return {n: "Gemini", s: "The Twins", i: "♊", desc: "Versatile & Expressive"};
+                        if ((m == 6 && d >= 21) || (m == 7 && d <= 22)) return {n: "Cancer", s: "The Crab", i: "♋", desc: "Sentimental & Protective"};
+                        if ((m == 7 && d >= 23) || (m == 8 && d <= 22)) return {n: "Leo", s: "The Lion", i: "♌", desc: "Fiery & Self-assured"};
+                        if ((m == 8 && d >= 23) || (m == 9 && d <= 22)) return {n: "Virgo", s: "The Virgin", i: "♍", desc: "Loyal & Analytical"};
+                        if ((m == 9 && d >= 23) || (m == 10 && d <= 22)) return {n: "Libra", s: "The Scales", i: "♎", period: "Gracious & Diplomatic"};
+                        if ((m == 10 && d >= 23) || (m == 11 && d <= 21)) return {n: "Scorpio", s: "The Scorpion", i: "♏", desc: "Passionate & Resourceful"};
+                        return {n: "Sagittarius", s: "The Archer", i: "♐", desc: "Optimistic & Adventurous"};
                     };
 
-                    // อายุ
-                    const bCE = yBE - 543;
-                    const birth = new Date(bCE, dob.getMonth(), dob.getDate());
-                    let y = now.getFullYear() - birth.getFullYear();
-                    let mo = now.getMonth() - birth.getMonth();
-                    if (mo < 0) { y--; mo += 12; }
+                    // 4. Nickname Analysis (Simple Alphabet Numerology)
+                    const firstChar = this.user.nickname.charAt(0).toUpperCase();
+                    const nameMaps = {
+                        'A': 'มีความทะเยอทะยานสูง เป็นผู้นำ', 'B': 'จิตใจอ่อนโยน รักความสงบ', 'C': 'ร่าเริงแจ่มใส เข้ากับคนง่าย',
+                        'D': 'มีความเป็นระเบียบ มั่นคง', 'E': 'รักอิสระ ชอบความท้าทาย', 'ก': 'วาสนาดี มีผู้ใหญ่เมตตา',
+                        'ข': 'มีไหวพริบ เอาตัวรอดเก่ง', 'ค': 'สติปัญญาดี เลี้ยงตัวรอด', 'จ': 'มุ่งมั่น ตั้งใจจริง',
+                        'น': 'มีเสน่ห์ทางคำพูด', 'ม': 'ขยัน อดทน สร้างตัวได้'
+                    };
 
-                    this.res = {
-                        ageDetailed: `${y} ปี ${mo} เดือน`,
-                        remainder: remainder, animal: az.n, animalIcon: az.i, element: az.e,
-                        galaYoke: y % 2 === 0 ? "อธิบดี" : "ธงชัย",
-                        thaiZ: getThai(m, d),
-                        interZ: getInter(m, d),
-                        luckyNum: (yBE % 9) + "" + (d % 10),
-                        luckyColor: ["แดงทับทิม", "เขียวมรกต", "น้ำเงินไพลิน", "เหลืองทอง", "ขาวมุก"][yBE % 5],
-                        luckyDir: ["อุดร (เหนือ)", "บูรพา (ตะวันออก)", "ทักษิณ (ใต้)", "ประจิม (ตะวันตก)"][remainder % 4],
-                        forecasts: [
-                            { topic: '❤️ Love & Soul', color: 'pink', power: 88, icon: '💝', desc: `ชาวปี${az.n} ในปีนี้มีพลังเสน่ห์ดึงดูดสูง คนโสดมีเกณฑ์พบเจอคู่ครองที่มาจากต่างถิ่น` },
-                            { topic: '💰 Wealth & Flow', color: 'emerald', power: 74, icon: '🏦', desc: `กระแสการเงินหมุนเวียนได้ดีมาก โดยเฉพาะการลงทุนในสินทรัพย์ดิจิทัลหรืออสังหาฯ` },
-                            { topic: '💼 Power & Career', color: 'blue', power: 95, icon: '👑', desc: `ได้รับอำนาจจากราศี${getThai(m, d).n} ส่งเสริมให้การงานก้าวหน้าแบบก้าวกระโดด` },
-                            { topic: '🏥 Health & Aura', color: 'red', power: 65, icon: '🧘', desc: `ระวังปัญหาเรื่องสายตาและหลัง ควรทำสมาธิเสริมออร่าให้แจ่มใสอยู่เสมอ` },
-                            { topic: '🌟 Karma & Luck', color: 'purple', power: 90, icon: '✨', desc: `บุญเก่าหนุนนำให้พ้นอุปสรรค เคราะห์ร้ายที่เคยมีจะเปลี่ยนเป็นโชคลาภมหาศาล` },
-                            { topic: '🏠 Roots & Family', color: 'orange', power: 82, icon: '🏡', desc: `คนในครอบครัวเกื้อหนุนดีเยี่ยม มีเกณฑ์ได้รับสมาชิกใหม่หรือขยับขยายที่อยู่` }
+                    // 5. Gender Specific Logic (Dynamic Generation)
+                    const genderData = {
+                        "ชาย": [
+                            { topic: "อำนาจบารมี", text: `ดวงบุรุษปี${az.n} มีเกณฑ์ได้รับความนิยมยกย่องในวงสังคม ตำแหน่งงานจะขยับขึ้นสู่ระดับบริหาร` },
+                            { topic: "การสร้างตัว", text: "ช่วงนี้เป็นจังหวะดีในการลงทุนใหญ่ พลังชายชาตรีจะนำมาซึ่งความมั่งคั่ง" }
+                        ],
+                        "หญิง": [
+                            { topic: "เมตตามหานิยม", text: `ดวงสตรีปี${az.n} มีเสน่ห์เย้ายวนใจ ผู้ใหญ่จะให้ความเอ็นดูเป็นพิเศษ การเจรจาค้าขายจะสำเร็จราบรื่น` },
+                            { topic: "โชคลาภจากคนรัก", text: "คนใกล้ตัวหรือเพศตรงข้ามจะนำโชคใหญ่มาให้ในเร็วๆ นี้" }
+                        ],
+                        "อื่นๆ": [
+                            { topic: "ความคิดสร้างสรรค์", text: `ชาวปี${az.n} ที่มีหัวใจอิสระ จะประสบความสำเร็จจากงานด้านศิลปะหรือนวัตกรรมใหม่ๆ` },
+                            { topic: "โชคจากการเดินทาง", text: "การเดินทางไปต่างถิ่นจะพบมิตรแท้และช่องทางทำเงินมหาศาล" }
                         ]
                     };
 
+                    const ageY = now.getFullYear() - (yBE - 543);
+                    const ageM = Math.abs(now.getMonth() - dob.getMonth());
+
+                    this.res = {
+                        ageText: `${ageY} ปี ${ageM} เดือน`,
+                        remainder: remainder, animal: az.n, animalIcon: az.i, element: az.e,
+                        nameSymbol: firstChar,
+                        nameFortune: `พลังแห่งตัวอักษร "${firstChar}" ส่งผลต่อชะตาชีวิตท่าน`,
+                        nameDeepDetail: nameMaps[firstChar] || "ชื่อของท่านมีแรงสั่นสะเทือนแห่งความสำเร็จและการปรับตัวที่ยอดเยี่ยม",
+                        thai: getThai(m, d), inter: getInter(m, d),
+                        genderForecast: genderData[this.user.gender]
+                    };
+
+                    this.saveToDB(this.res);
                     this.view = 'result'; this.loading = false;
                     window.scrollTo(0,0);
                 },
 
-                share() { alert('บันทึกคำทำนายลงในไฟล์ PDF จำลองเรียบร้อย!'); }
+                updateLiveActivity() {
+                    const acts = [
+                        "ระบบกำลังประมวลผลดวงดาวปี 2027...",
+                        "ผู้ใช้งานจากกรุงเทพฯ เพิ่งได้รับคำทำนายมหาเศรษฐี",
+                        "คำเตือน: ดาวพฤหัสกำลังย้ายทิศทาง...",
+                        "วิเคราะห์รหัสชีวิตด้วย Modulo 12 สำเร็จ"
+                    ];
+                    this.liveActivity = acts[Math.floor(Math.random()*acts.length)];
+                },
+
+                shareOracle() {
+                    alert('คัดลอกลิ้งค์พยากรณ์เฉพาะบุคคลของท่านแล้ว (จำลอง)');
+                }
             }
         }
     </script>
 
     <style>
         @keyframes dash { to { stroke-dashoffset: 0; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </body>
 </html>
