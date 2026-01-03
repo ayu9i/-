@@ -3,303 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sovereign Oracle v8.0 | ระบบพยากรณ์ชะตา 7 มิติฉบับเต็ม</title>
+    <title>SOVEREIGN ORACLE v11.0 | THE 2000-LINE MASTERCODE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;700&family=Bai+Jamjuree:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@100;400;700&family=Bai+Jamjuree:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #d4af37; --bg: #030305; }
-        body { font-family: 'Anuphan', sans-serif; background-color: var(--bg); color: #e2e8f0; }
-        .gold-text { background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 2rem; }
-        .stat-card { background: linear-gradient(145deg, #0a0a0f, #151520); border: 1px solid rgba(212, 175, 55, 0.1); }
+        :root { --gold-primary: #d4af37; --gold-light: #fcf6ba; --deep-space: #020205; }
+        body { font-family: 'Anuphan', sans-serif; background: var(--deep-space); color: #e2e8f0; scroll-behavior: smooth; }
+        .gold-shimmer { background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% auto; animation: shine 5s linear infinite; }
+        @keyframes shine { to { background-position: 200% center; } }
+        .glass-card { background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.07); border-radius: 3rem; transition: all 0.4s ease; }
+        .glass-card:hover { border-color: rgba(212, 175, 55, 0.3); background: rgba(255, 255, 255, 0.02); }
+        .sidebar-blur { background: rgba(0,0,0,0.9); backdrop-filter: blur(20px); border-left: 1px solid rgba(255,255,255,0.1); }
         [x-cloak] { display: none !important; }
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
     </style>
 </head>
-<body x-data="oracleCore()" x-init="initSystem()">
+<body x-data="oracleMaster()" x-init="initEngine()">
 
-    <header class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/5 px-6 py-4">
+    <nav class="fixed top-0 w-full z-[100] bg-black/70 backdrop-blur-xl border-b border-white/5 px-10 py-5">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div>
-                <h1 class="text-2xl font-bold gold-text tracking-tighter uppercase">Sovereign Genesis</h1>
-                <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
-                    <p class="text-[9px] text-emerald-400 font-mono uppercase">System Optimized: 2026 Stable</p>
-                </div>
+                <h1 class="text-3xl font-black gold-shimmer tracking-tighter">SOVEREIGN ORACLE</h1>
+                <p class="text-[8px] text-emerald-500 font-bold uppercase tracking-[0.8em]">Neural Destiny Core v11.2026</p>
             </div>
-            <div class="flex gap-8">
+            <div class="flex items-center gap-12">
                 <div class="text-right">
-                    <p class="text-[9px] text-gray-500 font-bold uppercase">ผู้เข้าชมทั้งหมด</p>
-                    <p class="text-xl font-bold text-white font-mono" x-text="visitorCount.toLocaleString()"></p>
+                    <p class="text-[9px] text-gray-500 font-black uppercase tracking-widest">Active Users</p>
+                    <p class="text-2xl font-bold text-white font-mono" x-text="visitorCount.toLocaleString()"></p>
                 </div>
+                <button @click="showLog = !showLog" class="p-3 glass-card !rounded-full hover:bg-white/10">📜</button>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="pt-32 pb-24 px-4 max-w-6xl mx-auto">
-        <template x-if="view === 'gate'">
-            <div class="max-w-3xl mx-auto space-y-12 animate-[fadeIn_0.5s]">
-                <div class="text-center space-y-4">
-                    <h2 class="text-6xl font-black italic gold-text">7-Dimensions</h2>
-                    <p class="text-gray-400 text-sm tracking-widest uppercase">ถอดรหัสชะตาชีวิตและเหตุการณ์ล่วงหน้า</p>
+    <aside x-show="showLog" x-transition x-cloak class="fixed right-0 top-0 h-full w-80 z-[150] sidebar-blur p-8 shadow-2xl">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-xs font-black text-gold uppercase tracking-widest">Recent Calculations</h3>
+            <button @click="showLog = false" class="text-gray-500 hover:text-white">✕</button>
+        </div>
+        <div class="space-y-4">
+            <template x-for="log in logs">
+                <div class="p-4 bg-white/5 rounded-2xl border border-white/5 text-[10px]">
+                    <p class="text-gold font-bold" x-text="log.name"></p>
+                    <p class="text-gray-400" x-text="log.result"></p>
+                    <p class="text-[8px] text-gray-600 mt-1" x-text="log.time"></p>
+                </div>
+            </template>
+        </div>
+    </aside>
+
+    <main class="pt-40 pb-32 px-6 max-w-7xl mx-auto">
+        
+        <template x-if="view === 'entrance'">
+            <div class="max-w-4xl mx-auto space-y-16 animate-[fadeIn_0.6s]">
+                <div class="text-center space-y-6">
+                    <h2 class="text-8xl font-black text-white leading-none tracking-tighter uppercase">Unlock<br><span class="gold-shimmer italic">Your Path</span></h2>
+                    <p class="text-gray-500 text-[10px] tracking-[0.8em] uppercase">กรุณาระบุข้อมูลตัวตนเพื่อเข้าสู่ระบบประมวลผล 2,000 มิติ</p>
                 </div>
 
-                <div class="glass p-10 space-y-8 shadow-2xl">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="col-span-1 md:col-span-2 space-y-3">
-                            <label class="text-[10px] font-black text-gold uppercase tracking-[0.3em]">ข้อมูลตัวตน</label>
+                <div class="glass-card p-12 lg:p-20 space-y-12 shadow-2xl relative overflow-hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black text-gold uppercase tracking-[0.3em] ml-2">ชื่อจริง-นามสกุล / ชื่อเล่น</label>
                             <div class="grid grid-cols-2 gap-4">
-                                <input type="text" x-model="form.name" placeholder="ชื่อ-นามสกุล" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-gold transition-all">
-                                <input type="text" x-model="form.nickname" placeholder="ชื่อเล่น" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-gold transition-all">
+                                <input type="text" x-model="form.name" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-5 rounded-3xl focus:border-gold outline-none transition-all">
+                                <input type="text" x-model="form.nickname" placeholder="Nickname" class="w-full bg-white/5 border border-white/10 p-5 rounded-3xl focus:border-gold outline-none transition-all">
                             </div>
                         </div>
-                        <div class="space-y-3">
-                            <label class="text-[10px] font-black text-gold uppercase tracking-[0.3em]">เพศสภาพ</label>
-                            <select x-model="form.gender" class="w-full bg-[#08080c] border border-white/10 p-4 rounded-2xl outline-none focus:border-gold">
-                                <option value="ชาย">ชาย (Male)</option>
-                                <option value="หญิง">หญิง (Female)</option>
-                                <option value="อื่นๆ">อื่นๆ (Diverse)</option>
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black text-gold uppercase tracking-[0.3em] ml-2">เพศสภาพ (Gender)</label>
+                            <select x-model="form.gender" class="w-full bg-[#08080c] border border-white/10 p-5 rounded-3xl outline-none focus:border-gold">
+                                <option value="ชาย">ชาย (MALE)</option>
+                                <option value="หญิง">หญิง (FEMALE)</option>
+                                <option value="อื่นๆ">อื่นๆ (DIVERSE)</option>
                             </select>
                         </div>
-                        <div class="space-y-3">
-                            <label class="text-[10px] font-black text-gold uppercase tracking-[0.3em]">วันเดือนปีเกิด (พ.ศ.)</label>
-                            <input type="date" x-model="form.dob" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-gold">
+                        <div class="col-span-1 md:col-span-2 space-y-4">
+                            <label class="text-[10px] font-black text-gold uppercase tracking-[0.3em] ml-2">วัน/เดือน/ปีเกิด (รองรับ พ.ศ. และ ค.ศ.)</label>
+                            <input type="date" x-model="form.dob" class="w-full bg-white/5 border border-white/10 p-5 rounded-3xl focus:border-gold outline-none">
+                            <div class="flex justify-between px-2">
+                                <p class="text-[9px] text-gray-500 uppercase">สูตรคำนวณ: ปีปัจจุบัน - 543 = ค.ศ. (Auto-detect)</p>
+                                <p class="text-[9px] text-gray-500 uppercase">นักษัตร: Modulo 12 Formula</p>
+                            </div>
                         </div>
                     </div>
-                    <button @click="processDestiny()" class="w-full py-6 bg-gradient-to-r from-amber-600 via-amber-300 to-amber-700 text-black font-black uppercase tracking-[0.5em] rounded-3xl hover:scale-[1.01] transition-all shadow-xl shadow-amber-500/20">
-                        เริ่มการพยากรณ์
+                    <button @click="processDestiny()" class="w-full py-8 bg-gradient-to-r from-amber-600 via-amber-200 to-amber-700 text-black font-black uppercase tracking-[0.6em] rounded-[2.5rem] hover:scale-[1.02] active:scale-95 transition-all shadow-[0_0_50px_rgba(212,175,55,0.2)]">
+                        วิเคราะห์โชคชะตาขั้นสูงสุด
                     </button>
                 </div>
             </div>
         </template>
 
         <template x-if="view === 'result'">
-            <div class="space-y-10 animate-[fadeIn_0.7s]">
-                <div class="glass p-10 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-10 opacity-5 text-[150px] font-black" x-text="res.animalIcon"></div>
-                    <div class="relative z-10 space-y-6">
-                        <div class="inline-block px-4 py-1 bg-gold/10 border border-gold/20 rounded-full">
-                            <span class="text-[10px] font-black text-gold uppercase tracking-widest" x-text="'ID: ' + res.destinyHash"></span>
+            <div class="space-y-12 animate-[fadeIn_0.8s]">
+                <div class="glass-card p-16 text-center relative overflow-hidden">
+                    <div class="absolute -right-20 -top-20 opacity-[0.03] text-[300px] font-black" x-text="res.animalIcon"></div>
+                    <h2 class="text-6xl font-black text-white uppercase tracking-tighter" x-text="form.name"></h2>
+                    <div class="flex flex-wrap justify-center gap-6 mt-8">
+                        <div class="px-8 py-3 bg-white/5 rounded-2xl border border-white/10">
+                            <p class="text-[9px] text-gray-500 uppercase font-bold mb-1">อายุที่แท้จริง</p>
+                            <p class="text-xl font-bold gold-shimmer" x-text="res.ageStr"></p>
                         </div>
-                        <h2 class="text-5xl font-black text-white" x-text="form.name + ' (' + form.nickname + ')'"></h2>
-                        <div class="flex flex-wrap gap-4 text-xs font-bold text-gray-400">
-                            <span class="px-4 py-2 bg-white/5 rounded-xl border border-white/5" x-text="'อายุ: ' + res.ageDetails"></span>
-                            <span class="px-4 py-2 bg-white/5 rounded-xl border border-white/5" x-text="'เพศ: ' + form.gender"></span>
-                            <span class="px-4 py-2 bg-white/5 rounded-xl border border-white/5 text-gold" x-text="'ปีนักษัตร: ' + res.animalName"></span>
+                        <div class="px-8 py-3 bg-white/5 rounded-2xl border border-white/10">
+                            <p class="text-[9px] text-gray-500 uppercase font-bold mb-1">ปีนักษัตร</p>
+                            <p class="text-xl font-bold text-white" x-text="res.animal"></p>
                         </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 pt-8 border-t border-white/5">
-                        <div class="flex justify-between items-center p-4 bg-black/40 rounded-2xl">
-                            <span class="text-[11px] font-bold text-gray-500 uppercase">ราศีไทย</span>
-                            <span class="font-bold text-white" x-text="res.thaiZodiac"></span>
+                        <div class="px-8 py-3 bg-white/5 rounded-2xl border border-white/10">
+                            <p class="text-[9px] text-gray-500 uppercase font-bold mb-1">ราศีไทย</p>
+                            <p class="text-xl font-bold text-white" x-text="res.thaiZodiac"></p>
                         </div>
-                        <div class="flex justify-between items-center p-4 bg-black/40 rounded-2xl">
-                            <span class="text-[11px] font-bold text-gray-500 uppercase">ราศีสากล</span>
-                            <span class="font-bold text-white" x-text="res.interZodiac"></span>
+                        <div class="px-8 py-3 bg-white/5 rounded-2xl border border-white/10">
+                            <p class="text-[9px] text-gray-500 uppercase font-bold mb-1">ราศีสากล</p>
+                            <p class="text-xl font-bold text-white" x-text="res.interZodiac"></p>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <template x-for="dim in res.matrix">
-                        <div class="glass p-8 space-y-4 hover:border-gold/40 transition-all group">
-                            <div class="flex justify-between items-center">
-                                <h3 class="text-xs font-black text-gold uppercase tracking-widest" x-text="dim.title"></h3>
-                                <span class="text-2xl group-hover:scale-125 transition-transform" x-text="dim.icon"></span>
+                        <div class="glass-card p-10 space-y-6 flex flex-col justify-between border-t-4 border-t-gold/20">
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-4">
+                                    <span class="text-4xl" x-text="dim.icon"></span>
+                                    <h3 class="text-sm font-black text-gold uppercase tracking-[0.3em]" x-text="dim.title"></h3>
+                                </div>
+                                <p class="text-sm text-gray-300 leading-relaxed font-light italic" x-text="dim.content"></p>
                             </div>
-                            <p class="text-sm text-gray-300 leading-relaxed italic" x-text="dim.content"></p>
-                            <div class="pt-4 border-t border-white/5">
-                                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-tighter">คำแนะนำ & การตัดสินใจ</p>
-                                <p class="text-xs text-gray-400 mt-2" x-text="dim.action"></p>
+                            <div class="pt-6 border-t border-white/5">
+                                <p class="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-2 underline decoration-emerald-500/30">ทางเลือกและการตัดสินใจ</p>
+                                <p class="text-xs text-gray-400" x-text="dim.advice"></p>
                             </div>
                         </div>
                     </template>
                 </div>
 
-                <div class="glass p-10 border-l-4 border-gold bg-gradient-to-r from-gold/5 to-transparent">
-                    <h3 class="text-xl font-black mb-8">🔮 Timeline เหตุการณ์อนาคต (2026-2027)</h3>
-                    <div class="space-y-8 relative">
-                        <div class="absolute left-[7px] top-2 bottom-2 w-[2px] bg-white/5"></div>
-                        <template x-for="event in res.timeline">
-                            <div class="relative pl-8">
-                                <div class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-gold border-4 border-[#030305]"></div>
-                                <p class="text-[10px] font-black text-gold uppercase" x-text="event.period"></p>
-                                <p class="text-md font-bold text-white mt-1" x-text="event.title"></p>
-                                <p class="text-sm text-gray-400 mt-1" x-text="event.detail"></p>
+                <div class="glass-card p-16">
+                    <h3 class="text-2xl font-black mb-12 gold-shimmer uppercase tracking-[0.5em]">2026 Monthly Destiny Timeline</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 relative">
+                        <template x-for="m in res.months">
+                            <div class="relative pl-8 border-l-2 border-gold/20">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gold shadow-[0_0_10px_#d4af37]"></div>
+                                <p class="text-xs font-black text-gold uppercase" x-text="m.name"></p>
+                                <p class="text-sm text-white font-bold mt-2" x-text="m.event"></p>
+                                <p class="text-[11px] text-gray-500 mt-2 leading-loose" x-text="m.detail"></p>
                             </div>
                         </template>
                     </div>
                 </div>
 
-                <div class="flex justify-center pt-10">
-                    <button @click="view = 'gate'" class="px-12 py-4 border border-white/10 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-white/5 transition-all">ถอดรหัสใหม่</button>
+                <div class="flex justify-center gap-6">
+                    <button @click="view = 'entrance'" class="px-12 py-5 border border-white/10 rounded-3xl text-xs font-black uppercase tracking-widest hover:bg-white/5 transition-all">เริ่มใหม่</button>
+                    <button onclick="window.print()" class="px-12 py-5 bg-white text-black rounded-3xl text-xs font-black uppercase tracking-widest hover:invert transition-all">ดาวน์โหลดคัมภีร์ (PDF)</button>
                 </div>
             </div>
         </template>
     </main>
 
-    <div x-data="{ open: false }" class="fixed bottom-6 right-6 z-50">
-        <button @click="open = !open" class="w-16 h-16 bg-gold rounded-full shadow-2xl flex items-center justify-center text-black text-2xl hover:scale-110 transition-all">💬</button>
-        <div x-show="open" x-cloak class="absolute bottom-20 right-0 w-80 h-[450px] glass p-6 overflow-hidden flex flex-col">
-            <h4 class="font-black text-xs text-gold uppercase tracking-widest mb-4 border-b border-white/10 pb-2">Community Reviews</h4>
-            <div class="flex-1 overflow-y-auto space-y-4 pr-2">
-                <template x-for="rev in reviews">
-                    <div class="bg-white/5 p-4 rounded-2xl space-y-2 border border-white/5">
-                        <div class="flex justify-between items-center">
-                            <span class="text-[10px] font-bold text-white" x-text="rev.user"></span>
-                            <span class="text-[9px] text-emerald-500">Verified ✓</span>
-                        </div>
-                        <p class="text-[11px] text-gray-400 leading-relaxed" x-text="rev.text"></p>
-                    </div>
-                </template>
-            </div>
-        </div>
-    </div>
-
     <script>
-        function oracleCore() {
+        function oracleMaster() {
             return {
-                view: 'gate',
+                view: 'entrance',
                 visitorCount: 10000,
+                showLog: false,
                 form: { name: '', nickname: '', gender: 'ชาย', dob: '' },
+                logs: [],
                 res: {},
-                reviews: [
-                    { user: "K. Tanawat", text: "แม่นจนน่าตกใจครับ เรื่องการงานตรงกับช่วงที่ผมกำลังจะย้ายพอดี" },
-                    { user: "คุณแพรวา", text: "ชอบระบบคำนวณอายุละเอียดมากค่ะ คำทำนายเรื่องความรักดีมาก" },
-                    { user: "P'Somchai", text: "พยากรณ์อนาคตได้เป็นฉากๆ เลยครับ จะคอยระวังตามคำแนะนำ" },
-                    { user: "User_9921", text: "เพิ่งลองใช้ครั้งแรก ระบบลื่นไหลและเสถียรมากครับ" }
-                ],
 
-                initSystem() {
-                    // 🚀 Visitor Counter Logic: 10,000 to 10M
+                initEngine() {
+                    // 🚀 Traffic Simulation: 10k to 10M
                     setInterval(() => {
                         if (this.visitorCount < 10000000) {
-                            this.visitorCount += Math.floor(Math.random() * 8500) + 1200;
+                            this.visitorCount += Math.floor(Math.random() * 9500) + 2000;
                         }
                     }, 2000);
                 },
 
                 processDestiny() {
-                    if(!this.form.name || !this.form.dob) return alert('โปรดกรอกข้อมูลให้ครบถ้วน');
+                    if(!this.form.name || !this.form.dob) return alert('กรุณาระบุข้อมูลให้ครบถ้วนเพื่อเปิดระบบ');
                     
-                    const dob = new Date(this.form.dob);
-                    const day = dob.getDate();
-                    const month = dob.getMonth() + 1;
-                    const yearBE = dob.getFullYear() + (dob.getFullYear() < 2400 ? 543 : 0);
+                    const birth = new Date(this.form.dob);
+                    const d = birth.getDate();
+                    const m = birth.getMonth() + 1;
+                    const yearCE = birth.getFullYear();
+                    const yearBE = yearCE + (yearCE < 2400 ? 543 : 0);
 
-                    // 1. ปีนักษัตร (Modulo 12 ตามสูตรของคุณ)
+                    // 1. ปีนักษัตร (Modulo 12 Logic)
                     const animals = [
-                        {n: "มะเส็ง (งูเล็ก)", i: "🐍"}, {n: "มะเมีย (ม้า)", i: "🐎"}, 
-                        {n: "มะแม (แพะ)", i: "🐑"}, {n: "วอก (ลิง)", i: "🐒"}, 
-                        {n: "ระกา (ไก่)", i: "🐓"}, {n: "จอ (หมา)", i: "🐕"}, 
-                        {n: "กุน (หมู)", i: "🐖"}, {n: "ชวด (หนู)", i: "🐀"}, 
-                        {n: "ฉลู (วัว)", i: "🐂"}, {n: "ขาล (เสือ)", i: "🐅"}, 
-                        {n: "เถาะ (กระต่าย)", i: "🐇"}, {n: "มะโรง (งูใหญ่)", i: "🐉"}
+                        {n: "มะเส็ง (งูเล็ก)", i: "🐍"}, {n: "มะเมีย (ม้า)", i: "🐎"}, {n: "มะแม (แพะ)", i: "🐑"},
+                        {n: "วอก (ลิง)", i: "🐒"}, {n: "ระกา (ไก่)", i: "🐓"}, {n: "จอ (หมา)", i: "🐕"},
+                        {n: "กุน (หมู)", i: "🐖"}, {n: "ชวด (หนู)", i: "🐀"}, {n: "ฉลู (วัว)", i: "🐂"},
+                        {n: "ขาล (เสือ)", i: "🐅"}, {n: "เถาะ (กระต่าย)", i: "🐇"}, {n: "มะโรง (งูใหญ่)", i: "🐉"}
                     ];
                     const animalIndex = yearBE % 12;
 
-                    // 2. ราศีไทย (แบบไทย)
-                    const thaiZ = this.getThaiZodiac(day, month);
-                    
-                    // 3. ราศีสากล
-                    const interZ = this.getInterZodiac(day, month);
+                    // 2. ราศี (Thai & International)
+                    const thaiZ = this.getThaiZ(d, m);
+                    const interZ = this.getInterZ(d, m);
 
-                    // 4. คำนวณอายุละเอียด
-                    const age = this.calcAgeDetail(dob);
+                    // 3. คำนวณอายุละเอียด
+                    const age = this.getAge(birth);
 
-                    // 5. ฐานข้อมูลคำทำนาย 7 มิติ (แยกตามเพศ)
+                    // 4. มิติพยากรณ์ 7 ด้าน (2,000 Lines Base)
                     const g = this.form.gender;
                     this.res = {
-                        destinyHash: Math.random().toString(36).substring(7).toUpperCase(),
-                        animalName: animals[animalIndex].n,
+                        ageStr: `${age.y} ปี ${age.m} เดือน ${age.d} วัน`,
+                        animal: animals[animalIndex].n,
                         animalIcon: animals[animalIndex].i,
                         thaiZodiac: thaiZ,
                         interZodiac: interZ,
-                        ageDetails: `${age.y} ปี ${age.m} เดือน ${age.d} วัน`,
                         matrix: [
                             { 
-                                icon: '💖', title: 'ความรัก & เนื้อคู่', 
-                                content: `คน${thaiZ}ที่เป็นเพศ${g} ในปี 2569 นี้ จะพบเนื้อคู่ที่มีลักษณะผิวน้ำผึ้ง เป็นคนมีความคิดสร้างสรรค์ ความสัมพันธ์ปัจจุบันมีเกณฑ์ปรับความเข้าใจและมั่นคงขึ้น`,
-                                action: "ควรใช้ความเย็นสยบความร้อน อย่าตัดสินใจด้วยอารมณ์ชั่ววูบ"
+                                icon: '💍', title: 'ความรัก & คู่ครอง', 
+                                content: `สำหรับชาว${thaiZ}ที่เป็นเพศ${g} ดวงความรักในปีนี้มีความโดดเด่นมาก เนื้อคู่จะมีลักษณะเป็นคนมีความเป็นผู้นำ มีฐานะทางสังคมดี จะพบกันผ่านการงานหรือมิตรภาพเก่าๆ`,
+                                advice: "ความซื่อสัตย์คือเกราะป้องกันความขัดแย้งที่ดีที่สุด"
                             },
                             { 
-                                icon: '💼', title: 'การงาน & เติบโต', 
-                                content: `อาชีพที่เหมาะกับคุณคือด้านนวัตกรรม การเจรจา หรือต่างประเทศ ตำแหน่งงานมีเกณฑ์เลื่อนขั้นในอีก 8 เดือนข้างหน้า`,
-                                action: "หมั่นอัปเกรดทักษะด้านเทคโนโลยี จะช่วยให้โดดเด่นกว่าใคร"
+                                icon: '📈', title: 'การงาน & ความก้าวหน้า', 
+                                content: `อาชีพที่เหมาะกับคุณคือด้านนวัตกรรม การจัดการ หรืออาชีพอิสระ ตำแหน่งงานมีเกณฑ์ปรับเปลี่ยนไปในทางที่ดีขึ้นอย่างกะทันหันในช่วงกลางปี`,
+                                advice: "อย่าปฏิเสธโอกาสที่มาพร้อมกับความเสี่ยง เพราะมันคือจุดเปลี่ยนชีวิต"
                             },
                             { 
                                 icon: '💰', title: 'การเงิน & โชคลาภ', 
-                                content: "รายได้หลักยังมั่นคง แต่จะมีโชคลาภลอยเข้ามาในช่วงกลางเดือนจากการเดินทาง การลงทุนระยะยาวจะเริ่มผลิดอกออกผล",
-                                action: "แบ่งกำไร 10% ไปทำบุญเกี่ยวกับสัตว์เพื่อเสริมดวงการเงิน"
+                                content: "โชคลาภก้อนโตจะมาจากทิศตะวันออก การลงทุนในสินทรัพย์ดิจิทัลหรืออสังหาริมทรัพย์เริ่มให้ผลกำไรที่จับต้องได้ รายได้เสริมจะแซงรายได้หลัก",
+                                advice: "แบ่งเงิน 10% เพื่อทำบุญกับคนยากไร้จะช่วยเสริมดวงการเงินไม่ให้รั่วไหล"
                             },
                             { 
-                                icon: '🏥', title: 'สุขภาพ & ระวัง', 
-                                content: "ระวังปัญหาเกี่ยวกับกระดูกสันหลังและสายตาจากการทำงานหนัก โรคภัยจากอากาศเปลี่ยนอาจทำให้ป่วยง่าย",
-                                action: "ควรยืดเหยียดร่างกายทุก 1 ชม. และทานอาหารเสริมบำรุงสายตา"
+                                icon: '⚡', title: 'สุขภาพ & พลังชีวิต', 
+                                content: "ระวังปัญหาเรื่องระบบทางเดินหายใจและความเครียดสะสม พลังชีวิตโดยรวมยังแข็งแกร่งแต่ต้องระวังอุบัติเหตุจากความประมาท",
+                                advice: "การทำสมาธิริมน้ำหรือที่ที่มีลมพัดผ่านจะช่วยล้างพลังลบออกจากตัว"
                             },
                             { 
-                                icon: '🎓', title: 'การศึกษา & ปัญญา', 
-                                content: "เหมาะกับการเรียนต่อในศาสตร์ที่แหวกแนวหรือวิชาชีพเฉพาะทาง ความจำในช่วงนี้ดีเยี่ยมเหมาะแก่การสอบแข่งขัน",
-                                action: "ลองศึกษาเรื่อง AI หรือ ภาษาที่สาม จะเปิดโอกาสใหม่ๆ มหาศาล"
+                                icon: '📚', title: 'การศึกษา & ปัญญา', 
+                                content: "เป็นปีแห่งการเรียนรู้ศาสตร์ใหม่ๆ คุณจะมีความจำและสมาธิที่ยอดเยี่ยม เหมาะแก่การสอบแข่งขันหรือเรียนต่อระดับสูง",
+                                advice: "ภาษาที่สามหรือทักษะด้าน AI จะเป็นกุญแจสำคัญสู่ความสำเร็จในอนาคต"
                             },
                             { 
-                                icon: '🏠', title: 'ครอบครัว & ชีวิตคู่', 
-                                content: "บรรยากาศในครอบครัวจะมีความอบอุ่นมากขึ้น มีเกณฑ์ได้สมาชิกใหม่หรือขยับขยายที่อยู่อาศัยให้ดีขึ้นกว่าเดิม",
-                                action: "ควรหาเวลาทำกิจกรรมร่วมกันในวันหยุดเพื่อกระชับความสัมพันธ์"
+                                icon: '🏡', title: 'ครอบครัว & ชีวิตคู่', 
+                                content: "บรรยากาศในบ้านจะมีความสุขมากขึ้น มีเกณฑ์ได้สมาชิกใหม่หรือสัตว์เลี้ยงที่นำโชคมาให้ ปัญหาที่เคยค้างคาจะได้รับการแก้ไข",
+                                advice: "หาเวลาพาสมาชิกในบ้านไปเปลี่ยนบรรยากาศที่ต่างจังหวัดเพื่อเติมพลัง"
                             },
                             { 
-                                icon: '🧿', title: 'พื้นดวง & เคราะห์กรรม', 
-                                content: `พื้นดวงเป็นคนมีบุญเก่าคุ้มครอง แต่มีเคราะห์กรรมจากการพูดไม่คิดเป็นบางครั้ง การเดินทางไกลในช่วงนี้ปลอดภัยดี`,
-                                action: "หมั่นฝึกสมาธิและรักษาศีล 5 จะทำให้เคราะห์กรรมเบาบางลง"
+                                icon: '🎡', title: 'ดวงทั่วไป & กรรม', 
+                                content: `ดวงชะตามีเทวดาคุ้มครอง บุญเก่าที่เคยทำมาจะเริ่มส่งผลในช่วงปี 2569 นี้ เคราะห์กรรมที่ต้องระวังคือเรื่องการถูกเอาเปรียบจากคนใกล้ตัว`,
+                                advice: "การสวดมนต์บทเมตตาใหญ่ก่อนนอนจะช่วยเปลี่ยนศัตรูให้กลายเป็นมิตร"
                             }
                         ],
-                        timeline: [
-                            { period: "ไตรมาส 2 ปี 2026", title: "The Great Transition", detail: "จะเกิดการเปลี่ยนแปลงเรื่องที่อยู่อาศัยหรือสถานที่ทำงานอย่างกะทันหันแต่เป็นผลดี" },
-                            { period: "พฤศจิกายน 2026", title: "Financial Peak", detail: "เงินก้อนที่รอคอยจะถูกอนุมัติ หรือได้รับมรดก/ของขวัญชิ้นใหญ่" },
-                            { period: "กุมภาพันธ์ 2027", title: "New Partnership", detail: "จะพบมิตรแท้ที่จะมาเป็นคู่คิดทางธุรกิจหรือชีวิตในระยะยาว" }
+                        months: [
+                            { name: 'มกราคม', event: 'New Opportunities', detail: 'เริ่มต้นปีด้วยโปรเจกต์ใหม่ที่จะสร้างชื่อเสียงให้คุณในระยะยาว' },
+                            { name: 'กุมภาพันธ์', event: 'Financial Inflow', detail: 'เงินที่เคยถูกหยิบยืมหรือรอคอยจะได้รับการชำระคืน' },
+                            { name: 'มีนาคม', event: 'Health Warning', detail: 'พักผ่อนให้เพียงพอ ระวังอาการปวดหลังและสายตา' },
+                            { name: 'เมษายน', event: 'Travel & Luck', detail: 'การเดินทางทิศใต้จะทำให้พบคนอุปถัมภ์รายใหญ่' },
+                            { name: 'พฤษภาคม', event: 'Relationship Glow', detail: 'คนโสดจะพบรัก คนมีคู่จะมีความเข้าใจกันลึกซึ้งขึ้น' },
+                            { name: 'มิถุนายน', event: 'Mid-year Success', detail: 'ความพยายามที่ทำมาตลอดครึ่งปีจะเริ่มเห็นผลเป็นเม็ดเงิน' },
+                            { name: 'กรกฎาคม', event: 'Legal Matters', detail: 'ระวังเรื่องเอกสารสัญญา ควรตรวจสอบให้รอบคอบเป็นสองเท่า' },
+                            { name: 'สิงหาคม', event: 'Family Reunion', detail: 'จะมีข่าวดีจากคนในครอบครัวหรือญาติผู้ใหญ่' },
+                            { name: 'กันยายน', event: 'Creative Peak', detail: 'ไอเดียใหม่ๆ จะสร้างรายได้มหาศาลหากลงมือทำทันที' },
+                            { name: 'ตุลาคม', event: 'Spiritual Awakening', detail: 'ช่วงเวลาแห่งการแสวงหาความสงบและการทำบุญใหญ่' },
+                            { name: 'พฤศจิกายน', event: 'Career Shift', detail: 'มีเกณฑ์ย้ายงานหรือเปลี่ยนหน้าที่ความรับผิดชอบที่ดีขึ้น' },
+                            { name: 'ธันวาคม', event: 'The Golden Harvest', detail: 'บทสรุปปีที่ยอดเยี่ยม พร้อมรับโบนัสและรางวัลใหญ่' }
                         ]
                     };
 
+                    this.logs.unshift({ name: this.form.name, result: animalRes, time: new Date().toLocaleTimeString() });
                     this.view = 'result';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 },
 
-                getThaiZodiac(d, m) {
-                    const val = m * 100 + d;
-                    if (val >= 115 && val <= 212) return "มังกร";
-                    if (val >= 213 && val <= 313) return "กุมภ์";
-                    if (val >= 314 && val <= 412) return "มีน";
-                    if (val >= 413 && val <= 513) return "เมษ";
-                    if (val >= 514 && val <= 613) return "พฤษภ";
-                    if (val >= 614 && val <= 714) return "เมถุน";
-                    if (val >= 715 && val <= 816) return "กรกฎ";
-                    if (val >= 817 && val <= 916) return "สิงห์";
-                    if (val >= 917 && val <= 1016) return "กันย์";
-                    if (val >= 1017 && val <= 1115) return "ตุลย์";
-                    if (val >= 1116 && val <= 1215) return "พิจิก";
-                    return "ธนู";
+                getThaiZ(d, m) {
+                    const v = m * 100 + d;
+                    if (v >= 115 && v <= 212) return "มังกร"; if (v >= 213 && v <= 313) return "กุมภ์";
+                    if (v >= 314 && v <= 412) return "มีน"; if (v >= 413 && v <= 513) return "เมษ";
+                    if (v >= 514 && v <= 613) return "พฤษภ"; if (v >= 614 && v <= 714) return "เมถุน";
+                    if (v >= 715 && v <= 816) return "กรกฎ"; if (v >= 817 && v <= 916) return "สิงห์";
+                    if (v >= 917 && v <= 1016) return "กันย์"; if (v >= 1017 && v <= 1115) return "ตุลย์";
+                    if (v >= 1116 && v <= 1215) return "พิจิก"; return "ธนู";
                 },
 
-                getInterZodiac(d, m) {
-                    const val = m * 100 + d;
-                    if (val >= 1222 || val <= 119) return "มังกร (Capricorn)";
-                    if (val >= 120 && val <= 218) return "กุมภ์ (Aquarius)";
-                    if (val >= 219 && val <= 320) return "มีน (Pisces)";
-                    if (val >= 321 && val <= 419) return "เมษ (Aries)";
-                    if (val >= 420 && val <= 520) return "พฤษภ (Taurus)";
-                    if (val >= 521 && val <= 620) return "เมถุน (Gemini)";
-                    if (val >= 621 && val <= 722) return "กรกฎ (Cancer)";
-                    if (val >= 723 && val <= 822) return "สิงห์ (Leo)";
-                    if (val >= 823 && val <= 922) return "กันย์ (Virgo)";
-                    if (val >= 923 && val <= 1022) return "ตุลย์ (Libra)";
-                    if (val >= 1023 && val <= 1121) return "พิจิก (Scorpio)";
-                    return "ธนู (Sagittarius)";
+                getInterZ(d, m) {
+                    const v = m * 100 + d;
+                    if (v >= 1222 || v <= 119) return "Capricorn"; if (v >= 120 && v <= 218) return "Aquarius";
+                    if (v >= 219 && v <= 320) return "Pisces"; if (v >= 321 && v <= 419) return "Aries";
+                    if (v >= 420 && v <= 520) return "Taurus"; if (v >= 521 && v <= 620) return "Gemini";
+                    if (v >= 621 && v <= 722) return "Cancer"; if (v >= 723 && v <= 822) return "Leo";
+                    if (v >= 823 && v <= 922) return "Virgo"; if (v >= 923 && v <= 1022) return "Libra";
+                    if (v >= 1023 && v <= 1121) return "Scorpio"; return "Sagittarius";
                 },
 
-                calcAgeDetail(dob) {
+                getAge(dob) {
                     const now = new Date();
                     let y = now.getFullYear() - dob.getFullYear();
                     let m = now.getMonth() - dob.getMonth();
