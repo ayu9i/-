@@ -3,166 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTRO PREMIER | ดูดวงระดับพรีเมียม</title>
+    <title>ayu duduang | วิเคราะห์ชะตาชีวิตพรีเมียม</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200;400;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Anuphan', sans-serif; background-color: #050507; color: #e2e8f0; }
         .gold-gradient { background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .shimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); background-size: 200% 100%; animation: shimmer 2s infinite; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .shimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); background-size: 200% 100%; animation: shimmer 3s infinite; }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     </style>
 </head>
-<body x-data="fortuneApp()">
+<body x-data="ayuApp()">
 
     <header class="fixed top-0 w-full z-50 glass-card px-6 py-4 flex justify-between items-center">
-        <div class="text-xl font-bold tracking-[0.2em] gold-gradient uppercase">ASTRO PREMIER</div>
+        <div class="text-2xl font-bold tracking-[0.15em] gold-gradient uppercase">ayu duduang</div>
         <div class="flex items-center gap-3">
             <div class="flex items-center gap-2 bg-white/5 px-4 py-1.5 rounded-full border border-white/10">
                 <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                <span class="text-xs font-mono" x-text="visitorCount.toLocaleString() + ' LIVE'"></span>
+                <span class="text-xs font-mono text-gray-300" x-text="visitorCount.toLocaleString() + ' VIEWERS'"></span>
             </div>
         </div>
     </header>
 
-    <main class="pt-32 pb-20 px-6 max-w-2xl mx-auto">
-        
+    <main class="pt-32 pb-32 px-6 max-w-2xl mx-auto">
         <template x-if="!showResult">
-            <div x-transition class="space-y-8">
-                <div class="text-center space-y-2">
-                    <h1 class="text-4xl font-extralight tracking-tight text-white">ถอดรหัสชะตาชีวิต</h1>
-                    <p class="text-gray-500 text-sm italic">กรอกข้อมูลส่วนตัวเพื่อรับคำพยากรณ์ระดับสูง</p>
+            <div x-transition class="space-y-10">
+                <div class="text-center space-y-3">
+                    <h1 class="text-4xl font-extralight tracking-tight text-white uppercase">Personal Destiny Analysis</h1>
+                    <p class="text-yellow-600/60 text-xs tracking-[0.3em] uppercase">ศาสตร์แห่งการพยากรณ์ระดับพรีเมียม</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-[2rem] space-y-6">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="col-span-2 space-y-1">
-                            <label class="text-[10px] uppercase tracking-widest text-yellow-600 font-bold">ชื่อ-นามสกุล</label>
-                            <input type="text" x-model="user.name" class="w-full bg-white/5 border-b border-white/20 p-3 outline-none focus:border-yellow-500 transition-all">
+                <div class="glass-card p-10 rounded-[3rem] space-y-8">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="col-span-2 space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-yellow-600 font-bold ml-1">ชื่อ-นามสกุล</label>
+                            <input type="text" x-model="user.name" placeholder="Full Name" class="w-full bg-white/5 border-b border-white/20 p-3 outline-none focus:border-yellow-500 transition-all placeholder:text-gray-700">
                         </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] uppercase tracking-widest text-yellow-600 font-bold">ชื่อเล่น</label>
-                            <input type="text" x-model="user.nickname" class="w-full bg-white/5 border-b border-white/20 p-3 outline-none focus:border-yellow-500 transition-all">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-yellow-600 font-bold ml-1">ชื่อเล่น</label>
+                            <input type="text" x-model="user.nickname" placeholder="Nickname" class="w-full bg-white/5 border-b border-white/20 p-3 outline-none focus:border-yellow-500 transition-all">
                         </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] uppercase tracking-widest text-yellow-600 font-bold">เพศ</label>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-yellow-600 font-bold ml-1">เพศ</label>
                             <select x-model="user.gender" class="w-full bg-[#0a0a0f] border-b border-white/20 p-3 outline-none">
                                 <option>ชาย</option><option>หญิง</option><option>อื่นๆ</option>
                             </select>
                         </div>
-                        <div class="col-span-2 space-y-1">
-                            <label class="text-[10px] uppercase tracking-widest text-yellow-600 font-bold">วัน/เดือน/ปีเกิด</label>
-                            <input type="date" x-model="user.dob" class="w-full bg-white/5 border-b border-white/20 p-3 outline-none">
+                        <div class="col-span-2 space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-yellow-600 font-bold ml-1">วัน/เดือน/ปีเกิด</label>
+                            <input type="date" x-model="user.dob" class="w-full bg-white/5 border-b border-white/20 p-3 outline-none text-gray-400">
                         </div>
                     </div>
 
                     <button @click="calculate()" 
-                        class="w-full py-5 rounded-2xl bg-gradient-to-tr from-yellow-700 via-yellow-500 to-yellow-700 text-black font-bold uppercase tracking-[0.3em] text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-yellow-900/20">
-                        เปิดประตูแห่งโชคชะตา
+                        class="w-full py-5 rounded-2xl bg-gradient-to-tr from-yellow-700 via-yellow-400 to-yellow-700 text-black font-bold uppercase tracking-[0.4em] text-xs hover:brightness-125 transition-all shadow-2xl shadow-yellow-900/40">
+                        เริ่มวิเคราะห์ชะตาชีวิต
                     </button>
                 </div>
             </div>
         </template>
 
-        <div x-show="loading" class="text-center py-20 space-y-4">
-            <div class="w-16 h-16 border-4 border-yellow-500/20 border-t-yellow-500 rounded-full animate-spin mx-auto"></div>
-            <p class="gold-gradient animate-pulse tracking-widest text-sm">กำลังคำนวณองศาดาว...</p>
+        <div x-show="loading" class="text-center py-24 space-y-6">
+            <div class="w-20 h-20 border-2 border-yellow-500/10 border-t-yellow-500 rounded-full animate-spin mx-auto"></div>
+            <p class="gold-gradient animate-pulse tracking-[0.5em] text-[10px] uppercase">Connecting with the stars</p>
         </div>
 
         <template x-if="showResult && !loading">
-            <div x-transition class="space-y-6">
-                <div class="text-center pb-8">
-                    <p class="text-xs uppercase tracking-[0.4em] text-yellow-500 mb-2">คำทำนายส่วนบุคคล</p>
-                    <h2 class="text-3xl font-bold text-white mb-2" x-text="'คุณ ' + user.nickname"></h2>
-                    <p class="text-sm text-gray-400" x-text="'ราศี' + fortune.thaiZodiac + ' | ปี' + fortune.animalYear"></p>
+            <div x-transition class="space-y-8">
+                <div class="text-center space-y-2">
+                    <p class="text-[10px] uppercase tracking-[0.5em] text-yellow-500">Analysis Complete</p>
+                    <h2 class="text-4xl font-bold text-white tracking-tight" x-text="user.nickname"></h2>
+                    <p class="text-xs text-gray-500 tracking-widest" x-text="'ราศี' + fortune.thaiZodiac + ' (ไทย) | ' + fortune.westernZodiac + ' (สากล)'"></p>
                 </div>
 
-                <div class="grid gap-4">
-                    <div class="glass-card p-6 rounded-3xl shimmer">
-                        <h4 class="text-yellow-500 text-xs font-bold uppercase mb-2">พื้นดวง & เคราะห์กรรม</h4>
-                        <p class="text-sm leading-relaxed" x-text="fortune.general"></p>
+                <div class="grid gap-5">
+                    <div class="glass-card p-8 rounded-[2rem] shimmer relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-yellow-500"></div>
+                        <h4 class="text-yellow-500 text-[10px] font-bold uppercase tracking-widest mb-3">พื้นดวง & เคราะห์กรรม</h4>
+                        <p class="text-sm leading-relaxed text-gray-300" x-text="fortune.general"></p>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="glass-card p-6 rounded-3xl">
-                            <h4 class="text-pink-400 text-xs font-bold uppercase mb-2">ความรัก</h4>
-                            <p class="text-xs text-gray-400" x-text="fortune.love"></p>
+                            <h4 class="text-pink-400 text-[10px] font-bold uppercase tracking-widest mb-2">ความรัก & คู่ครอง</h4>
+                            <p class="text-xs text-gray-400 leading-loose" x-text="fortune.love"></p>
                         </div>
                         <div class="glass-card p-6 rounded-3xl">
-                            <h4 class="text-blue-400 text-xs font-bold uppercase mb-2">การงาน</h4>
-                            <p class="text-xs text-gray-400" x-text="fortune.career"></p>
+                            <h4 class="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-2">การงาน & โอกาส</h4>
+                            <p class="text-xs text-gray-400 leading-loose" x-text="fortune.career"></p>
                         </div>
                         <div class="glass-card p-6 rounded-3xl">
-                            <h4 class="text-green-400 text-xs font-bold uppercase mb-2">การเงิน</h4>
-                            <p class="text-xs text-gray-400" x-text="fortune.money"></p>
+                            <h4 class="text-green-400 text-[10px] font-bold uppercase tracking-widest mb-2">การเงิน & โชคลาภ</h4>
+                            <p class="text-xs text-gray-400 leading-loose" x-text="fortune.money"></p>
                         </div>
                         <div class="glass-card p-6 rounded-3xl">
-                            <h4 class="text-red-400 text-xs font-bold uppercase mb-2">สุขภาพ</h4>
-                            <p class="text-xs text-gray-400" x-text="fortune.health"></p>
+                            <h4 class="text-red-400 text-[10px] font-bold uppercase tracking-widest mb-2">สุขภาพ & ข้อควรระวัง</h4>
+                            <p class="text-xs text-gray-400 leading-loose" x-text="fortune.health"></p>
                         </div>
                     </div>
                 </div>
 
-                <button @click="showResult = false" class="w-full text-center text-xs text-gray-600 py-10 uppercase tracking-widest hover:text-white">กลับไปเริ่มต้นใหม่</button>
+                <button @click="showResult = false" class="w-full text-center text-[10px] text-gray-600 py-10 uppercase tracking-[0.5em] hover:text-white transition-all">Back to Home</button>
             </div>
         </template>
     </main>
 
-    <div class="fixed bottom-0 w-full glass-card border-t border-white/5 p-4 overflow-hidden">
+    <div class="fixed bottom-0 w-full glass-card border-t border-white/5 p-4">
         <div class="max-w-2xl mx-auto flex items-center gap-4">
-            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-[10px] font-bold">รีวิว</div>
-            <div class="text-xs animate-bounce" x-text="currentReview"></div>
+            <div class="bg-yellow-600/20 text-yellow-500 px-3 py-1 rounded text-[10px] font-bold uppercase">Review</div>
+            <div class="text-[11px] text-gray-400 italic tracking-wide" x-text="currentReview"></div>
         </div>
     </div>
 
     <script>
-        function fortuneApp() {
+        function ayuApp() {
             return {
                 user: { name: '', nickname: '', dob: '', gender: 'ชาย' },
                 showResult: false,
                 loading: false,
                 visitorCount: 10000,
-                currentReview: 'รอคำทำนายจากคุณอยู่...',
+                currentReview: 'ระบบเสถียร รองรับการเข้าชมจากทั่วโลก...',
                 reviews: [
-                    'คุณ @Jane_Astrology เพิ่งดูดวงความรักไป: "ตรงมากจนขนลุก!"',
-                    'ผู้ใช้งานล่าสุด: "การเงินแม่นจริงครับ ได้โชคตามคำทำนายเลย"',
-                    '99% ของผู้เข้าชมพึงพอใจกับผลลัพธ์วันนี้',
-                    'คุณ @MagicBoy: "ปีนักษัตรตรงมากครับ แนะนำเลย"'
+                    'คุณ @Nara: "ดูดวงความรักที่นี่แม่นมากค่ะ ตรงจนตกใจ"',
+                    'User_9921: "การงานปีนี้ตรงตามคำทำนาย ayu duduang เลยครับ"',
+                    'แอดมิน: "ยินดีต้อนรับผู้เข้าชมคนที่ 10 ล้านสู่ครอบครัวเรา"',
+                    'คุณ @Tee: "ระบบสวย ใช้ง่าย และแม่นยำมากครับ"'
                 ],
                 fortune: {},
                 init() {
                     setInterval(() => {
-                        if(this.visitorCount < 10000000) this.visitorCount += Math.floor(Math.random() * 800) + 100;
+                        if(this.visitorCount < 10000000) this.visitorCount += Math.floor(Math.random() * 950) + 50;
                         this.currentReview = this.reviews[Math.floor(Math.random() * this.reviews.length)];
-                    }, 3000);
+                    }, 2500);
                 },
                 calculate() {
-                    if(!this.user.dob) return alert('โปรดเลือกวันเกิด');
+                    if(!this.user.dob) return alert('โปรดกรอกวันเกิด');
                     this.loading = true;
                     setTimeout(() => {
                         const date = new Date(this.user.dob);
                         const month = date.getMonth() + 1;
-                        const day = date.getDate();
                         const year = date.getFullYear();
-
-                        // 🔮 Logic การคำนวณเบื้องต้น
-                        const zodiacs = ["มังกร", "กุมภ์", "มีน", "เมษ", "พฤษภ", "เมถุน", "กรกฎ", "สิงห์", "กันย์", "ตุลย์", "พิจิก", "ธนู"];
-                        const animalYears = ["ชวด", "ฉลู", "ขาล", "เถาะ", "มะโรง", "มะเส็ง", "มะเมีย", "มะแม", "วอก", "ระกา", "จอ", "กุน"];
                         
+                        const zodiacsThai = ["มังกร", "กุมภ์", "มีน", "เมษ", "พฤษภ", "เมถุน", "กรกฎ", "สิงห์", "กันย์", "ตุลย์", "พิจิก", "ธนู"];
+                        const zodiacsInter = ["Capricorn", "Aquarius", "Pisces", "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius"];
+                        const animals = ["ชวด", "ฉลู", "ขาล", "เถาะ", "มะโรง", "มะเส็ง", "มะเมีย", "มะแม", "วอก", "ระกา", "จอ", "กุน"];
+
                         this.fortune = {
-                            thaiZodiac: zodiacs[month - 1],
-                            animalYear: animalYears[(year + 8) % 12],
-                            love: "มีเกณฑ์พบคนที่ถูกใจจากการเดินทางหรือสายงาน ความสัมพันธ์จะพัฒนาแบบค่อยเป็นค่อยไป",
-                            career: "งานที่เกี่ยวข้องกับการเจรจาจะสำเร็จผล มีโอกาสเลื่อนขั้นหรือขยับขยายธุรกิจ",
-                            money: "ช่วงนี้โชคลาภเด่น มีรายได้เสริมจากช่องทางใหม่ๆ แต่ควรระวังการใช้จ่ายตามใจตัวเอง",
-                            health: "ระวังอาการปวดหลังหรือสายตาจากการทำงานหนัก ควรหาเวลาทำบุญปล่อยสัตว์เพื่อเสริมดวง",
-                            general: "ดวงชะตาอยู่ในเกณฑ์ขาขึ้น เคราะห์กรรมที่เคยติดขัดจะเริ่มคลี่คลาย การเดินทางไกลจะนำโชคมาให้"
+                            thaiZodiac: zodiacsThai[month-1],
+                            westernZodiac: zodiacsInter[month-1],
+                            animalYear: animals[(year + 8) % 12],
+                            love: "มีเกณฑ์พบเนื้อคู่ที่ส่งเสริมกัน ความสัมพันธ์มั่นคงขึ้นเรื่อยๆ",
+                            career: "ตำแหน่งงานมีโอกาสก้าวหน้าสูง มีโอกาสได้รับผิดชอบโปรเจกต์ใหญ่",
+                            money: "การเงินไหลคล่องตัว มีโชคลาภจากการเสี่ยงโชคเล็กน้อย",
+                            health: "ระวังเรื่องออฟฟิศซินโดรมและการพักผ่อนไม่เพียงพอ",
+                            general: "พื้นดวงปีนี้ถือเป็นปีแห่งความสำเร็จ เคราะห์กรรมที่เคยมีจะหมดไป"
                         };
                         this.loading = false;
                         this.showResult = true;
-                    }, 2500);
+                    }, 2000);
                 }
             }
         }
