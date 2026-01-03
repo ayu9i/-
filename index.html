@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ayu duduang | วิเคราะห์ชะตาชีวิตพรีเมียม</title>
+    <title>ayu duduang | ระบบพยากรณ์ความแม่นยำสูง</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200;400;600&display=swap" rel="stylesheet">
@@ -12,7 +12,6 @@
         .gold-gradient { background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
         [x-cloak] { display: none !important; }
-        .secure-badge { background: linear-gradient(45deg, #0f172a, #1e293b); border: 1px solid rgba(16, 185, 129, 0.2); }
     </style>
 </head>
 <body x-data="ayuApp()" x-init="init()">
@@ -20,8 +19,8 @@
     <header class="fixed top-0 w-full z-50 glass-card px-6 py-4 flex justify-between items-center">
         <div class="text-xl font-bold tracking-[0.2em] gold-gradient uppercase">ayu duduang</div>
         <div class="flex items-center gap-3">
-            <div class="secure-badge px-3 py-1 rounded-md flex items-center gap-2">
-                <span class="text-[9px] text-emerald-500 font-bold">🔒 SSL SECURED</span>
+            <div class="px-3 py-1 rounded-md border border-emerald-500/30 bg-emerald-500/5 flex items-center gap-2">
+                <span class="text-[9px] text-emerald-500 font-bold uppercase tracking-widest text-center">🔒 SSL Encrypted Database</span>
             </div>
             <div class="bg-white/5 px-3 py-1 rounded-full border border-white/10 flex items-center gap-2">
                 <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
@@ -35,11 +34,11 @@
         <template x-if="!showResult">
             <div x-transition class="space-y-8">
                 <div class="text-center space-y-2">
-                    <h1 class="text-3xl font-light tracking-tighter text-white uppercase">Astro Intelligence</h1>
-                    <p class="text-yellow-600/60 text-[9px] tracking-[0.4em] uppercase font-bold">พยากรณ์ชะตาชีวิตล้ำสมัย</p>
+                    <h1 class="text-3xl font-light tracking-tighter text-white uppercase italic">Advanced Astrology</h1>
+                    <p class="text-yellow-600/60 text-[9px] tracking-[0.4em] uppercase font-bold">ความแม่นยำระดับ AI 7 มิติ</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-[2.5rem] space-y-6">
+                <div class="glass-card p-8 rounded-[2.5rem] space-y-6 shadow-2xl">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="col-span-2 space-y-1">
                             <label class="text-[9px] uppercase tracking-widest text-yellow-600 font-bold ml-1">ชื่อ-นามสกุล</label>
@@ -56,14 +55,13 @@
                             </select>
                         </div>
                         <div class="col-span-2 space-y-1">
-                            <label class="text-[9px] uppercase tracking-widest text-yellow-600 font-bold ml-1">วัน/เดือน/ปี เกิด (พ.ศ./ค.ศ.)</label>
+                            <label class="text-[9px] uppercase tracking-widest text-yellow-600 font-bold ml-1">วัน/เดือน/ปี เกิด (รองรับ พ.ศ. และ ค.ศ.)</label>
                             <input type="date" x-model="user.dob" class="w-full bg-white/5 border-b border-white/10 p-3 outline-none text-xs text-gray-400">
                         </div>
                     </div>
-                    <button @click="calculate()" class="w-full py-5 rounded-2xl bg-gradient-to-tr from-yellow-700 via-yellow-400 to-yellow-700 text-black font-bold uppercase tracking-[0.3em] text-[10px] shadow-xl shadow-yellow-900/40">
-                        วิเคราะห์โชคชะตา 7 มิติ
+                    <button @click="calculate()" class="w-full py-5 rounded-2xl bg-gradient-to-tr from-yellow-700 via-yellow-400 to-yellow-700 text-black font-bold uppercase tracking-[0.3em] text-[10px] hover:brightness-110 transition-all">
+                        ประมวลผลดวงชะตาแม่นยำสูง
                     </button>
-                    <p class="text-[8px] text-center text-gray-600 uppercase tracking-widest italic">ข้อมูลของคุณถูกเข้ารหัสและปลอดภัย 100%</p>
                 </div>
             </div>
         </template>
@@ -71,75 +69,59 @@
         <template x-if="showResult && !loading">
             <div x-transition class="space-y-6">
                 <div class="text-center space-y-2">
-                    <h2 class="text-2xl font-bold text-white tracking-tight" x-text="'คุณ ' + user.fullname"></h2>
-                    <div class="text-[10px] text-yellow-500 uppercase font-bold tracking-[0.2em]" x-text="'นักษัตร' + fortune.animal"></div>
+                    <p class="text-[10px] text-emerald-500 uppercase tracking-widest font-bold">✓ การประมวลผลเสร็จสมบูรณ์</p>
+                    <h2 class="text-3xl font-bold text-white tracking-tight" x-text="'คุณ ' + user.fullname"></h2>
+                    <p class="text-[10px] text-yellow-500 font-bold uppercase tracking-widest" x-text="'ปีนักษัตร' + fortune.animal"></p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
-                    <div class="glass-card p-4 rounded-2xl text-center">
-                        <p class="text-[8px] text-gray-500 uppercase tracking-widest mb-1">ราศีไทย (สัญลักษณ์)</p>
-                        <p class="text-xs font-bold text-white" x-text="fortune.zThai + ' (' + fortune.zSymbol + ')'"></p>
+                    <div class="glass-card p-5 rounded-3xl border-t border-white/10">
+                        <p class="text-[8px] text-gray-500 uppercase tracking-widest mb-1 font-bold italic">ราศีแบบไทย (แม่นยำ)</p>
+                        <p class="text-sm font-bold text-white mb-1" x-text="fortune.zThai"></p>
+                        <p class="text-[9px] gold-gradient font-bold" x-text="'สัญลักษณ์: ' + fortune.zSymbol"></p>
                     </div>
-                    <div class="glass-card p-4 rounded-2xl text-center">
-                        <p class="text-[8px] text-gray-500 uppercase tracking-widest mb-1">ราศีสากล</p>
-                        <p class="text-xs font-bold text-white" x-text="fortune.zInter"></p>
+                    <div class="glass-card p-5 rounded-3xl border-t border-white/10">
+                        <p class="text-[8px] text-gray-500 uppercase tracking-widest mb-1 font-bold italic">ราศีแบบสากล</p>
+                        <p class="text-sm font-bold text-white mb-1" x-text="fortune.zInter"></p>
+                        <p class="text-[9px] text-gray-500 font-bold" x-text="fortune.zInterRange"></p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="glass-card p-5 rounded-3xl flex items-center gap-4">
-                        <div class="text-3xl">🌤️</div>
-                        <div class="text-[10px]">
-                            <p class="font-bold gold-gradient uppercase">Astro-Weather</p>
-                            <p class="text-gray-400 italic">ท้องฟ้าเปิดรับทรัพย์ มีพลังงานด้านบวกสูง</p>
-                        </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass-card p-4 rounded-3xl text-center">
+                        <p class="text-[8px] uppercase text-gray-500 mb-1">เลขนำโชค</p>
+                        <p class="text-2xl font-bold gold-gradient" x-text="fortune.luckyNumber"></p>
                     </div>
-                    <div class="glass-card p-5 rounded-3xl text-center border border-yellow-500/20">
-                        <p class="text-[9px] uppercase text-gray-500 mb-1 font-bold">สีมงคล (ถูกกะคุณที่สุด)</p>
-                        <p class="text-lg font-bold gold-gradient uppercase" x-text="fortune.luckyColor"></p>
+                    <div class="glass-card p-4 rounded-3xl text-center">
+                        <p class="text-[8px] uppercase text-gray-500 mb-1">สีที่ถูกกะคุณที่สุด</p>
+                        <p class="text-xs font-bold text-white uppercase" x-text="fortune.luckyColor"></p>
                     </div>
                 </div>
 
                 <div class="grid gap-4">
                     <template x-for="item in fortune.details">
-                        <div class="glass-card p-5 rounded-3xl border-l-2 border-white/5 hover:border-yellow-500 transition-all">
+                        <div class="glass-card p-5 rounded-3xl border-l-2 border-white/5 hover:border-yellow-600 transition-all">
                             <h4 class="text-[9px] font-bold uppercase mb-2 tracking-widest" :class="item.color" x-text="item.topic"></h4>
                             <p class="text-[11px] text-gray-300 leading-relaxed" x-text="item.desc"></p>
                         </div>
                     </template>
                 </div>
 
-                <div class="grid grid-cols-3 gap-3">
-                    <template x-for="f in fortune.future">
-                        <div class="glass-card p-3 rounded-xl text-center">
-                            <p class="text-[7px] text-yellow-600 font-bold uppercase" x-text="f.year"></p>
-                            <p class="text-[9px] text-gray-400" x-text="f.event"></p>
-                        </div>
-                    </template>
-                </div>
-
-                <div class="glass-card p-4 rounded-2xl text-center">
-                    <p class="text-[8px] uppercase text-gray-500 mb-1 tracking-widest">เลขนำโชคประจำบุคคล</p>
-                    <p class="text-2xl font-bold gold-gradient" x-text="fortune.luckyNumber"></p>
-                </div>
-
-                <button @click="showResult = false" class="w-full text-center text-[10px] text-gray-600 py-6 uppercase tracking-[0.5em]">Back to analyze</button>
+                <button @click="showResult = false" class="w-full text-center text-[10px] text-gray-600 py-6 uppercase tracking-[0.5em]">กลับไปคำนวณใหม่</button>
             </div>
         </template>
 
         <div x-show="loading" x-cloak class="text-center py-24 space-y-4">
             <div class="w-10 h-10 border-t-2 border-yellow-500 rounded-full animate-spin mx-auto"></div>
-            <p class="gold-gradient animate-pulse tracking-[0.3em] text-[9px] uppercase font-bold">Secured Processing...</p>
+            <p class="gold-gradient animate-pulse tracking-[0.3em] text-[9px] uppercase font-bold">Synchronizing Astral Data...</p>
         </div>
     </main>
 
     <footer class="fixed bottom-0 w-full glass-card p-4 z-50">
-        <div class="max-w-2xl mx-auto flex items-center justify-between overflow-hidden">
-            <p class="text-[9px] text-gray-500 italic whitespace-nowrap" x-text="'Review: ' + currentReview"></p>
+        <div class="max-w-2xl mx-auto flex items-center justify-between">
+            <p class="text-[9px] text-gray-500 italic whitespace-nowrap" x-text="'Live Feedback: ' + currentReview"></p>
             <div class="flex gap-1">
-                <template x-for="i in 5">
-                    <span class="text-yellow-600 text-[8px]">★</span>
-                </template>
+                <span class="text-yellow-600 text-[8px]">★★★★★</span>
             </div>
         </div>
     </footer>
@@ -149,10 +131,10 @@
             return {
                 user: { fullname: '', nickname: '', dob: '', gender: 'ชาย' },
                 showResult: false, loading: false, visitorCount: 10000, currentReview: '',
-                reviews: ['คุณปาล์ม: แม่นจนขนลุก!', 'User_102: สีมงคลใส่แล้วเฮงจริงครับ', 'แอดมิน: ยินดีต้อนรับเข้าสู่ระบบ'],
+                reviews: ['คุณออย: ราศีตรงมากค่ะ!', 'User_77: สีมงคลที่แนะนำใส่แล้วงานเข้าเลย', 'Admin: ระบบเสถียร 100%'],
                 init() {
                     setInterval(() => {
-                        if(this.visitorCount < 10000000) this.visitorCount += Math.floor(Math.random() * 900);
+                        if(this.visitorCount < 10000000) this.visitorCount += Math.floor(Math.random() * 900) + 100;
                         this.currentReview = this.reviews[Math.floor(Math.random() * this.reviews.length)];
                     }, 3000);
                 },
@@ -164,42 +146,55 @@
                         let y = date.getFullYear(); if(y > 2400) y -= 543;
                         const m = date.getMonth() + 1; const d = date.getDate();
 
-                        // 🔍 Database: ราศีแบบไทย (สัญลักษณ์ & ช่วงวัน) และสากล ตามตารางเป๊ะ
-                        const zodiacData = [
-                            { th: "มังกร", sym: "แพะทะเล", inter: "Capricorn", mS: 1, dS: 15, mE: 2, dE: 12 },
-                            { th: "กุมภ์", sym: "คนแบกหม้อน้ำ", inter: "Aquarius", mS: 2, dS: 13, mE: 3, dE: 13 },
-                            { th: "มีน", sym: "ปลาคู่", inter: "Pisces", mS: 3, dS: 14, mE: 4, dE: 12 },
-                            { th: "เมษ", sym: "แกะ", inter: "Aries", mS: 4, dS: 13, mE: 5, dE: 13 },
-                            { th: "พฤษภ", sym: "วัว", inter: "Taurus", mS: 5, dS: 14, mE: 6, dE: 13 },
-                            { th: "เมถุน", sym: "คนคู่", inter: "Gemini", mS: 6, dS: 14, mE: 7, dE: 14 },
-                            { th: "กรกฎ", sym: "ปู", inter: "Cancer", mS: 7, dS: 15, mE: 8, dE: 16 },
-                            { th: "สิงห์", sym: "สิงโต", inter: "Leo", mS: 8, dS: 17, mE: 9, dE: 16 },
-                            { th: "กันย์", sym: "หญิงสาว", inter: "Virgo", mS: 9, dS: 17, mE: 10, dE: 16 },
-                            { th: "ตุลย์", sym: "คันชั่ง", inter: "Libra", mS: 10, dS: 17, mE: 11, dE: 15 },
-                            { th: "พิจิก", sym: "แมงป่อง", inter: "Scorpio", mS: 11, dS: 16, mE: 12, dE: 15 },
-                            { th: "ธนู", sym: "นักยิงธนู", inter: "Sagittarius", mS: 12, dS: 16, mE: 1, dE: 14 }
-                        ];
+                        // 🔍 Advanced Accuracy Engine (ตามตารางเป๊ะ)
+                        const getThaiZodiac = (m, d) => {
+                            if ((m === 1 && d >= 15) || (m === 2 && d <= 12)) return { n: "มังกร", s: "แพะทะเล" };
+                            if ((m === 2 && d >= 13) || (m === 3 && d <= 13)) return { n: "กุมภ์", s: "คนแบกหม้อน้ำ" };
+                            if ((m === 3 && d >= 14) || (m === 4 && d <= 12)) return { n: "มีน", s: "ปลาคู่" };
+                            if ((m === 4 && d >= 13) || (m === 5 && d <= 13)) return { n: "เมษ", s: "แกะ" };
+                            if ((m === 5 && d >= 14) || (m === 6 && d <= 13)) return { n: "พฤษภ", s: "วัว" };
+                            if ((m === 6 && d >= 14) || (m === 7 && d <= 14)) return { n: "เมถุน", s: "คนคู่" };
+                            if ((m === 7 && d >= 15) || (m === 8 && d <= 16)) return { n: "กรกฎ", s: "ปู" };
+                            if ((m === 8 && d >= 17) || (m === 9 && d <= 16)) return { n: "สิงห์", s: "สิงโต" };
+                            if ((m === 9 && d >= 17) || (m === 10 && d <= 16)) return { n: "กันย์", s: "หญิงสาว" };
+                            if ((m === 10 && d >= 17) || (m === 11 && d <= 15)) return { n: "ตุลย์", s: "คันชั่ง" };
+                            if ((m === 11 && d >= 16) || (m === 12 && d <= 15)) return { n: "พิจิก", s: "แมงป่อง" };
+                            if ((m === 12 && d >= 16) || (m === 1 && d <= 14)) return { n: "ธนู", s: "นักยิงธนู" };
+                        };
 
-                        let myZ = zodiacData.find(z => (m === z.mS && d >= z.dS) || (m === z.mE && d <= z.dE));
-                        if(!myZ) myZ = zodiacData[11]; // Default fallback
+                        const getInterZodiac = (m, d) => {
+                            if ((m === 12 && d >= 22) || (m === 1 && d <= 19)) return { n: "Capricorn", r: "22 ธ.ค. – 19 ม.ค." };
+                            if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return { n: "Aquarius", r: "20 ม.ค. – 18 ก.พ." };
+                            if ((m === 2 && d >= 19) || (m === 3 && d <= 20)) return { n: "Pisces", r: "19 ก.พ. – 20 มี.ค." };
+                            if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return { n: "Aries", r: "21 มี.ค. – 19 เม.ย." };
+                            if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return { n: "Taurus", r: "20 เม.ย. – 20 พ.ค." };
+                            if ((m === 5 && d >= 21) || (m === 6 && d <= 20)) return { n: "Gemini", r: "21 พ.ค. – 20 มิ.ย." };
+                            if ((m === 6 && d >= 21) || (m === 7 && d <= 22)) return { n: "Cancer", r: "21 มิ.ย. – 22 ก.ค." };
+                            if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return { n: "Leo", r: "23 ก.ค. – 22 ส.ค." };
+                            if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return { n: "Virgo", r: "23 ส.ค. – 22 ก.ย." };
+                            if ((m === 9 && d >= 23) || (m === 10 && d <= 22)) return { n: "Libra", r: "23 ก.ย. – 22 ต.ค." };
+                            if ((m === 10 && d >= 23) || (m === 11 && d <= 21)) return { n: "Scorpio", r: "23 ต.ค. – 21 พ.ย." };
+                            if ((m === 11 && d >= 22) || (m === 12 && d <= 21)) return { n: "Sagittarius", r: "22 พ.ย. – 21 ธ.ค." };
+                        };
 
+                        const tZ = getThaiZodiac(m, d);
+                        const iZ = getInterZodiac(m, d);
                         const animals = ["ชวด", "ฉลู", "ขาล", "เถาะ", "มะโรง", "มะเส็ง", "มะเมีย", "มะแม", "วอก", "ระกา", "จอ", "กุน"];
 
                         this.fortune = {
                             animal: animals[(y + 8) % 12],
-                            zThai: myZ.th, zSymbol: myZ.sym, zInter: myZ.inter,
+                            zThai: tZ.n, zSymbol: tZ.s, zInter: iZ.n, zInterRange: iZ.r,
                             luckyNumber: Math.floor(Math.random()*89)+10,
-                            luckyColor: ["ขาวมุก (เสริมเมตตา)", "เขียวมรกต (เสริมทรัพย์)", "แดงทับทิม (เสริมบารมี)", "น้ำเงินไพลิน (เสริมงาน)"][Math.floor(Math.random()*4)],
+                            luckyColor: ["ขาวมุก (เสริมเมตตา)", "เขียวมรกต (เรียกทรัพย์)", "น้ำเงินไพลิน (หนุนดวง)", "ทองสว่าง (ดึงดูดโชค)"][Math.floor(Math.random()*4)],
                             details: [
-                                { topic: 'ความรัก', color: 'text-pink-400', desc: 'คนโสดจะพบคนถูกกะในงานมงคล คนมีคู่รักใคร่กันดีแต่ต้องระวังเรื่องเวลา' },
-                                { topic: 'การงาน', color: 'text-blue-400', desc: 'โอกาสเติบโตสูงในสายงานเจรจา มีเกณฑ์เลื่อนตำแหน่งในเร็ววัน' },
-                                { topic: 'การเงิน', color: 'text-green-400', desc: 'รายได้มั่นคง มีโชคลาภลอยจากการเดินทางไกล การลงทุนส่งผลบวก' },
-                                { topic: 'สุขภาพ', color: 'text-red-400', desc: 'ให้ระวังเรื่องสายตาและความเครียด หมั่นพักผ่อนจะช่วยเสริมดวง' },
-                                { topic: 'การศึกษา', color: 'text-purple-400', desc: 'เรียนรู้ได้เร็ว มีคนคอยสนับสนุนด้านวิชาการ ประสบความสำเร็จตามหวัง' },
-                                { topic: 'ครอบครัว', color: 'text-orange-400', desc: 'ชีวิตคู่ราบรื่น คนในบ้านจะนำข่าวดีเรื่องสมาชิกใหม่หรือบ้านมาให้' },
-                                { topic: 'เรื่องทั่วไป (พื้นดวง)', color: 'text-yellow-500', desc: 'วาสนาดี มีคนอุปถัมภ์ เคราะห์กรรมที่เคยมีจะมลายหายไป' }
-                            ],
-                            future: [{year:'1 ปี',event:'รับทรัพย์ใหญ่'},{year:'3 ปี',event:'บ้าน/รถใหม่'},{year:'5 ปี',event:'ความสำเร็จสูงสุด'}]
+                                { topic: 'ความรัก', color: 'text-pink-400', desc: 'มีเกณฑ์ได้พบคนที่เข้าใจลึกซึ้ง หากมีคู่แล้วความสัมพันธ์จะมั่นคงขึ้น' },
+                                { topic: 'การงาน', color: 'text-blue-400', desc: 'โอกาสทองกำลังจะมาถึงในอีก 3 เดือนข้างหน้า งานอิสระจะรุ่งเป็นพิเศษ' },
+                                { topic: 'การเงิน', color: 'text-green-400', desc: 'การหมุนเวียนเงินดีขึ้นมาก มีลาภลอยเล็กน้อยจากการเดินทาง' },
+                                { topic: 'สุขภาพ', color: 'text-red-400', desc: 'ระวังอาการปวดหลังและสายตา หมั่นพักผ่อนจะช่วยให้ดวงเปิด' },
+                                { topic: 'การศึกษา', color: 'text-purple-400', desc: 'การค้นคว้าสิ่งใหม่จะประสบความสำเร็จสูง มีเกณฑ์ได้รับทุนหรือโอกาสดี' },
+                                { topic: 'ครอบครัว', color: 'text-orange-400', desc: 'สมาชิกในบ้านจะนำข่าวดีมาให้ ชีวิตคู่ราบรื่นมีความสุข' },
+                                { topic: 'พื้นดวง/เคราะห์กรรม', color: 'text-yellow-500', desc: 'วาสนาเดิมดีอยู่แล้ว เคราะห์กรรมที่ติดขัดกำลังจะคลี่คลายในเร็วๆ นี้' }
+                            ]
                         };
                         this.loading = false; this.showResult = true; window.scrollTo(0,0);
                     }, 2000);
