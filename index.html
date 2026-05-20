@@ -360,13 +360,6 @@
             margin-bottom: 8px;
         }
 
-        .dashboard-grid-links {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
         /* 💣 BOMB DEFUSE SUB-STAGE SYSTEM VIEW CSS */
         .bomb-workspace {
             background: #040508;
@@ -610,7 +603,7 @@
 
     <!-- ==========================================================================
        MAIN SYSTEM APPLICATION TOP HEADER NAVIGATION SECTION
-       ========================================================================== -->
+       ================================================================全面 -->
     <header class="app-header">
         <div class="header-brand">
             <h1>🕵️ Detective Bomb & Mystery Games</h1>
@@ -618,7 +611,7 @@
         </div>
 
         <div class="user-hud-profile">
-            <div class="profile-stat">นักสืบ: <span id="hud-name">Yuri_Alpha</span> <span class="uid-badge" id="hud-uid">UID: ------</span></div>
+            <div class="profile-stat">นักสืบ: <span id="hud-name">Anonymous</span> <span class="uid-badge" id="hud-uid">UID: ------</span></div>
             <div class="profile-stat">แรงค์คะแนน: <span id="hud-rank">0 RP</span></div>
             <div class="profile-stat">💎 เพชรทดสอบ: <span id="hud-diamonds" style="color:var(--cyan);">0</span></div>
         </div>
@@ -679,7 +672,7 @@
 
                 <div class="panel-header-title">🚧 สถานะการอัปเดตโมดูลระบบระบบ (Development Status)</div>
                 <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.6; margin-bottom: 15px;">
-                    🛠️ <strong>Currently In Development:</strong> ระบบคำนวณทศนิยมถอยหลัง, ฟังก์ชันสุ่มตัวเลขแบบพลวัต, อาร์เรย์เก็บคลังคดีความมั่นคงสูง และโมดูลวิเคราะห์พฤติกรรมผู้ต้องสงสัยแบบเรียลไทม์
+                    🛠️ <strong>Currently In Development:</strong> ระบบคำนวณทศนิยมถอยหลัง, ฟังก์ชันสุ่มตัวเลขแบบพลวัต, อาร์เรย์เก็บคลังคดีความมั่นคงสูง และโมดูลวิเคราะห์พฤทีพฤติกรรมผู้ต้องสงสัยเรียลไทม์
                 </p>
 
                 <div class="panel-header-title">🔮 แผนการอัปเกรดในอนาคต (Future Plans)</div>
@@ -782,12 +775,17 @@
                 <span style="color: var(--emerald); font-size: 0.75rem;">● Online Live</span>
             </div>
 
+            <!-- ปุ่มสวิตช์เปิด-ปิดเสียงสิริอ่านข้อความแชท -->
+            <button class="primary-btn" id="siri-toggle-btn" onclick="ChatEngine.toggleSiri()" style="margin-bottom: 12px; background: rgba(212,175,55,0.15); font-size: 0.85rem; border-color: var(--gold-main);">
+                🔊 สิริอ่านแชทอัตโนมัติ: <span id="siri-status-text" style="color: var(--emerald); font-weight: bold;">เปิดใช้งาน</span>
+            </button>
+
             <div class="chat-history-container" id="global-chat-monitor">
                 <!-- Text lines append point -->
             </div>
 
             <div class="chat-input-dock">
-                <input type="text" id="chat-message-field" class="chat-input-dock chat-field-input" placeholder="พิมพ์ข้อความคุยในแชทโลก..." maxlength="70">
+                <input type="text" id="chat-message-field" class="chat-field-input" placeholder="พิมพ์ข้อความคุยในแชทโลก..." maxlength="70">
                 <button class="primary-btn" onclick="ChatEngine.sendUserMessage()" style="padding: 10px 14px;">ส่ง</button>
             </div>
         </aside>
@@ -864,43 +862,33 @@
                 }
 
                 ProfileState.username = input;
-                // Generate a persistent random game UID for identification
                 ProfileState.uid = Math.floor(100000 + Math.random() * 900000).toString();
                 
-                // Update UI Node components
                 document.getElementById("hud-name").innerText = ProfileState.username;
                 document.getElementById("hud-uid").innerText = `UID: ${ProfileState.uid}`;
                 
-                // Audio signal trigger
                 SoundBox.success();
-
-                // Hide registration panel layout
                 document.getElementById("auth-overlay").style.display = "none";
                 
-                // Boot global simulator lines chat
                 ChatEngine.initSimulator();
             },
 
             switchStage(stageId) {
                 SoundBox.click();
                 
-                // Toggle navbar buttons state view active
                 const buttons = document.querySelectorAll(".nav-item-btn");
                 buttons.forEach(btn => btn.classList.remove("active"));
                 
-                // Map control id markers selection triggers to bind class toggle
                 if(stageId === 'dashboard') document.getElementById('nav-dash').classList.add('active');
                 if(stageId === 'stage-bomb') document.getElementById('nav-bomb').classList.add('active');
                 if(stageId === 'stage-number') document.getElementById('nav-number').classList.add('active');
                 if(stageId === 'stage-quiz') document.getElementById('nav-quiz').classList.add('active');
 
-                // Switch workspace view block containers layout
                 const views = document.querySelectorAll(".game-stage-view");
                 views.forEach(v => v.classList.remove("active-stage"));
 
                 document.getElementById(stageId).classList.add("active-stage");
 
-                // If leaving the bomb game, make sure to safely cancel old running timers to protect system thread performance
                 if (stageId !== 'stage-bomb') {
                     BombGame.forceStopTimer();
                 }
@@ -915,7 +903,7 @@
                 SoundBox.success();
                 ProfileState.diamonds += amount;
                 this.updateHUD();
-                alert(`🎯 [ระบบทดสอบเติมเงินสำเร็จ]\nระบบทำการเติมจำนวน ${amount} เพชร เข้าบัญชี UID ${ProfileState.uid} ของคุณเรียบร้อยแล้ว (การหักเงินจำนวน ${price} บาท เป็นเพียงการจำลองทดสอบโหมดระบบภายนอกเท่านั้น)`);
+                alert(`🎯 [ระบบทดสอบเติมเงินสำเร็จ]\nระบบทำการเติมจำนวน ${amount} เพชร เข้าบัญชี UID ${ProfileState.uid} ของคุณเรียบร้อยแล้ว (การหักเงินจำนวน ${price} บาท เป็นเพียงการจำลองระบบเท่านั้น)`);
             },
 
             buySpecialTicket() {
@@ -952,22 +940,18 @@
                 document.getElementById("bomb-status-indicator").style.color = "var(--crimson)";
                 document.getElementById("bomb-start-btn").setAttribute("disabled", "true");
 
-                // Reset physical layout view cords
                 const ropes = document.querySelectorAll(".wire-rope");
                 ropes.forEach(r => r.classList.remove("cut-off"));
 
-                // Randomize correct solution targets string wire array keys
                 const wiresList = ["blue", "red", "yellow", "green"];
                 this.correctWire = wiresList[Math.floor(Math.random() * wiresList.length)];
                 
-                // Boot counting interval execution loops
                 this.timerInterval = setInterval(() => {
                     this.timeLeft--;
                     
                     let secondsStr = this.timeLeft < 10 ? `0${this.timeLeft}` : this.timeLeft;
                     document.getElementById("bomb-timer-clock").innerText = `00:${secondsStr}`;
                     
-                    // Warning sound feedback ticker
                     SoundBox.playNote(880, 0.02, "sine", 0.04);
 
                     if (this.timeLeft <= 0) {
@@ -983,13 +967,12 @@
                 }
 
                 const targetWire = document.getElementById(`wire-${color}`);
-                if (targetWire.classList.contains("cut-off")) return; // already cut
+                if (targetWire.classList.contains("cut-off")) return;
 
                 targetWire.classList.add("cut-off");
                 SoundBox.playNote(400, 0.05, "sawtooth");
 
                 if (color === this.correctWire) {
-                    // Success closure
                     this.clearMatchState();
                     document.getElementById("bomb-status-indicator").innerText = "🟢 สถานะ: กู้สำเร็จ ระบบถอดชนวนแล้วอย่างปลอดภัย!";
                     document.getElementById("bomb-status-indicator").style.color = "var(--emerald)";
@@ -1000,7 +983,6 @@
                     SoundBox.success();
                     alert("🎉 ยินดีด้วยคุณนักสืบ! ไหวพริบของคุณยอดเยี่ยมมาก ตัดสายชนวนหลักระเบิดหยุดทำงานทันเวลาอย่างหวุดหวิด! (+35 RP)");
                 } else {
-                    // Wrong choice explosion
                     this.triggerExplosion(`คุณตัดผิดเส้น! สายสี${color} กระตุ้นโวลต์ไฟส่งสัญญาณตรงหาแกนชนวนทันที!`);
                 }
             },
@@ -1085,7 +1067,7 @@
         const QuizGame = {
             currentQuestionIdx: 0,
             
-            questionsData: [
+            questionsData = [
                 {
                     q: "คดีชายสวมแว่นตาดำ: ชายคนหนึ่งแจ้งความว่าโดนคนร้ายบุกเดี่ยวชิงทรัพย์ในห้องนอนยามวิกาลช่วงเที่ยงคืนไฟดับสนิท โดยเขาจำหน้าตาและรอยสักบนใบหน้าคนร้ายได้อย่างแม่นยำ คุณฐานะนักสืบพบบังพิรุธใดในคำให้การนี้?",
                     options: [
@@ -1116,7 +1098,6 @@
 
             loadQuestion() {
                 if (this.currentQuestionIdx >= this.questionsData.length) {
-                    // Completed quiz sequence
                     document.getElementById("quiz-question-node").innerText = "🏆 การประเมินคดีเสร็จสิ้นแล้ว! คุณได้แสดงทักษะการจับสังเกตจับพิรุธได้อย่างเหมาะสมในฐานะนักสืบสายรหัสลับ";
                     document.getElementById("quiz-options-wrapper").innerHTML = "";
                     document.getElementById("quiz-activation-btn").style.display = "block";
@@ -1131,7 +1112,7 @@
                 document.getElementById("quiz-question-node").innerText = `คดีที่ ${this.currentQuestionIdx + 1}: ${currentData.q}`;
                 
                 const wrapper = document.getElementById("quiz-options-wrapper");
-                wrapper.innerHTML = ""; // reset UI
+                wrapper.innerHTML = "";
 
                 currentData.options.forEach((optText, index) => {
                     const btn = document.createElement("button");
@@ -1158,10 +1139,11 @@
         };
 
         /**
-         * GLOBAL CHAT SIMULATOR REAL-TIME MESSAGE ENGINE
+         * GLOBAL CHAT SIMULATOR REAL-TIME MESSAGE ENGINE WITH SIRI VOICE SPEECH
          */
         const ChatEngine = {
             simulatorInterval: null,
+            siriActive: true, 
             botNames: ["Conan_Fan", "Kaito_Kid99", "Mori_Kogoro", "Ayumi_Alpha", "Inspector_Megure", "Heiji_Osaka"],
             botPhrases: [
                 "ใครกู้ระเบิดสายสีแดงผ่านบ้างวะ ตึงจัดบึ้มใส่หน้าไปสามรอบละ 💣",
@@ -1173,22 +1155,53 @@
             ],
 
             initSimulator() {
-                // Post initial warm up messages rows
                 this.appendMessage("System_Server", "ระบบทำการเชื่อมต่อเครือข่ายความปลอดภัยแชทโลกนักสืบสำเร็จ ยินดีต้อนรับผู้เล่นทุกคน", true);
                 
-                // Boot continuous loop simulation interval
                 this.simulatorInterval = setInterval(() => {
                     const randomName = this.botNames[Math.floor(Math.random() * this.botNames.length)];
                     const randomText = this.botPhrases[Math.floor(Math.random() * this.botPhrases.length)];
                     this.appendMessage(randomName, randomText);
-                }, 6000);
+                }, 7000);
 
-                // Add enter key trigger support on input element fields
                 document.getElementById("chat-message-field").addEventListener("keypress", function(e) {
                     if (e.key === "Enter") {
                         ChatEngine.sendUserMessage();
                     }
                 });
+            },
+
+            toggleSiri() {
+                SoundBox.click();
+                this.siriActive = !this.siriActive;
+                const statusTxt = document.getElementById("siri-status-text");
+                const toggleBtn = document.getElementById("siri-toggle-btn");
+                
+                if (this.siriActive) {
+                    statusTxt.innerText = "เปิดใช้งาน";
+                    statusTxt.style.color = "var(--emerald)";
+                    toggleBtn.style.borderColor = "var(--gold-main)";
+                } else {
+                    statusTxt.innerText = "ปิดใช้งาน";
+                    statusTxt.style.color = "var(--crimson)";
+                    toggleBtn.style.borderColor = "rgba(255,255,255,0.1)";
+                    window.speechSynthesis.cancel();
+                }
+            },
+
+            speakSiri(text) {
+                if (!this.siriActive || !('speechSynthesis' in window)) return;
+
+                window.speechSynthesis.cancel();
+
+                // กรองอีโมจิออกเพื่อให้เสียงอ่านสมูทขึ้นไม่ติดขัด
+                let cleanText = text.replace(/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF]/g, "");
+
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.lang = 'th-TH'; 
+                utterance.rate = 1.1;     
+                utterance.pitch = 1.0;    
+
+                window.speechSynthesis.speak(utterance);
             },
 
             appendMessage(sender, text, isSystem = false) {
@@ -1208,11 +1221,14 @@
                         </div>
                         <div>${text}</div>
                     `;
+                    
+                    // สั่งให้สิริออกเสียงแชทที่อัปเดตใหม่
+                    this.speakSiri(`${sender} พูดว่า ${text}`);
                 }
 
                 monitor.appendChild(bubble);
                 monitor.scrollTop = monitor.scrollHeight;
-                SoundBox.playNote(900, 0.01, "sine", 0.02); // minor notification sound tick
+                SoundBox.playNote(900, 0.01, "sine", 0.02); 
             },
 
             sendUserMessage() {
@@ -1221,15 +1237,12 @@
 
                 if (txt === "") return;
 
-                // Append user profile identity node layout
-                this.appendMessage(`${ProfileState.username} (คุณ)`, txt);
-                inputField.value = ""; // flush clear
+                this.appendMessage(`${ProfileState.username}`, txt);
+                inputField.value = ""; 
             }
         };
 
-        // Window load initial default constructor execution attachment
         window.addEventListener("DOMContentLoaded", () => {
-            // Trigger target elements setup data variables defaults
             NumberGame.initGame();
         });
     </script>
