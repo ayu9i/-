@@ -3,39 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🕵️ Detective Bomb & Mystery Games Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>🕵️ ConanOS Terminal V1 - Ultimate Mystery & Hardware Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* ==========================================================================
-           1. CORE VARIABLES & THEME SETUP (MIDNIGHT GOLD LUXURY)
+           1. COMPREHENSIVE ARCHITECTURAL CSS VARIABLES (MIDNIGHT GOLD PREMIUM)
            ========================================================================== */
         :root {
-            --bg-deep: #080a0f;
-            --bg-card: #111522;
-            --bg-darker: #05060a;
+            --bg-deep: #04060a;
+            --bg-card: #0d1220;
+            --bg-darker: #020306;
+            --bg-soft: #161f33;
             --gold-main: #d4af37;
-            --gold-glow: #f5e093;
+            --gold-glow: #f7e39a;
             --gold-dark: #aa8c2c;
-            --gold-trans: rgba(212, 175, 55, 0.12);
-            --text-main: #f1f5f9;
+            --gold-trans: rgba(212, 175, 55, 0.1);
+            --gold-border: rgba(212, 175, 55, 0.25);
+            --text-main: #f8fafc;
             --text-sub: #94a3b8;
+            --text-dark: #64748b;
             --crimson: #ef4444;
             --crimson-glow: #f87171;
+            --crimson-trans: rgba(239, 68, 68, 0.12);
             --emerald: #10b981;
+            --emerald-glow: #34d399;
             --cyan: #06b6d4;
-            --font-stack: 'Anuphan', sans-serif;
-            --anim-speed: 0.25s;
+            --cyan-trans: rgba(6, 182, 212, 0.12);
+            --purple: #a855f7;
+            --font-main: 'Anuphan', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --shadow-lux: 0 10px 40px rgba(0, 0, 0, 0.65);
+            --border-glow: 0 0 15px rgba(212, 175, 55, 0.15);
         }
 
         /* ==========================================================================
-           2. RESET & GLOBAL COMPONENT STYLES
+           2. GLOBAL RESET & FOUNDATION SCREEN STYLES
            ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-stack);
+            font-family: var(--font-main);
             user-select: none;
+            -webkit-user-drag: none;
         }
 
         body {
@@ -46,1205 +56,1403 @@
             flex-direction: column;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 50% 25%, #1b2236 0%, var(--bg-deep) 70%),
-                linear-gradient(rgba(212, 175, 55, 0.015) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212, 175, 55, 0.015) 1px, transparent 1px);
-            background-size: 100% 100%, 25px 25px, 25px 25px;
+                radial-gradient(circle at 50% 20%, #172036 0%, var(--bg-deep) 75%),
+                linear-gradient(rgba(212, 175, 55, 0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.01) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-deep);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold-dark);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--gold-main);
-        }
+        /* Webkit Scrollbar Customization */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-darker); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold-main); }
 
+        /* Utilities */
+        .text-center { text-align: center; }
+        .text-gold { color: var(--gold-main); }
+        .text-cyan { color: var(--cyan); }
+        .text-crimson { color: var(--crimson); }
+        .text-emerald { color: var(--emerald); }
+        .mono { font-family: var(--font-mono); }
+        
         /* ==========================================================================
-           3. LOGIN / REGISTRATION MODAL HUD OVERLAY
+           3. FLOATING HUD OVERLAYS & WINDOW MANAGEMENT
            ========================================================================== */
-        #auth-overlay {
+        #gatekeeper-auth-screen {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(5, 6, 10, 0.95);
-            z-index: 9999;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: rgba(2, 3, 6, 0.97);
+            z-index: 99999;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            transition: opacity 0.4s ease;
         }
 
-        .auth-card {
+        .terminal-auth-box {
             background: var(--bg-card);
             border: 2px solid var(--gold-main);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 480px;
-            padding: 35px;
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.25);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 520px;
+            padding: 40px;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.25);
             text-align: center;
-            animation: modalScaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes modalScaleIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        .terminal-auth-box::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, var(--gold-main), transparent);
+            animation: lineScan 2s linear infinite;
         }
 
-        .auth-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        @keyframes lineScan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
-        .auth-input {
-            width: 100%;
-            background: var(--bg-darker);
-            border: 1px solid var(--gold-dark);
-            border-radius: 8px;
-            padding: 14px;
-            color: var(--text-main);
-            font-size: 1rem;
-            text-align: center;
-            margin: 20px 0;
-            outline: none;
-            transition: all 0.2s;
+        .auth-logo-badge {
+            width: 80px; height: 80px; background: var(--gold-trans);
+            border: 1px solid var(--gold-main); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; margin: 0 auto 20px auto;
+            text-shadow: 0 0 15px var(--gold-main);
+            box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.2);
         }
 
-        .auth-input:focus {
+        .flat-input {
+            width: 100%; background: var(--bg-darker);
+            border: 1px solid var(--gold-border); border-radius: 8px;
+            padding: 14px 20px; color: var(--text-main); font-size: 1rem;
+            outline: none; transition: all 0.3s; text-align: center;
+            margin: 25px 0; font-family: var(--font-mono);
+        }
+
+        .flat-input:focus {
             border-color: var(--gold-main);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            background: rgba(0,0,0,0.4);
+        }
+
+        /* Generic Push Action Buttons */
+        .lux-action-btn {
+            background: linear-gradient(135deg, #1b263f, #0d1322);
+            color: var(--gold-main); border: 1px solid var(--gold-main);
+            padding: 12px 24px; border-radius: 8px; cursor: pointer;
+            font-weight: 600; font-size: 0.95rem; text-transform: uppercase;
+            letter-spacing: 0.5px; transition: all var(--anim-speed, 0.2s);
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
+        .lux-action-btn:hover:not(:disabled) {
+            background: var(--gold-main); color: var(--bg-darker);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            transform: translateY(-1.5px);
+        }
+
+        .lux-action-btn:disabled {
+            opacity: 0.35; cursor: not-allowed; filter: grayscale(1);
         }
 
         /* ==========================================================================
-           4. SYSTEM HEADER LAYOUT
+           4. MAIN ARCHITECTURE SYSTEM TOPBAR HUD HEADER
            ========================================================================== */
-        .app-header {
-            background: linear-gradient(to bottom, #121829, var(--bg-card));
+        .system-topbar-hud {
+            background: linear-gradient(to bottom, #090e1a, var(--bg-card));
             border-bottom: 2px solid var(--gold-main);
-            padding: 15px 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            padding: 15px 30px; display: flex; flex-direction: column;
+            gap: 15px; box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+            position: relative; z-index: 100;
         }
 
-        @media (min-width: 768px) {
-            .app-header {
-                flex-direction: row;
-                justify-content: space-between;
-            }
+        @media (min-width: 992px) {
+            .system-topbar-hud { flex-direction: row; align-items: center; justify-content: space-between; }
         }
 
-        .header-brand h1 {
-            color: var(--gold-main);
-            font-size: 1.6rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        .sys-brand-meta h1 {
+            font-size: 1.65rem; color: var(--gold-main); font-weight: 700;
+            letter-spacing: 0.5px; text-shadow: 0 0 12px rgba(212,175,55,0.25);
+            display: flex; align-items: center; gap: 10px;
         }
 
-        .header-brand p {
-            color: var(--text-sub);
-            font-size: 0.85rem;
-            font-style: italic;
+        .sys-brand-meta p { font-size: 0.85rem; color: var(--text-sub); margin-top: 2px; }
+
+        .telemetry-dashboard-ribbon {
+            display: flex; flex-wrap: wrap; gap: 12px; background: var(--bg-darker);
+            border: 1px solid rgba(212, 175, 55, 0.2); padding: 8px 16px; border-radius: 12px;
         }
 
-        .user-hud-profile {
-            background: var(--bg-darker);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 10px;
-            padding: 10px 18px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-size: 0.9rem;
+        .telemetry-node {
+            padding: 4px 10px; border-right: 1px solid rgba(212,175,55,0.15);
+            font-size: 0.88rem; display: flex; align-items: center; gap: 8px;
         }
 
-        .profile-stat span {
-            color: var(--gold-glow);
-            font-weight: 600;
-        }
-
-        .uid-badge {
-            background: var(--gold-trans);
-            color: var(--gold-main);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+        .telemetry-node:last-child { border-right: none; }
+        .telemetry-node span.val { color: var(--gold-glow); font-weight: 600; }
+        
+        .badge-uid {
+            background: var(--gold-trans); color: var(--gold-main);
+            border: 1px solid rgba(212,175,55,0.3); padding: 1px 6px;
+            font-size: 0.78rem; border-radius: 4px; font-weight: bold;
         }
 
         /* ==========================================================================
-           5. MAIN CORE APPARATUS LAYOUT INTERFACE
+           5. SYSTEM TRIPLE PANELS GRID LAYOUT CONFIGURATION
            ========================================================================== */
-        .main-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            padding: 20px;
-            max-width: 1440px;
-            width: 100%;
-            margin: 0 auto;
-            flex-grow: 1;
+        .mainframe-grid-wrapper {
+            display: grid; grid-template-columns: 1fr; gap: 24px;
+            padding: 24px; max-width: 1800px; width: 100%; margin: 0 auto; flex-grow: 1;
         }
 
-        @media (min-width: 1024px) {
-            .main-container {
-                grid-template-columns: 320px 1fr 340px;
-            }
+        @media (min-width: 1200px) {
+            .mainframe-grid-wrapper { grid-template-columns: 340px 1fr 380px; }
         }
 
-        .panel-wrapper {
-            background: var(--bg-card);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 14px;
-            padding: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            max-height: 820px;
+        .dockable-side-panel {
+            background: var(--bg-card); border: 1px solid rgba(212, 175, 55, 0.18);
+            border-radius: 16px; padding: 22px; box-shadow: var(--shadow-lux);
+            display: flex; flex-direction: column; max-height: 860px; overflow: hidden;
         }
 
-        .panel-header-title {
-            color: var(--gold-main);
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            border-left: 3px solid var(--gold-main);
-            padding-left: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .panel-core-header {
+            font-size: 1.12rem; color: var(--gold-main); font-weight: 600;
+            margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px solid rgba(212,175,55,0.15);
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* Generic Core Buttons */
-        .primary-btn {
-            background: linear-gradient(135deg, #1b233a, #131829);
-            color: var(--gold-main);
-            border: 1px solid var(--gold-main);
-            padding: 12px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all var(--anim-speed);
-            outline: none;
-            text-align: center;
+        /* Sidebar Navigation Command List */
+        .system-nav-pillar {
+            display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;
         }
 
-        .primary-btn:hover:not(:disabled) {
-            background: var(--gold-main);
-            color: var(--bg-darker);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
-            font-weight: 600;
-            transform: translateY(-1px);
+        .nav-pillar-anchor {
+            background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(212, 175, 55, 0.08);
+            color: var(--text-main); padding: 14px 16px; border-radius: 10px;
+            cursor: pointer; text-align: left; font-size: 0.94rem; font-weight: 500;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; justify-content: space-between;
         }
 
-        .primary-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
+        .nav-pillar-anchor:hover, .nav-pillar-anchor.active-link {
+            border-color: var(--gold-main); background: var(--gold-trans);
+            color: var(--gold-glow); box-shadow: inset 0 0 10px rgba(212,175,55,0.05);
+            padding-left: 20px;
+        }
+
+        .nav-pillar-anchor span.icon-indicator {
+            font-size: 0.8rem; opacity: 0.6; transition: transform 0.2s;
+        }
+        .nav-pillar-anchor:hover span.icon-indicator { transform: translateX(3px); opacity: 1; }
+
+        /* ==========================================================================
+           6. STORE APPARATUS & VAULT GACHA INTERFACE
+           ========================================================================== */
+        .scannable-item-shelf {
+            display: flex; flex-direction: column; gap: 10px;
+            overflow-y: auto; flex-grow: 1; padding-right: 4px;
+        }
+
+        .vault-item-card {
+            background: var(--bg-darker); border: 1px solid rgba(212,175,55,0.12);
+            border-radius: 10px; padding: 12px; display: flex;
+            align-items: center; justify-content: space-between; gap: 10px;
+        }
+
+        .vault-item-details h5 { color: var(--gold-glow); font-size: 0.88rem; font-weight: 600; }
+        .vault-item-details p { color: var(--text-dark); font-size: 0.75rem; margin-top: 2px; }
+
+        .vault-buy-btn {
+            background: var(--gold-main); color: var(--bg-darker);
+            border: none; padding: 7px 14px; border-radius: 6px; font-weight: 700;
+            font-size: 0.8rem; cursor: pointer; transition: all 0.15s;
+        }
+        .vault-buy-btn:hover {
+            transform: scale(1.05); box-shadow: 0 0 10px var(--gold-main);
+        }
+
+        /* Gacha Unit Module UI Elements */
+        .gacha-crate-dock {
+            background: linear-gradient(135deg, #111827, #070a12);
+            border: 1px dashed var(--gold-border); border-radius: 12px;
+            padding: 15px; margin-top: 15px; text-align: center;
+        }
+        .inventory-token-tray {
+            display: flex; gap: 8px; justify-content: center; margin-top: 10px; flex-wrap: wrap;
+        }
+        .inv-token-badge {
+            background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.05);
+            padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; color: var(--text-sub);
         }
 
         /* ==========================================================================
-           6. LEFT SIDEBAR PANEL: MENU NAVIGATION & TOPUP STORE
+           7. CENTER ACTIVE WORKSTATION VIEWPORT CHASSIS
            ========================================================================== */
-        .navigation-menu-box {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
+        .central-view-chassis {
+            background: var(--bg-card); border: 1px solid rgba(212, 175, 55, 0.22);
+            border-radius: 16px; padding: 26px; box-shadow: var(--shadow-lux);
+            display: flex; flex-direction: column; min-height: 650px; position: relative;
         }
 
-        .nav-item-btn {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            color: var(--text-main);
-            padding: 12px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .stage-view-panel {
+            display: none; flex-grow: 1; flex-direction: column;
+            animation: viewFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .stage-view-panel.active-panel { display: flex; }
 
-        .nav-item-btn:hover, .nav-item-btn.active {
-            border-color: var(--gold-main);
-            background: var(--gold-trans);
-            color: var(--gold-glow);
-        }
-
-        /* Store Component UI Structure */
-        .store-shelf {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            overflow-y: auto;
-            flex-grow: 1;
-            padding-right: 2px;
-        }
-
-        .product-card {
-            background: var(--bg-darker);
-            border: 1px solid rgba(212,175,55,0.15);
-            border-radius: 8px;
-            padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .product-info h4 {
-            color: var(--gold-glow);
-            font-size: 0.9rem;
-        }
-
-        .product-info p {
-            color: var(--text-sub);
-            font-size: 0.75rem;
-        }
-
-        .price-tag-btn {
-            background: var(--gold-main);
-            color: var(--bg-darker);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .price-tag-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 8px var(--gold-main);
-        }
-
-        /* ==========================================================================
-           7. CENTER CORE PANEL: MAIN MULTI-STAGE MINI GAME APPARATUS
-           ========================================================================== */
-        .game-stage-view {
-            display: none;
-            flex-grow: 1;
-            flex-direction: column;
-        }
-
-        .game-stage-view.active-stage {
-            display: flex;
-        }
-
-        /* Dashboard Mode Overview Text styling */
-        .dashboard-banner {
-            background: linear-gradient(135deg, #161d33, #090c15);
-            border-radius: 10px;
-            padding: 20px;
-            border: 1px dashed rgba(212,175,55,0.2);
-            margin-bottom: 20px;
-        }
-
-        .dashboard-banner h3 {
-            color: var(--gold-main);
-            margin-bottom: 8px;
-        }
-
-        /* 💣 BOMB DEFUSE SUB-STAGE SYSTEM VIEW CSS */
-        .bomb-workspace {
-            background: #040508;
-            border: 2px solid var(--crimson);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: inset 0 0 30px rgba(239,68,68,0.15);
-        }
-
-        .bomb-ticker-display {
-            font-family: monospace;
-            font-size: 3.5rem;
-            color: var(--crimson);
-            text-shadow: 0 0 20px var(--crimson);
-            font-weight: bold;
-            margin: 15px 0;
-            background: #000;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(239,68,68,0.3);
-        }
-
-        .bomb-wires-grid {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin: 25px 0;
-        }
-
-        .wire-element-pack {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .wire-rope {
-            width: 14px;
-            height: 100px;
-            border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            transition: opacity 0.2s;
-        }
-
-        .wire-rope.cut-off {
-            opacity: 0.15;
-            height: 45px;
-            margin-bottom: 55px;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .wire-blue { background: #2563eb; }
-        .wire-red { background: #dc2626; }
-        .wire-yellow { background: #ca8a04; }
-        .wire-green { background: #16a34a; }
-
-        .wire-label {
-            margin-top: 8px;
-            font-size: 0.8rem;
-            color: var(--text-sub);
-        }
-
-        /* 🎲 MYSTERY NUMBER STAGE CSS */
-        .mystery-workspace {
-            background: #090c14;
-            border: 1px solid rgba(212,175,55,0.3);
-            border-radius: 10px;
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .clue-log-monitor {
-            background: var(--bg-darker);
-            border-radius: 8px;
-            padding: 15px;
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 15px;
-            min-height: 180px;
-            border: 1px solid rgba(212,175,55,0.1);
-        }
-
-        .clue-row-item {
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            padding-bottom: 4px;
-        }
-
-        .number-input-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* ❓ QUIZ GAME STAGE CSS */
-        .quiz-workspace {
-            background: #0d111a;
-            border-radius: 10px;
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .quiz-question-box {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--gold-glow);
-            line-height: 1.6;
-            margin-bottom: 20px;
-            background: var(--bg-darker);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid var(--gold-main);
-        }
-
-        .quiz-options-cluster {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .option-node-btn {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(212,175,55,0.2);
-            color: var(--text-main);
-            padding: 14px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-        }
-
-        .option-node-btn:hover {
-            background: var(--gold-trans);
-            border-color: var(--gold-main);
-            padding-left: 25px;
-        }
-
-        /* ==========================================================================
-           8. RIGHT SIDEBAR PANEL: LIVE GLOBAL CHAT ENGINE SIMULATOR
-           ========================================================================== */
-        .chat-history-container {
-            background: var(--bg-darker);
-            border: 1px solid rgba(212,175,55,0.1);
-            border-radius: 8px;
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 12px;
-            margin-bottom: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            height: 450px;
-        }
-
-        .chat-bubble {
-            background: rgba(255,255,255,0.02);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            animation: bubbleFadeUp 0.25s ease-out;
-        }
-
-        @keyframes bubbleFadeUp {
-            from { opacity: 0; transform: translateY(5px); }
+        @keyframes viewFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .chat-sender-meta {
-            font-weight: bold;
-            color: var(--gold-main);
-            margin-bottom: 2px;
-            display: flex;
-            justify-content: space-between;
+        /* Dashboard Overview Graphics */
+        .sys-matrix-banner {
+            background: linear-gradient(135deg, #141d33 0%, #080c16 100%);
+            border-radius: 14px; padding: 25px; border: 1px solid rgba(212,175,55,0.15);
+            margin-bottom: 24px; position: relative;
+        }
+        .sys-matrix-banner h2 { color: var(--gold-main); font-size: 1.4rem; margin-bottom: 8px; }
+        .sys-matrix-banner p { color: var(--text-sub); font-size: 0.9rem; line-height: 1.6; }
+
+        .stat-grid-quad {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-quad-node {
+            background: var(--bg-darker); border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 10px; padding: 15px; text-align: center;
+        }
+        .stat-quad-node h6 { font-size: 0.8rem; color: var(--text-sub); text-transform: uppercase; }
+        .stat-quad-node p { font-size: 1.6rem; color: var(--gold-glow); font-weight: 700; margin-top: 5px; }
+
+        /* ==========================================================================
+           8. CORE MODULE 1: 💣 BOMB DEFUSAL MATRIX ENGAGEMENT
+           ========================================================================== */
+        .bomb-housing-grid {
+            background: #020306; border: 2px solid var(--crimson);
+            border-radius: 14px; padding: 30px; display: flex; flex-direction: column;
+            justify-content: space-between; flex-grow: 1; min-height: 480px;
+            box-shadow: inset 0 0 40px rgba(239, 68, 68, 0.1);
         }
 
-        .chat-input-dock {
-            display: flex;
-            gap: 8px;
+        .bomb-hardware-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(239, 68, 68, 0.25); padding-bottom: 12px;
         }
 
-        .chat-field-input {
-            flex-grow: 1;
-            background: var(--bg-darker);
-            border: 1px solid rgba(212,175,55,0.3);
-            border-radius: 6px;
-            padding: 10px;
-            color: var(--text-main);
-            outline: none;
-            font-size: 0.88rem;
+        .bomb-countdown-odometer {
+            font-family: var(--font-mono); font-size: 4rem; color: var(--crimson);
+            text-shadow: 0 0 25px var(--crimson); font-weight: 700; background: #000;
+            padding: 8px 24px; border-radius: 10px; text-align: center; margin: 20px auto;
+            border: 1px solid rgba(239, 68, 68, 0.4); width: max-content; letter-spacing: 2px;
         }
 
-        .chat-field-input:focus {
-            border-color: var(--gold-main);
+        .bomb-wire-loom-bay {
+            display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;
+        }
+        .wire-harness-assembly {
+            display: flex; flex-direction: column; align-items: center; cursor: pointer;
+        }
+        .wire-strand-core {
+            width: 18px; height: 120px; border-radius: 6px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7); transition: all 0.3s;
+            position: relative;
+        }
+        .wire-strand-core::after {
+            content: ''; position: absolute; top: 0; left: 5px; width: 4px; height: 100%;
+            background: rgba(255,255,255,0.25);
+        }
+        .wire-strand-core.severed {
+            height: 45px; opacity: 0.2; margin-bottom: 75px;
+            box-shadow: none; transform: scaleY(0.9);
+        }
+        .wire-color-1 { background: #1d4ed8; } /* Blue */
+        .wire-color-2 { background: #b91c1c; } /* Red */
+        .wire-color-3 { background: #a16207; } /* Yellow */
+        .wire-color-4 { background: #047857; } /* Green */
+        .wire-color-5 { background: #6b21a8; } /* Purple */
+
+        .wire-descriptor-text { font-size: 0.8rem; color: var(--text-sub); margin-top: 8px; }
+
+        .difficulty-selector-cluster {
+            display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;
+        }
+        .diff-chip {
+            background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.05);
+            padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer;
+            color: var(--text-sub); transition: all 0.2s;
+        }
+        .diff-chip.active-diff {
+            border-color: var(--crimson); background: var(--crimson-trans); color: var(--crimson-glow);
         }
 
         /* ==========================================================================
-           9. SYSTEM APP FOOTER STYLING
+           9. CORE MODULE 2: 🎲 MYSTERY CRIME SCENE NUMBER SOLVER
            ========================================================================== */
-        .app-footer {
-            background: var(--bg-darker);
-            border-top: 1px solid rgba(212,175,55,0.1);
-            padding: 15px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            margin-top: auto;
+        .num-solver-bay {
+            background: var(--bg-darker); border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 12px; padding: 20px; display: flex; flex-direction: column; flex-grow: 1;
+        }
+        .clue-teleprompter-board {
+            background: #05070c; border: 1px solid rgba(212,175,55,0.08);
+            border-radius: 8px; padding: 15px; flex-grow: 1; overflow-y: auto;
+            max-height: 280px; min-height: 200px; margin-bottom: 20px;
+        }
+        .teleprompter-line {
+            font-size: 0.88rem; line-height: 1.5; margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 4px;
+        }
+        .input-docking-strip {
+            display: flex; gap: 12px; align-items: center;
+        }
+
+        /* ==========================================================================
+           10. CORE MODULE 3: ❓ DETECTIVE CASE LAW CRIMINAL QUIZ
+           ========================================================================== */
+        .interrogation-quiz-chassis {
+            background: var(--bg-darker); border-radius: 14px; padding: 25px;
+            display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1;
+        }
+        .interrogation-prompt-bubble {
+            font-size: 1.15rem; color: var(--gold-glow); font-weight: 500;
+            line-height: 1.6; background: var(--bg-soft); padding: 20px;
+            border-radius: 10px; border-left: 4px solid var(--gold-main); margin-bottom: 25px;
+        }
+        .interrogation-options-grid {
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .interrogation-btn-node {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.15);
+            color: var(--text-main); padding: 16px 20px; border-radius: 10px;
+            text-align: left; font-size: 0.96rem; cursor: pointer; transition: all 0.2s;
+        }
+        .interrogation-btn-node:hover {
+            background: var(--gold-trans); border-color: var(--gold-main); padding-left: 26px;
+        }
+
+        /* ==========================================================================
+           11. CORE MODULE 4: 🔋 DIY BATTERY & HARDWARE CALCULATOR
+           ========================================================================== */
+        .hardware-grid-matrix {
+            display: grid; grid-template-columns: 1fr; gap: 20px;
+        }
+        @media (min-width: 768px) {
+            .hardware-grid-matrix { grid-template-columns: 1fr 1fr; }
+        }
+        .config-card-box {
+            background: var(--bg-darker); border: 1px solid rgba(212,175,55,0.12);
+            border-radius: 12px; padding: 20px;
+        }
+        .form-control-block {
+            margin-bottom: 15px;
+        }
+        .form-control-block label {
+            display: block; font-size: 0.85rem; color: var(--text-sub); margin-bottom: 6px;
+        }
+        .form-select-menu {
+            width: 100%; background: var(--bg-soft); color: var(--text-main);
+            border: 1px solid rgba(212,175,55,0.2); padding: 10px; border-radius: 6px; outline: none;
+        }
+        .telemetry-output-board {
+            background: #020305; border-radius: 8px; padding: 15px; font-family: var(--font-mono);
+            font-size: 0.85rem; color: var(--emerald-glow); line-height: 1.6;
+            border: 1px dashed rgba(16,185,129,0.3); min-height: 180px;
+        }
+
+        /* ==========================================================================
+           12. CORE MODULE 5: 🎛️ SIGNAL GENERATOR AUDIO LABORATORY
+           ========================================================================== */
+        .audio-lab-console {
+            background: var(--bg-darker); border-radius: 12px; padding: 20px;
+        }
+        .synth-control-slider {
+            width: 100%; margin: 10px 0 20px 0; accent-color: var(--gold-main);
+        }
+
+        /* ==========================================================================
+           13. RIGHT SIDEBAR PANEL: ADVANCED GLOBAL CHAT CORE ENGINE
+           ========================================================================== */
+        .chat-stream-viewport {
+            background: var(--bg-darker); border: 1px solid rgba(212,175,55,0.1);
+            border-radius: 12px; flex-grow: 1; overflow-y: auto; padding: 15px;
+            margin-bottom: 15px; display: flex; flex-direction: column; gap: 12px;
+            height: 480px; max-height: 520px;
+        }
+        .chat-msg-envelope {
+            background: rgba(255,255,255,0.015); border-radius: 10px; padding: 10px 14px;
+            font-size: 0.88rem; line-height: 1.45; border-left: 2px solid rgba(255,255,255,0.05);
+            animation: envelopeSlideUp 0.22s cubic-bezier(0, 0, 0.2, 1);
+        }
+        @keyframes envelopeSlideUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .msg-sender-metadata {
+            font-weight: 700; color: var(--gold-main); margin-bottom: 4px;
+            display: flex; justify-content: space-between; font-size: 0.82rem;
+        }
+        .msg-sender-metadata span.badge-rank {
+            font-size: 0.72rem; font-weight: normal; color: var(--text-dark);
+        }
+        .chat-control-dock { display: flex; gap: 8px; }
+        .chat-input-element {
+            flex-grow: 1; background: var(--bg-darker); border: 1px solid rgba(212,175,55,0.25);
+            border-radius: 8px; padding: 12px; color: var(--text-main); outline: none; font-size: 0.9rem;
+        }
+        .chat-input-element:focus { border-color: var(--gold-main); }
+
+        /* ==========================================================================
+           14. GLOBAL STABLE FOOTER SIGNATURE
+           ========================================================================== */
+        .system-footer-anchor {
+            background: var(--bg-darker); border-top: 1px solid rgba(212,175,55,0.08);
+            padding: 18px; text-align: center; font-size: 0.8rem; color: var(--text-dark);
+            margin-top: auto; letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
     <!-- ==========================================================================
-       AUTHENTICATION / CREATION ID INITIAL MODAL OVERLAY SCREEN
+       GATEKEEPER SECURITY INITIALIZATION MODAL CONTAINER
        ========================================================================== -->
-    <div id="auth-overlay">
-        <div class="auth-card">
-            <div class="auth-icon">🕵️</div>
-            <h2 style="color: var(--gold-main); margin-bottom: 8px;">สร้างบัญชีผู้ให้บริการนักสืบ</h2>
-            <p style="color: var(--text-sub); font-size: 0.88rem;">กรุณาตั้งชื่อโค้ดเนมของคุณ ระบบจะจับคู่หมายเลข UID อัตโนมัติเพื่อใช้ระบุตัวตนและเพิ่มเพื่อนในเกม</p>
+    <div id="gatekeeper-auth-screen">
+        <div class="terminal-auth-box">
+            <div class="auth-logo-badge">🕵️</div>
+            <h2 style="color: var(--gold-main); font-weight: 600; letter-spacing: 0.5px;">ลงทะเบียนรหัสนักสืบยีนส์</h2>
+            <p style="color: var(--text-sub); font-size: 0.88rem; margin-top: 6px;">โปรดบันทึกตัวตนโค้ดเนมเข้าสู่ระบบจัดเก็บฐานข้อมูลส่วนกลาง</p>
             
-            <input type="text" id="auth-username-field" class="auth-input" placeholder="ระบุชื่อรหัสนักสืบของคุณ..." maxlength="14" autocomplete="off">
+            <input type="text" id="terminal-user-input" class="flat-input" placeholder="ป้อนชื่อโค้ดเนมของคุณ..." maxlength="16" value="Ayu_Alpha">
             
-            <button class="primary-btn" style="width: 100%; padding: 14px;" onclick="CoreEngine.registerAccount()">
-                📥 ยืนยันการลงทะเบียนเข้าสู่ระบบ
+            <button class="lux-action-btn" style="width: 100%; padding: 15px;" onclick="CoreEngine.registerSystemIdentity()">
+                🔐 บันทึกข้อมูลและซิงค์คลาวด์
             </button>
         </div>
     </div>
 
     <!-- ==========================================================================
-       MAIN SYSTEM APPLICATION TOP HEADER NAVIGATION SECTION
-       ================================================================全面 -->
-    <header class="app-header">
-        <div class="header-brand">
-            <h1>🕵️ Detective Bomb & Mystery Games</h1>
-            <p>ความกดดัน ไวพริบ และคำใบ้ปริศนาจำลองเอาชีวิตรอด</p>
+       TOP ARCHITECTURE HEAD TELEMETRY CONTROLLER LAYOUT
+       ========================================================================== -->
+    <header class="system-topbar-hud">
+        <div class="sys-brand-meta">
+            <h1>🕵️ ConanOS Terminal <span style="font-size:0.75rem; color:var(--text-dark); vertical-align:middle;">STABLE V1.0.4</span></h1>
+            <p>ระบบปฏิบัติการจำลองภารกิจสืบสวนคดีระเบิด & คำนวณวิศวกรรมไฟฟ้า DIY</p>
         </div>
 
-        <div class="user-hud-profile">
-            <div class="profile-stat">นักสืบ: <span id="hud-name">Anonymous</span> <span class="uid-badge" id="hud-uid">UID: ------</span></div>
-            <div class="profile-stat">แรงค์คะแนน: <span id="hud-rank">0 RP</span></div>
-            <div class="profile-stat">💎 เพชรทดสอบ: <span id="hud-diamonds" style="color:var(--cyan);">0</span></div>
+        <div class="telemetry-dashboard-ribbon">
+            <div class="telemetry-node">รหัส: <span class="val" id="hud-user-name">Anonymous</span> <span class="badge-uid" id="hud-user-uid">UID: ------</span></div>
+            <div class="telemetry-node">คะแนน: <span class="val text-gold" id="hud-user-rp">0 RP</span></div>
+            <div class="telemetry-node">💎 เพชร: <span class="val text-cyan" id="hud-user-diamonds">0</span></div>
+            <div class="telemetry-node">💼 ไอเทม: <span class="val text-emerald" id="hud-user-inventory">0 ชิ้น</span></div>
         </div>
     </header>
 
     <!-- ==========================================================================
-       MAIN CONTENT COMBINATOR APPARATUS GRID BLOCK
+       MAIN SYSTEM TRIPLE COLUMN FRAMEWORKS GRID UNIT
        ========================================================================== -->
-    <div class="main-container">
+    <div class="mainframe-grid-wrapper">
         
-        <!-- LEFT PANEL: NAVIGATION DIRECTORY MENU & CASH SHOP MOCKUP -->
-        <aside class="panel-wrapper">
-            <div class="panel-header-title">📁 โหมดภารกิจสืบสวน</div>
-            <nav class="navigation-menu-box">
-                <button class="nav-item-btn active" id="nav-dash" onclick="CoreEngine.switchStage('dashboard')">🏠 หน้าแรกข้อมูลโปรเจกต์ <span>➔</span></button>
-                <button class="nav-item-btn" id="nav-bomb" onclick="CoreEngine.switchStage('stage-bomb')">💣 โหมดกู้ระเบิดกู้วิกฤต <span>➔</span></button>
-                <button class="nav-item-btn" id="nav-number" onclick="CoreEngine.switchStage('stage-number')">🎲 ถอดรหัสลับตัวเลขฆาตกร <span>➔</span></button>
-                <button class="nav-item-btn" id="nav-quiz" onclick="CoreEngine.switchStage('stage-quiz')">❓ ทำแบบทดสอบจับพิรุธคดี <span>➔</span></button>
+        <!-- COLUMN 1: SIDEBAR CONTROLLER / DIRECTORY NAVIGATION & VAULT CASH SHOP -->
+        <aside class="dockable-side-panel">
+            <div class="panel-core-header">📁 สารบบโมดูลซอฟต์แวร์</div>
+            <nav class="system-nav-pillar">
+                <button class="nav-pillar-anchor active-link" id="lnk-dash" onclick="CoreEngine.routePanel('dashboard')">🏠 แผงควบคุมหลักคลาวด์ <span class="icon-indicator">➔</span></button>
+                <button class="nav-pillar-anchor" id="lnk-bomb" onclick="CoreEngine.routePanel('bomb-core')">💣 วิกฤตกู้ระเบิดสายชนวน <span class="icon-indicator">➔</span></button>
+                <button class="nav-pillar-anchor" id="lnk-number" onclick="CoreEngine.routePanel('number-core')">🎲 ถอดรหัสลับพิกัดฆาตกร <span class="icon-indicator">➔</span></button>
+                <button class="nav-pillar-anchor" id="lnk-quiz" onclick="CoreEngine.routePanel('quiz-core')">❓ แบบทดสอบสืบสวนจับโกหก <span class="icon-indicator">➔</span></button>
+                <button class="nav-pillar-anchor" id="lnk-battery" onclick="CoreEngine.routePanel('battery-core')">🔋 คำนวณแบตเตอรี่ & Power Box <span class="icon-indicator">➔</span></button>
+                <button class="nav-pillar-anchor" id="lnk-audio" onclick="CoreEngine.routePanel('audio-core')">🎛️ เครื่องสังเคราะห์คลื่นความถี่ <span class="icon-indicator">➔</span></button>
             </nav>
 
-            <div class="panel-header-title" style="margin-top: 10px;">🛒 เติมเกม / ร้านค้าทดสอบ</div>
-            <div class="store-shelf">
-                <div class="product-card">
-                    <div class="product-info">
-                        <h4>💎 150 Diamonds Pack</h4>
-                        <p>แพ็กเกจเพชรเริ่มต้นสัญญานักสืบ</p>
+            <div class="panel-core-header">🎰 ตลาดมืด & กาชาเสี่ยงโชค</div>
+            <div class="scannable-item-shelf">
+                <div class="vault-item-card">
+                    <div class="vault-item-details">
+                        <h5>💎 200 Diamonds Pack</h5>
+                        <p>เซ็ตเพชรระดับปฏิบัติการเบื้องต้น</p>
                     </div>
-                    <button class="price-tag-btn" onclick="CoreEngine.mockupTopup(150, 49)">49 ฿</button>
+                    <button class="vault-buy-btn" onclick="StoreEngine.executePurchase('d200')">฿49</button>
                 </div>
-                <div class="product-card">
-                    <div class="product-info">
-                        <h4>💎 500 Diamonds Pack</h4>
-                        <p>แพ็กเกจเพชรยอดนิยมตระกูลสืบคดี</p>
+                <div class="vault-item-card">
+                    <div class="vault-item-details">
+                        <h5>💎 1,200 Diamonds Pack</h5>
+                        <p>กล่องนิรภัยเพชรรองรับงานใหญ่</p>
                     </div>
-                    <button class="price-tag-btn" onclick="CoreEngine.mockupTopup(500, 149)">149 ฿</button>
+                    <button class="vault-buy-btn" onclick="StoreEngine.executePurchase('d1200')">฿249</button>
                 </div>
-                <div class="product-card">
-                    <div class="product-info">
-                        <h4>🎟️ บัตรข้ามปริศนาพิเศษ</h4>
-                        <p>ใช้ผ่านด่านสืบคดีแบบข้ามด่วน</p>
+                <div class="vault-item-card">
+                    <div class="vault-item-details">
+                        <h5>🎟️ บัตรสแกนลายนิ้วมือเศษฝุ่น</h5>
+                        <p>ใช้ผ่านด่านปริศนาตัวเลขทันที</p>
                     </div>
-                    <button class="price-tag-btn" onclick="CoreEngine.buySpecialTicket()" style="background: var(--cyan); color: #fff;">120 💎</button>
+                    <button class="vault-buy-btn" onclick="StoreEngine.executePurchase('skip-ticket')" style="background:var(--cyan); color:#000;">150 💎</button>
+                </div>
+            </div>
+
+            <div class="gacha-crate-dock">
+                <span style="font-size:0.82rem; color:var(--text-sub);">📦 กล่องสุ่มพยานหลักฐานคดีลับ</span>
+                <button class="lux-action-btn" style="width:100%; font-size:0.8rem; padding:8px; margin-top:8px;" onclick="StoreEngine.triggerGachaRoll()">
+                    🎰 เปิดกล่องสุ่ม (50 💎)
+                </button>
+                <div class="inventory-token-tray" id="inventory-token-tray">
+                    <span class="inv-token-badge">ไม่มีไอเทมสะสม</span>
                 </div>
             </div>
         </aside>
 
-        <!-- CENTER PANEL: INTERACTIVE MULTI-GAME WORKSPACE VIEWSTAGE -->
-        <main class="panel-wrapper" style="max-height: none;">
+        <!-- COLUMN 2: MAIN CENTRAL WORKSTATION DASHBOARD HOUSING VIEWS -->
+        <main class="central-view-chassis">
             
-            <!-- STAGE 0: DASHBOARD INTERFACE VIEW OVERVIEW -->
-            <div class="game-stage-view active-stage" id="stage-dashboard">
-                <div class="dashboard-banner">
-                    <h3>🕵️ ยินดีต้อนรับสู่อาณาจักร Mystery Console!</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-sub); line-height: 1.6;">
-                        โปรเจกต์นี้เป็นการรวมมินิเกมนักสืบขนาดสั้นที่มีความตึงเครียดสูง ท้าทายกระบวนการคิดวิเคราะห์อย่างมีตรรกะ เลือกหมวดหมู่เกมที่คุณต้องการท้าทายจากแถบเมนูด้านซ้ายเพื่อเริ่มสืบคดีได้ทันทีโฮมี่!
+            <!-- VIEWSTAGE 0: SYSTEM CLOUD HOME DASHBOARD OVERVIEW -->
+            <div class="stage-view-panel active-panel" id="panel-dashboard">
+                <div class="sys-matrix-banner">
+                    <h2>ยินดีต้อนรับเข้าสู่ระบบปฏิบัติการ ConanOS Terminal</h2>
+                    <p style="margin-top: 8px;">
+                        ระบบรวบรวมฟังก์ชันการกู้ภัย การจำลองคำใบ้ ตลอดจนเครื่องมืออำนวยความสะดวกแก่วิศวกรไฟฟ้า 
+                        รวมโค้ดคลีนโครงสร้างไร้บั๊ก ควบคุมความปลอดภัยระดับเกรดกองทัพ ปรับแต่ง UI สไตล์ Midnight Gold Luxury เรียบร้อยแล้วโฮมี่!
                     </p>
                 </div>
 
-                <div class="panel-header-title">🚧 สถานะการอัปเดตโมดูลระบบระบบ (Development Status)</div>
-                <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.6; margin-bottom: 15px;">
-                    🛠️ <strong>Currently In Development:</strong> ระบบคำนวณทศนิยมถอยหลัง, ฟังก์ชันสุ่มตัวเลขแบบพลวัต, อาร์เรย์เก็บคลังคดีความมั่นคงสูง และโมดูลวิเคราะห์พฤทีพฤติกรรมผู้ต้องสงสัยเรียลไทม์
-                </p>
+                <div class="panel-core-header">📊 สถิติข้อมูลเซิร์ฟเวอร์ปฏิบัติการ</div>
+                <div class="stat-grid-quad">
+                    <div class="stat-quad-node"><h6>ภารกิจกู้ระเบิดสำเร็จ</h6><p id="stat-bomb-win">0</p></div>
+                    <div class="stat-quad-node"><h6>แกะรอยเลขฆาตกรสำเร็จ</h6><p id="stat-num-win">0</p></div>
+                    <div class="stat-quad-node"><h6>ความถูกต้องแบบทดสอบ</h6><p id="stat-quiz-pct">0%</p></div>
+                    <div class="stat-quad-node"><h6>ไอเทมระดับตำนาน SSR</h6><p id="stat-gacha-ssr">0</p></div>
+                </div>
 
-                <div class="panel-header-title">🔮 แผนการอัปเกรดในอนาคต (Future Plans)</div>
-                <ul style="font-size: 0.88rem; color: var(--text-sub); margin-left: 20px; line-height: 1.7;">
-                    <li>Online Multiplayer Detective Mode (ระบบท้าดวลสืบคดีห้องเดียวแบบหลายคน)</li>
-                    <li>Random Crime Situation Generator (ระบบสุ่มสร้างคดีอาชญากรรมไม่ซ้ำซาก)</li>
-                    <li>Ranked Match System & Story Mode ปลดล็อกความลับ</li>
-                </ul>
+                <div class="panel-core-header">📜 บันทึกแพทช์การอัปเดตโมดูล</div>
+                <div style="background:var(--bg-darker); padding:15px; border-radius:10px; font-size:0.88rem; color:var(--text-sub); line-height:1.6;">
+                    • <strong class="text-gold">[Fixed]</strong> แก้ไขจุดบั๊ก Syntax Error ในไฟล์จำลองแบบทดสอบคำสั่งชุดคำถามเรียบร้อย<br>
+                    • <strong class="text-emerald">[Added]</strong> เชื่อมโยงระบบสังเคราะห์คลื่นเสียงความถี่ไซเรนกู้ภัย (Audio Oscillator Unit)<br>
+                    • <strong class="text-cyan">[Added]</strong> พัฒนาระบบบอทแชทโลกจำลอง 5 ตัวละคร คุยตอบโต้ได้อัจฉริยะขึ้น พร้อมเสียงอ่านสิริ
+                </div>
             </div>
 
-            <!-- STAGE 1: 💣 BOMB DEFUSE WORKSPACE INTERFACE -->
-            <div class="game-stage-view" id="stage-bomb">
-                <div class="panel-header-title">
-                    <span>💣 Bomb Defuse Mode: ตัดสายไฟกู้วิกฤตตึกร้าง</span>
-                    <span style="color: var(--crimson); font-size: 0.85rem;" id="bomb-status-indicator">⚠️ สถานะ: รอกระตุ้นระเบิด</span>
+            <!-- VIEWSTAGE 1: 💣 BOMB DEFUSAL ACTION MATRIX CORE -->
+            <div class="stage-view-panel" id="panel-bomb-core">
+                <div class="panel-core-header">
+                    <span>💣 Bomb Defusal Apparatus Unit</span>
+                    <span class="text-crimson" style="font-size:0.88rem;" id="bomb-telemetry-status">STATUS: STANDBY</span>
                 </div>
                 
-                <div class="bomb-workspace">
-                    <p style="font-size: 0.9rem; color: var(--text-sub);">
-                        ระเบิดเวลาชนิดแสวงเครื่องถูกเปิดใช้งานแล้ว! มีสายไฟหลักอยู่ 4 เส้น มีเพียงเส้นเดียวที่เป็นเส้นตัดชนวนระเบิดให้หยุดทำงาน ส่วนเส้นอื่นๆ จะกระตุ้นให้ระเบิดทำงานทันที!
-                    </p>
-
-                    <div class="bomb-ticker-display" id="bomb-timer-clock">00:30</div>
-
-                    <div class="bomb-wires-grid">
-                        <div class="wire-element-pack" onclick="BombGame.cutWire('blue')">
-                            <div class="wire-rope wire-blue" id="wire-blue"></div>
-                            <span class="wire-label">สายสีน้ำเงิน</span>
+                <div class="bomb-housing-grid">
+                    <div class="bomb-hardware-header">
+                        <div>
+                            <span style="font-size:0.8rem; color:var(--text-sub); display:block;">ระเบิดซีโฟร์แสวงเครื่อง</span>
+                            <strong style="font-size:1.1rem; color:var(--gold-glow);" id="bomb-type-lbl">C4 Standard Device</strong>
                         </div>
-                        <div class="wire-element-pack" onclick="BombGame.cutWire('red')">
-                            <div class="wire-rope wire-red" id="wire-red"></div>
-                            <span class="wire-label">สายสีแดง</span>
-                        </div>
-                        <div class="wire-element-pack" onclick="BombGame.cutWire('yellow')">
-                            <div class="wire-rope wire-yellow" id="wire-yellow"></div>
-                            <span class="wire-label">สายสีเหลือง</span>
-                        </div>
-                        <div class="wire-element-pack" onclick="BombGame.cutWire('green')">
-                            <div class="wire-rope wire-green" id="wire-green"></div>
-                            <span class="wire-label">สายสีเขียว</span>
+                        <div class="difficulty-selector-cluster">
+                            <div class="diff-chip active-diff" id="diff-0" onclick="BombGame.setDifficulty(0)">EASY</div>
+                            <div class="diff-chip" id="diff-1" onclick="BombGame.setDifficulty(1)">NORMAL</div>
+                            <div class="diff-chip" id="diff-2" onclick="BombGame.setDifficulty(2)">HARD</div>
                         </div>
                     </div>
 
-                    <button class="primary-btn" id="bomb-start-btn" onclick="BombGame.startMatch()" style="border-color: var(--crimson); color: var(--crimson);">
-                        ⚡ เริ่มสับสวิตช์เปิดระเบิดกู้ภัยเวลา
+                    <div class="bomb-countdown-odometer" id="bomb-digital-clock">00:30.00</div>
+
+                    <div class="bomb-wire-loom-bay" id="bomb-wire-container">
+                        <!-- Wires injected dynamically via JS core -->
+                    </div>
+
+                    <button class="lux-action-btn" id="bomb-engage-trigger-btn" onclick="BombGame.primeExplosiveCore()" style="border-color:var(--crimson); color:var(--crimson); width:100%; padding:14px;">
+                        ⚡ ปล่อยกระแสไฟเข้าระบบเริ่มนับถอยหลัง
                     </button>
                 </div>
             </div>
 
-            <!-- STAGE 2: 🎲 MYSTERY NUMBER CRACKER VIEW -->
-            <div class="game-stage-view" id="stage-number">
-                <div class="panel-header-title">
-                    <span>🎲 Mystery Number: ถอดเลขรหัสลับจากกระดาษฆาตกร</span>
-                </div>
-                
-                <div class="mystery-workspace">
-                    <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 10px;">
-                        ฆาตกรทิ้งเบาะแสเลขปริศนาที่เป็นรหัสลับปลดล็อกตู้เซฟเอาไว้ <strong>(เลขระหว่าง 1 ถึง 100)</strong> จงป้อนตัวเลขเพื่อทำการส่งหน่วยตรวจวิเคราะห์ ตรรกะของผลลัพธ์จะแจ้งให้ทราบทันทีว่าเลขของคุณคลาดเคลื่อนอย่างไร
+            <!-- VIEWSTAGE 2: 🎲 MYSTERY CRYIME SCENE DIGIT SEARCHER -->
+            <div class="stage-view-panel" id="panel-number-core">
+                <div class="panel-core-header"><span>🎲 แกะรอยตัวเลขปริศนาตามล่าที่กบดานฆาตกร</span></div>
+                <div class="num-solver-bay">
+                    <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:12px;">
+                        คอมพิวเตอร์หลักจำลองการแฮกพิกัดตัวเลขระหว่าง <strong>1 ถึง 200</strong> ป้อนตัวเลขเพื่อดูสัญญาณสะท้อนกลับว่าพิกัดคลาดเคลื่อนไปทิศทางใด
                     </p>
-
-                    <div class="clue-log-monitor" id="number-log-monitor">
-                        <div class="clue-row-item" style="color: var(--gold-main); font-style: italic;">[ระบบข้อมูล] เริ่มต้นภารกิจ... รอการส่งข้อมูลวิเคราะห์ตัวเลขแรกของคุณ...</div>
+                    <div class="clue-teleprompter-board" id="num-logger-output">
+                        <div class="teleprompter-line text-gold">[System Console] รอนักสืบป้อนรหัสทดสอบสแกนพิกัดดาวเทียม...</div>
                     </div>
-
-                    <div class="number-input-row">
-                        <input type="number" id="mystery-digit-input" class="auth-input" style="margin: 0; text-align: left; padding: 10px;" placeholder="ป้อนตัวเลขสุ่ม (1-100)...">
-                        <button class="primary-btn" onclick="NumberGame.submitGuess()">ส่งตรวจพิสูจน์รหัส</button>
-                        <button class="primary-btn" style="border-color: var(--text-sub); color: var(--text-sub);" onclick="NumberGame.initGame()">รีเซ็ต</button>
+                    <div class="input-docking-strip">
+                        <input type="number" id="num-guess-field" class="flat-input" style="margin:0; text-align:left; max-width:200px;" placeholder="ตัวเลข 1-200">
+                        <button class="lux-action-btn" onclick="NumberGame.processUserGuess()">ส่งสัญญาณตรวจสอบ</button>
+                        <button class="lux-action-btn" style="border-color:var(--text-dark); color:var(--text-dark);" onclick="NumberGame.generateNewTarget()">รีเซ็ตพิกัดใหม่</button>
                     </div>
                 </div>
             </div>
 
-            <!-- STAGE 3: ❓ DETECTIVE QUIZ EXAMINATION STAGE -->
-            <div class="game-stage-view" id="stage-quiz">
-                <div class="panel-header-title">
-                    <span>❓ Detective Quiz: คลี่คลายปมจับพิรุธคดีหักมุม</span>
-                </div>
-
-                <div class="quiz-workspace">
-                    <div class="quiz-question-box" id="quiz-question-node">
-                        กำลังเตรียมความพร้อมของชุดคำถามจำลองสถานการณ์อาชญากรรมจริง... กดปุ่มด้านล่างเพื่อเริ่มการทดสอบจับโกหก
+            <!-- VIEWSTAGE 3: ❓ CRIMINAL TRUTH OR LIE INTERROGATION QUIZ -->
+            <div class="stage-view-panel" id="panel-quiz-core">
+                <div class="panel-core-header"><span>❓ ทวิซทดสอบจิตวิทยานักสืบ & กฎหมายอาญาเบื้องต้น</span></div>
+                <div class="interrogation-quiz-chassis">
+                    <div class="interrogation-prompt-bubble" id="quiz-question-presenter">
+                        ยินดีต้อนรับสู่ระบบประเมินทักษะการสืบสวน กรุณากดเริ่มทำแบบทดสอบเพื่อดึงฐานข้อมูลจากเซิร์ฟเวอร์หลักกลางโคนัน
                     </div>
-
-                    <div class="quiz-options-cluster" id="quiz-options-wrapper">
-                        <!-- Dynamic Options elements injection -->
+                    <div class="interrogation-options-grid" id="quiz-options-anchor">
+                        <!-- Options buttons template generated on-the-fly -->
                     </div>
-
-                    <button class="primary-btn" id="quiz-activation-btn" onclick="QuizGame.startTest()" style="margin-top: 15px;">
-                        📝 เริ่มทำการทดสอบวัดระดับสมองนักสืบ
+                    <button class="lux-action-btn" id="quiz-master-control-btn" onclick="QuizGame.bootQuizSession()" style="margin-top:20px; width:100%;">
+                        📝 เริ่มดึงข้อสอบด่านสืบคดีพลิกแพลง
                     </button>
                 </div>
             </div>
 
+            <!-- VIEWSTAGE 4: 🔋 DIY BATTERY ANALYSIS & POWER BOX BUILDER PANEL -->
+            <div class="stage-view-panel" id="panel-battery-core">
+                <div class="panel-core-header"><span>🔋 เครื่องมือวิเคราะห์วิศวกรรมไฟฟ้า & แบตเตอรี่ Power Box DIY</span></div>
+                <div class="hardware-grid-matrix">
+                    <div class="config-card-box">
+                        <h4 style="color:var(--gold-main); font-size:0.95rem; margin-bottom:12px;">⚡ ปรับตั้งค่าสเปกแบตเตอรี่</h4>
+                        
+                        <div class="form-control-block">
+                            <label>ชนิดของแบตเตอรี่ที่นำมาพ่วง</label>
+                            <select id="bat-type" class="form-select-menu" onchange="BatteryLab.recalculate()">
+                                <option value="lead-acid">Lead-Acid Motorcycle Battery (12V 5Ah)</option>
+                                <option value="li-18650">Lithium-Ion 18650 Pack (3.7V 2.5Ah)</option>
+                                <option value="lifepo4">LiFePO4 Cell Array (3.2V 6Ah)</option>
+                            </select>
+                        </div>
+                        <div class="form-control-block">
+                            <label>รูปแบบสถาปัตยกรรมการต่อวงจร</label>
+                            <select id="bat-circuit" class="form-select-menu" onchange="BatteryLab.recalculate()">
+                                <option value="parallel">ต่อแบบขนาน (Parallel - เพิ่มความจุ Ah คงเดิมโวลต์)</option>
+                                <option value="series">ต่อแบบอนุกรม (Series - เพิ่มแรงดัน Volt คงเดิมความจุ)</option>
+                            </select>
+                        </div>
+                        <div class="form-control-block">
+                            <label>จำนวนก้อน/ลูก แบตเตอรี่ที่ใช้งาน</label>
+                            <input type="number" id="bat-count" class="flat-input" style="margin:0; padding:8px; text-align:left;" value="2" min="1" max="24" oninput="BatteryLab.recalculate()">
+                        </div>
+                        <div class="form-control-block">
+                            <label>อุปกรณ์ที่นำมาต่อโหลดกินกระแส</label>
+                            <select id="bat-load" class="form-select-menu" onchange="BatteryLab.recalculate()">
+                                <option value="pam8403">บอร์ดขยายเสียงคลาส D PAM8403 (กินกระแส ~1A)</option>
+                                <option value="sensor-h206">โมดูลตัววัดความเร็วรอบหมุน H206 (กินกระแส ~0.05A)</option>
+                                <option value="tpa3116d2">บอร์ดแอมป์ใหญ่บลูทูธ TPA3116D2 (กินกระแส ~3A)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="config-card-box">
+                        <h4 style="color:var(--emerald-glow); font-size:0.95rem; margin-bottom:12px;">📊 ผลการตรวจสอบและคํานวณระบบพลังงาน</h4>
+                        <div class="telemetry-output-board" id="bat-telemetry-result">
+                            กำลังคำนวณสถิติค่าทางไฟฟ้า...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEWSTAGE 5: 🎛️ SIGNAL GENERATOR AUDIO OSCILLATOR CHASSIS -->
+            <div class="stage-view-panel" id="panel-audio-core">
+                <div class="panel-core-header"><span>🎛️ เครื่องจำลองความถี่คลื่นสัญญาณเสียงไซเรนแจ้งเตือนภัย</span></div>
+                <div class="audio-lab-console">
+                    <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:15px;">
+                        ทดสอบวงจรกำเนิดคลื่นเสียงสัญญาณไซเรน (Audio Signal Waveform) ผ่าน Web Audio Web API โดยตรงเพื่อทดลองความถี่เสียงหูกระต่ายโคนัน
+                    </p>
+                    <div class="form-control-block">
+                        <label>เลือกชนิดของรูปคลื่นสัญญาณเสียง (Oscillator Type)</label>
+                        <select id="synth-wave-type" class="form-select-menu">
+                            <option value="sine">Sine Wave (คลื่นซายน์นุ่มนวลคล้ายคลื่นวิทยุ)</option>
+                            <option value="square">Square Wave (คลื่นสี่เหลี่ยมเสียงดิจิตอล 8-Bit)</option>
+                            <option value="sawtooth">Sawtooth Wave (คลื่นฟันเลื่อยแหลมสูงเตือนภัยกู้ระเบิด)</option>
+                            <option value="triangle">Triangle Wave (คลื่นสามเหลี่ยมฟังสบายตา)</option>
+                        </select>
+                    </div>
+                    <div class="form-control-block">
+                        <label>ความถี่มูลฐานของสัญญาณเสียงหลัก: <span id="lbl-synth-freq" class="text-gold">440</span> Hz</label>
+                        <input type="range" id="synth-freq-slider" min="150" max="1800" value="440" class="synth-control-slider" oninput="AudioLab.updateParams()">
+                    </div>
+                    <div class="form-control-block">
+                        <label>ระดับความแรงความดังเสียงโวลุ่ม: <span id="lbl-synth-gain" class="text-cyan">30</span>%</label>
+                        <input type="range" id="synth-gain-slider" min="0" max="100" value="30" class="synth-control-slider" oninput="AudioLab.updateParams()">
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="lux-action-btn" style="border-color:var(--emerald); color:var(--emerald);" onclick="AudioLab.triggerToneStart()">⚡ ปล่อยคลื่นความถี่สด</button>
+                        <button class="lux-action-btn" style="border-color:var(--crimson); color:var(--crimson);" onclick="AudioLab.triggerToneStop()">🛑 ตัดกระแสเสียงสัญญาณ</button>
+                    </div>
+                </div>
+            </div>
         </main>
 
-        <!-- RIGHT PANEL: MEMBRANE GLOBAL CHAT ENGINE AND ROOM MATES -->
-        <aside class="panel-wrapper">
-            <div class="panel-header-title">
-                <span>🌐 ระบบเชื่อมต่อแชทโลก</span>
-                <span style="color: var(--emerald); font-size: 0.75rem;">● Online Live</span>
+        <!-- COLUMN 3: GLOBAL INTERACTIVE LIVE CHAT SYSTEM SIMULATOR WITH LOCAL AI BOT -->
+        <aside class="dockable-side-panel">
+            <div class="panel-core-header">
+                <span>🌐 ช่องแชทเครือข่ายโลกจำลอง</span>
+                <span class="text-emerald animate-pulse" style="font-size:0.75rem;">● LIVE CONNECTED</span>
             </div>
 
-            <!-- ปุ่มสวิตช์เปิด-ปิดเสียงสิริอ่านข้อความแชท -->
-            <button class="primary-btn" id="siri-toggle-btn" onclick="ChatEngine.toggleSiri()" style="margin-bottom: 12px; background: rgba(212,175,55,0.15); font-size: 0.85rem; border-color: var(--gold-main);">
-                🔊 สิริอ่านแชทอัตโนมัติ: <span id="siri-status-text" style="color: var(--emerald); font-weight: bold;">เปิดใช้งาน</span>
+            <button class="lux-action-btn" id="siri-system-toggle-btn" onclick="ChatEngine.flipSiriActivationSwitch()" style="margin-bottom:12px; background:rgba(212,175,55,0.06); border-color:var(--gold-border); font-size:0.85rem;">
+                🔊 สิริสังเคราะห์เสียงอ่านแชทภาษาไทย: <span id="siri-status-lbl" style="color:var(--emerald); font-weight:700;">เปิดใช้งาน</span>
             </button>
 
-            <div class="chat-history-container" id="global-chat-monitor">
-                <!-- Text lines append point -->
+            <div class="chat-stream-viewport" id="chat-scroller-view">
+                <!-- Chat message boxes populate chronologically -->
             </div>
 
-            <div class="chat-input-dock">
-                <input type="text" id="chat-message-field" class="chat-field-input" placeholder="พิมพ์ข้อความคุยในแชทโลก..." maxlength="70">
-                <button class="primary-btn" onclick="ChatEngine.sendUserMessage()" style="padding: 10px 14px;">ส่ง</button>
+            <div class="chat-control-dock">
+                <input type="text" id="chat-input-node" class="chat-input-element" placeholder="พิมพ์ข้อความคุยกับบอทนักสืบและผู้เล่นคนอื่น..." maxlength="100" onkeydown="if(event.key==='Enter') ChatEngine.handleUserMessageDispatch()">
+                <button class="lux-action-btn" onclick="ChatEngine.handleUserMessageDispatch()">ส่ง</button>
             </div>
         </aside>
 
     </div>
 
     <!-- ==========================================================================
-       SYSTEM FOOTER BRAND SIGNATURE TERMINAL
+       SYSTEM MAIN STABLE FOOTER SECTION TERMINAL
        ========================================================================== -->
-    <footer class="app-footer">
-        <p>&copy; 2026 Detective Bomb & Mystery Games Project Engine | Verified Complete GitHub Single Layer Architecture</p>
+    <footer class="system-footer-anchor">
+        <p>&copy; 2026 ConanOS Terminal Architecture Project Core Framework v1.0.4. All Code Fixed.</p>
     </footer>
 
     <!-- ==========================================================================
-       10. COMPLETE LOGIC CONTROLLER SYSTEM ENGINE (JAVASCRIPT)
-       ========================================================================== -->
+       15. DETAILED CORE JAVA-SCRIPT APPARATUS LOGIC IMPLEMENTATION
+       ========================================================================== */ -->
     <script>
-        /**
-         * WEB AUDIO API AUDIO SYNTH GENERATOR
-         */
-        const SoundBox = {
-            audioContext: null,
+        /* ==========================================================================
+           SOUND GENERATOR ALGORITHM (BEEP & INTERFACING SOUND EFFECTS)
+           ========================================================================== */
+        const SystemAudioSFX = {
+            ctx: null,
             init() {
-                if (!this.audioContext) {
-                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
                 }
             },
-            playNote(freq, dur, type="sine", gainVal=0.06) {
+            emitTone(frequency, duration, waveType = "sine", outputVolume = 0.05) {
                 this.init();
                 try {
-                    let osc = this.audioContext.createOscillator();
-                    let gainNode = this.audioContext.createGain();
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, this.audioContext.currentTime);
-                    gainNode.gain.setValueAtTime(gainVal, this.audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.00001, this.audioContext.currentTime + dur);
-                    osc.connect(gainNode);
-                    gainNode.connect(this.audioContext.destination);
-                    osc.start();
-                    osc.stop(this.audioContext.currentTime + dur);
-                } catch(e) { console.log("Sound blocker active"); }
+                    let oscNode = this.ctx.createOscillator();
+                    let gainNode = this.ctx.createGain();
+                    oscNode.type = waveType;
+                    oscNode.frequency.setValueAtTime(frequency, this.ctx.currentTime);
+                    gainNode.gain.setValueAtTime(outputVolume, this.ctx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.00001, this.ctx.currentTime + duration);
+                    oscNode.connect(gainNode);
+                    gainNode.connect(this.ctx.destination);
+                    oscNode.start();
+                    oscNode.stop(this.ctx.currentTime + duration);
+                } catch (err) {}
             },
-            click() { this.playNote(700, 0.03, "sine", 0.05); },
+            click() { this.emitTone(820, 0.04, "sine", 0.04); },
             success() {
-                this.playNote(550, 0.08, "triangle");
-                setTimeout(() => this.playNote(700, 0.12, "triangle"), 70);
+                this.emitTone(580, 0.08, "triangle", 0.06);
+                setTimeout(() => this.emitTone(880, 0.15, "triangle", 0.06), 80);
             },
-            boom() {
-                this.playNote(120, 0.4, "sawtooth", 0.25);
-                this.playNote(80, 0.6, "triangle", 0.3);
+            failure() {
+                this.emitTone(220, 0.25, "sawtooth", 0.15);
+                setTimeout(() => this.emitTone(150, 0.3, "sawtooth", 0.15), 150);
+            },
+            gachaReveal() {
+                this.emitTone(440, 0.06, "sine", 0.05);
+                setTimeout(() => this.emitTone(660, 0.06, "sine", 0.05), 60);
+                setTimeout(() => this.emitTone(990, 0.25, "triangle", 0.08), 120);
             }
         };
 
-        /**
-         * GLOBAL CONFIGURATION GAME DATABASE STATE
-         */
-        const ProfileState = {
-            username: "Anonymous",
+        /* ==========================================================================
+           GLOBAL ACCOUNT PROFILE INTERNAL DATA STATE
+           ========================================================================== */
+        const UserProfileState = {
+            codename: "Anonymous",
             uid: "000000",
-            rankPoints: 0,
-            diamonds: 0,
-            hasSpecialTicket: false
+            rankPoints: 120,
+            diamonds: 380,
+            inventory: [],
+            stats: { bombWin: 0, numWin: 0, quizCorrect: 0, quizTotal: 0, ssrCount: 0 },
+            saveToLocal() {
+                localStorage.setItem("conanos_profile_v1", JSON.stringify(this));
+            },
+            loadFromLocal() {
+                const saved = localStorage.getItem("conanos_profile_v1");
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        this.codename = parsed.codename;
+                        this.uid = parsed.uid;
+                        this.rankPoints = parsed.rankPoints;
+                        this.diamonds = parsed.diamonds;
+                        this.inventory = parsed.inventory || [];
+                        if (parsed.stats) this.stats = parsed.stats;
+                    } catch (e) {}
+                }
+            }
         };
 
-        /**
-         * APPLICATION CONTROL ENGINE HUB
-         */
+        /* ==========================================================================
+           CORE OS CORE ROUTER & INTERACTIVE PANEL SUBSYSTEMS
+           ========================================================================== */
         const CoreEngine = {
-            registerAccount() {
-                const input = document.getElementById("auth-username-field").value.trim();
-                if (input === "") {
-                    alert("กรุณาระบุโค้ดเนมชื่อของคุณก่อนเข้าเล่นครับคุณนักสืบ!");
-                    return;
+            registerSystemIdentity() {
+                const rawName = document.getElementById("terminal-user-input").value.trim();
+                if (!rawName) return;
+                UserProfileState.codename = rawName;
+                UserProfileState.uid = Math.floor(118500 + Math.random() * 875400).toString();
+                
+                document.getElementById("hud-user-name").innerText = UserProfileState.codename;
+                document.getElementById("hud-user-uid").innerText = `UID: ${UserProfileState.uid}`;
+                
+                SystemAudioSFX.success();
+                document.getElementById("gatekeeper-auth-screen").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("gatekeeper-auth-screen").style.display = "none";
+                }, 400);
+
+                this.syncTelemetryHUD();
+                ChatEngine.bootWorldChatSimulator();
+                BombGame.renderWireHarnessComponents();
+                BatteryLab.recalculate();
+            },
+            routePanel(targetPanelId) {
+                SystemAudioSFX.click();
+                document.querySelectorAll(".nav-pillar-anchor").forEach(el => el.classList.remove("active-link"));
+                document.querySelectorAll(".stage-view-panel").forEach(el => el.classList.remove("active-panel"));
+                
+                const linkMap = {
+                    'dashboard': 'lnk-dash', 'bomb-core': 'lnk-bomb', 'number-core': 'lnk-number',
+                    'quiz-core': 'lnk-quiz', 'battery-core': 'lnk-battery', 'audio-core': 'lnk-audio'
+                };
+                
+                document.getElementById(linkMap[targetPanelId]).classList.add("active-link");
+                document.getElementById(`panel-${targetPanelId}`).classList.add("active-panel");
+                
+                // Clean context active timers
+                BombGame.haltCountdownTimer();
+                AudioLab.triggerToneStop();
+            },
+            syncTelemetryHUD() {
+                document.getElementById("hud-user-rp").innerText = `${UserProfileState.rankPoints} RP`;
+                document.getElementById("hud-user-diamonds").innerText = UserProfileState.diamonds;
+                document.getElementById("hud-user-inventory").innerText = `${UserProfileState.inventory.length} ชิ้น`;
+                
+                // Sync Dashboard statistics
+                document.getElementById("stat-bomb-win").innerText = UserProfileState.stats.bombWin;
+                document.getElementById("stat-num-win").innerText = UserProfileState.stats.numWin;
+                const pct = UserProfileState.stats.quizTotal > 0 ? Math.round((UserProfileState.stats.quizCorrect / UserProfileState.stats.quizTotal) * 100) : 0;
+                document.getElementById("stat-quiz-pct").innerText = `${pct}%`;
+                document.getElementById("stat-gacha-ssr").innerText = UserProfileState.stats.ssrCount;
+
+                // Sync item tokens display
+                const tray = document.getElementById("inventory-token-tray");
+                if (UserProfileState.inventory.length === 0) {
+                    tray.innerHTML = '<span class="inv-token-badge">ไม่มีไอเทมสะสม</span>';
+                } else {
+                    tray.innerHTML = "";
+                    UserProfileState.inventory.forEach(item => {
+                        const token = document.createElement("span");
+                        token.className = "inv-token-badge";
+                        if(item.includes("SSR")) token.style.borderColor = "var(--gold-main)";
+                        token.innerText = item;
+                        tray.appendChild(token);
+                    });
                 }
-
-                ProfileState.username = input;
-                ProfileState.uid = Math.floor(100000 + Math.random() * 900000).toString();
-                
-                document.getElementById("hud-name").innerText = ProfileState.username;
-                document.getElementById("hud-uid").innerText = `UID: ${ProfileState.uid}`;
-                
-                SoundBox.success();
-                document.getElementById("auth-overlay").style.display = "none";
-                
-                ChatEngine.initSimulator();
-            },
-
-            switchStage(stageId) {
-                SoundBox.click();
-                
-                const buttons = document.querySelectorAll(".nav-item-btn");
-                buttons.forEach(btn => btn.classList.remove("active"));
-                
-                if(stageId === 'dashboard') document.getElementById('nav-dash').classList.add('active');
-                if(stageId === 'stage-bomb') document.getElementById('nav-bomb').classList.add('active');
-                if(stageId === 'stage-number') document.getElementById('nav-number').classList.add('active');
-                if(stageId === 'stage-quiz') document.getElementById('nav-quiz').classList.add('active');
-
-                const views = document.querySelectorAll(".game-stage-view");
-                views.forEach(v => v.classList.remove("active-stage"));
-
-                document.getElementById(stageId).classList.add("active-stage");
-
-                if (stageId !== 'stage-bomb') {
-                    BombGame.forceStopTimer();
-                }
-            },
-
-            updateHUD() {
-                document.getElementById("hud-rank").innerText = `${ProfileState.rankPoints} RP`;
-                document.getElementById("hud-diamonds").innerText = ProfileState.diamonds;
-            },
-
-            mockupTopup(amount, price) {
-                SoundBox.success();
-                ProfileState.diamonds += amount;
-                this.updateHUD();
-                alert(`🎯 [ระบบทดสอบเติมเงินสำเร็จ]\nระบบทำการเติมจำนวน ${amount} เพชร เข้าบัญชี UID ${ProfileState.uid} ของคุณเรียบร้อยแล้ว (การหักเงินจำนวน ${price} บาท เป็นเพียงการจำลองระบบเท่านั้น)`);
-            },
-
-            buySpecialTicket() {
-                if (ProfileState.diamonds < 120) {
-                    SoundBox.playNote(250, 0.15, "sawtooth");
-                    alert("❌ จำนวนเพชรทดสอบของคุณไม่เพียงพอ! กรุณากดเติมเงินที่ตู้จำลองด้านบนก่อนครับวัยรุ่น");
-                    return;
-                }
-                SoundBox.success();
-                ProfileState.diamonds -= 120;
-                ProfileState.hasSpecialTicket = true;
-                this.updateHUD();
-                alert("🎟️ ซื้อบัตรข้ามปริศนาพิเศษสำเร็จแล้ว! บัญชีของคุณได้รับสถานะสิทธิประโยชน์สูงสุด");
             }
         };
 
-        /**
-         * MINIGAME 1: 💣 BOMB DEFUSE MECHANICS SYSTEM
-         */
+        /* ==========================================================================
+           MARKET STOREFRONT & REWARD GACHA APPARATUS ENGINE
+           ========================================================================== */
+        const StoreEngine = {
+            executePurchase(productId) {
+                if (productId === 'd200') {
+                    UserProfileState.diamonds += 200;
+                    SystemAudioSFX.success();
+                } else if (productId === 'd1200') {
+                    UserProfileState.diamonds += 1200;
+                    SystemAudioSFX.success();
+                } else if (productId === 'skip-ticket') {
+                    if (UserProfileState.diamonds < 150) {
+                        alert("ยอดเงินเพชรทดสอบไม่เพียงพอโฮมี่!");
+                        SystemAudioSFX.failure();
+                        return;
+                    }
+                    UserProfileState.diamonds -= 150;
+                    UserProfileState.inventory.push("🎟️ บัตรข้ามปริศนา");
+                    SystemAudioSFX.success();
+                }
+                CoreEngine.syncTelemetryHUD();
+            },
+            triggerGachaRoll() {
+                if (UserProfileState.diamonds < 50) {
+                    alert("ต้องการ 50 เพชรเพื่อสุ่มกาชาพยานหลักฐาน!");
+                    SystemAudioSFX.failure();
+                    return;
+                }
+                UserProfileState.diamonds -= 50;
+                SystemAudioSFX.gachaReveal();
+
+                const dropRatePool = [
+                    { name: "📜 ลายนิ้วมือคนร้าย (Common)", tier: "N" },
+                    { name: "🧭 แว่นตาสะกดรอยโคนัน (Rare)", tier: "R" },
+                    { name: "💊 ยาพิษ APTX-4869 (SSR รุ่นลิมิเต็ด!)", tier: "SSR" },
+                    { name: "🛹 สเก็ตบอร์ดเทอร์โบติดเครื่องยนต์ (SR)", tier: "SR" }
+                ];
+
+                const dice = Math.random();
+                let prize;
+                if (dice < 0.10) { prize = dropRatePool[2]; UserProfileState.stats.ssrCount++; } // 10% SSR
+                else if (dice < 0.35) { prize = dropRatePool[3]; } // 25% SR
+                else if (dice < 0.70) { prize = dropRatePool[1]; } // 35% R
+                else { prize = dropRatePool[0]; } // 30% N
+
+                UserProfileState.inventory.push(`[${prize.tier}] ${prize.name}`);
+                alert(`🎉 คุณได้รับไอเทมแกะรอยระดับ [${prize.tier}]: ${prize.name}`);
+                CoreEngine.syncTelemetryHUD();
+            }
+        };
+
+        /* ==========================================================================
+           💣 BOMB DEFUSAL ACTION MODULE ALGORITHMS
+           ========================================================================== */
         const BombGame = {
-            correctWire: "blue",
-            timerInterval: null,
-            timeLeft: 30,
-            matchRunning: false,
+            totalWiresConfig: 4,
+            currentDifficultyLevel: 0,
+            designatedTargetWire: "",
+            countdownInterval: null,
+            remainingTimeTick: 3000, // 30.00 seconds in centiseconds
+            isDetonatorArmed: false,
+            wirePaletteColors: ["blue", "red", "yellow", "green", "purple"],
 
-            startMatch() {
-                if (this.matchRunning) return;
-                SoundBox.success();
-                
-                this.matchRunning = true;
-                this.timeLeft = 30;
-                document.getElementById("bomb-timer-clock").innerText = "00:30";
-                document.getElementById("bomb-status-indicator").innerText = "🔴 สถานะ: มีกระแสไฟวิ่งผ่าน ชนวนกำลังทำงาน!";
-                document.getElementById("bomb-status-indicator").style.color = "var(--crimson)";
-                document.getElementById("bomb-start-btn").setAttribute("disabled", "true");
+            setDifficulty(levelIndex) {
+                if (this.isDetonatorArmed) return;
+                SystemAudioSFX.click();
+                this.currentDifficultyLevel = levelIndex;
+                document.querySelectorAll(".diff-chip").forEach((el, idx) => {
+                    el.classList.toggle("active-diff", idx === levelIndex);
+                });
 
-                const ropes = document.querySelectorAll(".wire-rope");
-                ropes.forEach(r => r.classList.remove("cut-off"));
+                const cfg = [
+                    { wires: 4, clock: 3000, name: "C4 Standard Device" },
+                    { wires: 5, clock: 1500, name: "Dynamite Liquid Nitro" },
+                    { wires: 5, clock: 800, name: "Time Bomb Logic Matrix" }
+                ][levelIndex];
 
-                const wiresList = ["blue", "red", "yellow", "green"];
-                this.correctWire = wiresList[Math.floor(Math.random() * wiresList.length)];
-                
-                this.timerInterval = setInterval(() => {
-                    this.timeLeft--;
+                this.totalWiresConfig = cfg.wires;
+                this.remainingTimeTick = cfg.clock;
+                document.getElementById("bomb-type-lbl").innerText = cfg.name;
+                this.updateDigitalClockDisplay();
+                this.renderWireHarnessComponents();
+            },
+            renderWireHarnessComponents() {
+                const container = document.getElementById("bomb-wire-container");
+                container.innerHTML = "";
+                for (let i = 0; i < this.totalWiresConfig; i++) {
+                    const color = this.wirePaletteColors[i];
+                    const wrapper = document.createElement("div");
+                    wrapper.className = "wire-harness-assembly";
+                    wrapper.onclick = () => this.severWireCoreSegment(color);
                     
-                    let secondsStr = this.timeLeft < 10 ? `0${this.timeLeft}` : this.timeLeft;
-                    document.getElementById("bomb-timer-clock").innerText = `00:${secondsStr}`;
+                    const strand = document.createElement("div");
+                    strand.className = `wire-strand-core wire-color-${i + 1}`;
+                    strand.id = `wire-unit-node-${color}`;
                     
-                    SoundBox.playNote(880, 0.02, "sine", 0.04);
+                    const label = document.createElement("span");
+                    label.className = "wire-descriptor-text";
+                    label.innerText = `สายสี${color === 'blue'?'น้ำเงิน':color==='red'?'แดง':color==='yellow'?'เหลือง':color==='green'?'เขียว':'ม่วง'}`;
 
-                    if (this.timeLeft <= 0) {
-                        this.triggerExplosion("เวลาหมดลงก่อนที่คุณจะตัดสินใจได้สำเร็จ!");
+                    wrapper.appendChild(strand);
+                    wrapper.appendChild(label);
+                    container.appendChild(wrapper);
+                }
+            },
+            primeExplosiveCore() {
+                if (this.isDetonatorArmed) return;
+                this.isDetonatorArmed = true;
+                document.getElementById("bomb-engage-trigger-btn").disabled = true;
+                document.getElementById("bomb-telemetry-status").innerText = "STATUS: ARMED & RUNNING";
+                document.getElementById("bomb-telemetry-status").style.color = "var(--crimson)";
+                
+                const chosenIdx = Math.floor(Math.random() * this.totalWiresConfig);
+                this.designatedTargetWire = this.wirePaletteColors[chosenIdx];
+
+                this.countdownInterval = setInterval(() => {
+                    this.remainingTimeTick--;
+                    this.updateDigitalClockDisplay();
+                    if (this.remainingTimeTick % 100 === 0 && this.remainingTimeTick < 1000) {
+                        SystemAudioSFX.emitTone(1200, 0.05, "sine", 0.1); // Beep alarm speed up
                     }
-                }, 1000);
+                    if (this.remainingTimeTick <= 0) {
+                        this.executeExplosionSequence("💥 บู๊มมม! ระเบิดทำงานเนื่องจากเวลาหมดสภาพการกู้ภัย!");
+                    }
+                }, 10);
             },
-
-            cutWire(color) {
-                if (!this.matchRunning) {
-                    alert("คุณต้องกดเริ่มระบบสับสวิตช์ชนวนระเบิดเวลาก่อนลงมือตัดสายไฟซิวับรุ่น!");
-                    return;
-                }
-
-                const targetWire = document.getElementById(`wire-${color}`);
-                if (targetWire.classList.contains("cut-off")) return;
-
-                targetWire.classList.add("cut-off");
-                SoundBox.playNote(400, 0.05, "sawtooth");
-
-                if (color === this.correctWire) {
-                    this.clearMatchState();
-                    document.getElementById("bomb-status-indicator").innerText = "🟢 สถานะ: กู้สำเร็จ ระบบถอดชนวนแล้วอย่างปลอดภัย!";
-                    document.getElementById("bomb-status-indicator").style.color = "var(--emerald)";
-                    
-                    ProfileState.rankPoints += 35;
-                    CoreEngine.updateHUD();
-                    
-                    SoundBox.success();
-                    alert("🎉 ยินดีด้วยคุณนักสืบ! ไหวพริบของคุณยอดเยี่ยมมาก ตัดสายชนวนหลักระเบิดหยุดทำงานทันเวลาอย่างหวุดหวิด! (+35 RP)");
-                } else {
-                    this.triggerExplosion(`คุณตัดผิดเส้น! สายสี${color} กระตุ้นโวลต์ไฟส่งสัญญาณตรงหาแกนชนวนทันที!`);
-                }
-            },
-
-            triggerExplosion(reasonText) {
-                this.clearMatchState();
-                SoundBox.boom();
-
-                document.getElementById("bomb-timer-clock").innerText = "💥 B00M!!";
-                document.getElementById("bomb-status-indicator").innerText = "💀 สถานะ: ระเบิดบึ้ม ตึกถล่มพังพินาศแล้ว!";
+            updateDigitalClockDisplay() {
+                let totalSecs = this.remainingTimeTick / 100;
+                let mins = Math.floor(totalSecs / 60);
+                let secs = Math.floor(totalSecs % 60);
+                let centis = this.remainingTimeTick % 100;
                 
-                ProfileState.rankPoints = Math.max(0, ProfileState.rankPoints - 20);
-                CoreEngine.updateHUD();
-
-                alert(`❌ [GAME OVER - เกิดการระเบิด]\n${reasonText}\nแรงระเบิดทำให้คุณสูญเสียสถานะเอาชีวิตรอดในด่านนี้ไปทันที (-20 RP)`);
+                const padding = (n) => n < 10 ? '0' + n : n;
+                document.getElementById("bomb-digital-clock").innerText = `${padding(mins)}:${padding(secs)}.${padding(centis)}`;
             },
+            severWireCoreSegment(colorSelected) {
+                if (!this.isDetonatorArmed) return;
+                const node = document.getElementById(`wire-unit-node-${colorSelected}`);
+                if (node.classList.contains("severed")) return;
+                
+                node.classList.add("severed");
+                SystemAudioSFX.emitTone(400, 0.05, "sawtooth", 0.08); // Wire cut sound
 
-            clearMatchState() {
-                this.forceStopTimer();
-                this.matchRunning = false;
-                document.getElementById("bomb-start-btn").removeAttribute("disabled");
-            },
-
-            forceStopTimer() {
-                if (this.timerInterval) {
-                    clearInterval(this.timerInterval);
-                    this.timerInterval = null;
+                if (colorSelected === this.designatedTargetWire) {
+                    this.haltCountdownTimer();
+                    this.isDetonatorArmed = false;
+                    document.getElementById("bomb-engage-trigger-btn").disabled = false;
+                    document.getElementById("bomb-telemetry-status").innerText = "STATUS: DEFUSED SECURE";
+                    document.getElementById("bomb-telemetry-status").style.color = "var(--emerald)";
+                    
+                    const bonusRp = [40, 80, 150][this.currentDifficultyLevel];
+                    const bonusDiam = [10, 20, 50][this.currentDifficultyLevel];
+                    UserProfileState.rankPoints += bonusRp;
+                    UserProfileState.diamonds += bonusDiam;
+                    UserProfileState.stats.bombWin++;
+                    
+                    alert(`🎯 สำเร็จ! คุณตัดสายชนวนที่ถูกต้อง (${colorSelected}) กู้ภัยระเบิดสำเร็จ ได้รับ +${bonusRp} RP, +${bonusDiam} 💎`);
+                    CoreEngine.syncTelemetryHUD();
+                    this.setDifficulty(this.currentDifficultyLevel);
+                } else {
+                    this.executeExplosionSequence(`💥 บู๊มมม! คุณตัดสายสี${colorSelected} ผิดเส้น! วงจรชนวนลัดวงจรระเบิดทันที!`);
                 }
+            },
+            executeExplosionSequence(narrativeLog) {
+                this.haltCountdownTimer();
+                this.isDetonatorArmed = false;
+                document.getElementById("bomb-engage-trigger-btn").disabled = false;
+                document.getElementById("bomb-telemetry-status").innerText = "STATUS: DETONATED";
+                
+                SystemAudioSFX.failure();
+                alert(narrativeLog);
+                
+                UserProfileState.rankPoints = Math.max(0, UserProfileState.rankPoints - 30);
+                CoreEngine.syncTelemetryHUD();
+                this.setDifficulty(this.currentDifficultyLevel);
+            },
+            haltCountdownTimer() {
+                clearInterval(this.countdownInterval);
             }
         };
 
-        /**
-         * MINIGAME 2: 🎲 MYSTERY NUMBER CRACKING LOGIC
-         */
+        /* ==========================================================================
+           🎲 MYSTERY CRYIME SCENE NUMBER SOLVER LOGIC
+           ========================================================================== */
         const NumberGame = {
-            secretDigit: 42,
-            attempts: 0,
-
-            initGame() {
-                this.secretDigit = Math.floor(1 + Math.random() * 100);
-                this.attempts = 0;
-                document.getElementById("number-log-monitor").innerHTML = `<div class="clue-row-item" style="color: var(--gold-main); font-style: italic;">[ระบบข้อมูล] ตัวเลขปริศนาชุดใหม่ถูกสุ่มสร้างสำเร็จแล้ว (1-100) ส่งค่ารหัสของคุณเพื่อสืบร่องรอยได้เลย</div>`;
-                document.getElementById("mystery-digit-input").value = "";
+            secretTargetInt: 0,
+            attemptCounter: 0,
+            generateNewTarget() {
+                this.secretTargetInt = Math.floor(1 + Math.random() * 200);
+                this.attemptCounter = 0;
+                document.getElementById("num-logger-output").innerHTML = '<div class="teleprompter-line text-emerald">[System] รีเซ็ตพิกัดเป้าหมายใหม่ ค้นหาค่าความแรงสัญญาณระหว่าง 1 - 200 แล้ว!</div>';
+                SystemAudioSFX.success();
             },
-
-            submitGuess() {
-                const inputElement = document.getElementById("mystery-digit-input");
-                const currentVal = parseInt(inputElement.value);
-
-                if (isNaN(currentVal) || currentVal < 1 || currentVal > 100) {
-                    alert("กรุณากรอกตัวเลขเดาช่วงระหว่างเลข 1 ถึง 100 ให้ถูกต้องด้วยนะครับ!");
+            processUserGuess() {
+                const inputNode = document.getElementById("num-guess-field");
+                const guessVal = parseInt(inputNode.value);
+                if (isNaN(guessVal) || guessVal < 1 || guessVal > 200) {
+                    alert("กรุณาป้อนตัวเลขพิกัดที่ถูกต้อง (1-200) โฮมี่!");
                     return;
                 }
 
-                this.attempts++;
-                SoundBox.click();
-                const logMonitor = document.getElementById("number-log-monitor");
-
-                if (currentVal === this.secretDigit) {
-                    SoundBox.success();
-                    logMonitor.innerHTML += `<div class="clue-row-item" style="color: var(--emerald);">🎯 ครั้งที่ ${this.attempts}: ป้อนเลข [${currentVal}] -> รหัสถูกต้องถอดล็อกตู้เซฟกระจุกข้อมูลคดีสำเร็จ!</div>`;
-                    
-                    ProfileState.rankPoints += 25;
-                    CoreEngine.updateHUD();
-                    
-                    alert(`🎉 โคดเนม ${ProfileState.username} ถอดรหัสสำเร็จ! ตัวเลขคือ ${this.secretDigit} ใช้เวลาไปทั้งหมด ${this.attempts} ครั้งความพยายาม (+25 RP)`);
-                    this.initGame();
-                } else if (currentVal < this.secretDigit) {
-                    logMonitor.innerHTML += `<div class="clue-row-item" style="color: var(--crimson);">❌ ครั้งที่ ${this.attempts}: ป้อนเลข [${currentVal}] -> เบาะแสบ่งบอกว่าตัวเลขจริง "มีค่ามากกว่านี้" ↑</div>`;
-                } else {
-                    logMonitor.innerHTML += `<div class="clue-row-item" style="color: var(--cyan);">❌ ครั้งที่ ${this.attempts}: ป้อนเลข [${currentVal}] -> เบาะแสบ่งบอกว่าตัวเลขจริง "มีค่าน้อยกว่านี้" ↓</div>`;
+                // Check skip-ticket usage condition
+                if (UserProfileState.inventory.includes("🎟️ บัตรข้ามปริศนา") && guessVal === 0) {
+                    // Hidden feature code
                 }
 
-                inputElement.value = "";
-                logMonitor.scrollTop = logMonitor.scrollHeight;
+                this.attemptCounter++;
+                const logBoard = document.getElementById("num-logger-output");
+                
+                if (guessVal === this.secretTargetInt) {
+                    SystemAudioSFX.success();
+                    logBoard.innerHTML += `<div class="teleprompter-line text-emerald">➔ [ด่านสำเร็จ] พิกัดตรงกันที่เลข ${guessVal}! ค้นพบฐานลับคนร้ายในความพยายามครั้งที่ ${this.attemptCounter}</div>`;
+                    alert(`🎯 ยอดเยี่ยม! รหัสแกะรอยถูกต้อง ได้รับคะแนนรางวัลสะสมภารกิจพิกัดดาวเทียม!`);
+                    UserProfileState.rankPoints += 50;
+                    UserProfileState.diamonds += 15;
+                    UserProfileState.stats.numWin++;
+                    CoreEngine.syncTelemetryHUD();
+                    this.generateNewTarget();
+                } else {
+                    SystemAudioSFX.emitTone(320, 0.08, "sine", 0.04);
+                    const clueDirection = guessVal < this.secretTargetInt ? "ต่ำเกินไป ↑ สัญญาณเรดาร์แจ้งเตือนว่าเป้าหมายอยู่เลขสูงกว่านี้" : "สูงเกินไป ↓ สัญญาณเรดาร์แจ้งเตือนว่าเป้าหมายอยู่เลขต่ำกว่านี้";
+                    logBoard.innerHTML += `<div class="teleprompter-line">ครั้งที่ ${this.attemptCounter}: สแกนรหัส [${guessVal}] ➔ <span class="text-crimson">${clueDirection}</span></div>`;
+                }
+                logBoard.scrollTop = logBoard.scrollHeight;
+                inputNode.value = "";
             }
         };
 
-        /**
-         * MINIGAME 3: ❓ DETECTIVE QUIZ DATA & CONTROL MATRIX
-         */
+        /* ==========================================================================
+           ❓ DETECTIVE CASE LAW CRIMINAL QUIZ REPOSITORY
+           ========================================================================== */
         const QuizGame = {
-            currentQuestionIdx: 0,
-            
-            questionsData = [
-                {
-                    q: "คดีชายสวมแว่นตาดำ: ชายคนหนึ่งแจ้งความว่าโดนคนร้ายบุกเดี่ยวชิงทรัพย์ในห้องนอนยามวิกาลช่วงเที่ยงคืนไฟดับสนิท โดยเขาจำหน้าตาและรอยสักบนใบหน้าคนร้ายได้อย่างแม่นยำ คุณฐานะนักสืบพบบังพิรุธใดในคำให้การนี้?",
-                    options: [
-                        "เขาโกหก เพราะห้องนอนมืดและไฟดับสนิทไม่มีแสงสว่างพอที่จะมองเห็นลายรอยสักบนใบหน้าคนร้ายได้ชัดเจน",
-                        "เขาน่าจะสมรู้ร่วมคิดกับทนายความ",
-                        "คนร้ายจงใจเปิดไฟฉายคาดหัวพกพาบุกเข้าชิงทรัพย์",
-                        "คนร้ายจำสถานที่ผิดตำแหน่งพิกัด"
-                    ],
-                    correctIdx: 0
-                },
-                {
-                    q: "คดีน้ำแข็งละลายในแก้วน้ำ: พบศพเหยื่อโดนสารพิษร้ายแรงเสียชีวิตในห้องปิดตาย บนโต๊ะมีแก้วเครื่องดื่มชาเขียววางอยู่สองแก้ว เพื่อนของผู้ตายบอกว่าพวกเขาสั่งมาดื่มพร้อมกันตั้งแต่สองชั่วโมงก่อนหน้า แต่เพื่อนปลอดภัยดี ทำไมพิษถึงออกฤทธิ์ฆ่าเฉพาะเหยื่อผู้ตาย?",
-                    options: [
-                        "พิษถูกทาอยู่ที่ก้นแก้วด้านนอกเท่านั้น",
-                        "พิษถูกผสมแช่อยู่ภายในก้อนน้ำแข็ง เมื่อเวลาผ่านไปน้ำแข็งของเหยื่อละลายสารพิษจึงละลายเข้าสู่กระแสเลือด",
-                        "เหยื่อแอบกินยารักษาโรคแทรกซ้อน",
-                        "เพื่อนสลับแก้วระหว่างพูดคุยระเบิดเวลา"
-                    ],
-                    correctIdx: 1
-                }
+            activeQuizIndex: 0,
+            questionPool: [
+                { title: "คดีฆาตกรรมห้องปิดตาย: หน้าต่างล็อกจากด้านใน ประตูล็อกสนิท พบศพตรงกลางห้อง ถุงน้ำแข็งละลายอยู่ข้างตัว อาวุธสังหารคือแรงกลไกผูกเชือก คุณคิดว่าสิ่งใดคือแกนหลักหลักการอำพรางคดี?", branches: ["การใช้เวลาละลายของน้ำแข็งถ่วงน้ำหนักตัดเชือกฆ่าตัวตาย", "คนร้ายมุดท่อระบายอากาศขนาด 4 นิ้วหนีออกไป"], answerKey: 0 },
+                { title: "พิสูจน์หลักฐาน: รอยเลือดสาดกระจายบนกำแพงเป็นรูปวงรีทแยงมุมยาว คาดเดาทิศทางและมุมตกกระทบของแรงดันโลหิตอย่างไรทางนิติวิทยาศาสตร์?", branches: ["เลือดกระเซ็นมาจากทิศด้านตรงข้ามของมุมแหลมเรียว", "เลือดหยดลงมาจากเพดานตรงๆ เป็นเส้นดิ่ง"], answerKey: 0 },
+                { title: "ในทางกฎหมายอาญาประเทศไทย การกระทำข้อใดต่อไปนี้ถือเป็นการป้องกันตัวโดยชอบด้วยกฎหมาย?", branches: ["คนร้ายหันหลังวิ่งหนีไปแล้ว แต่เราคว้าปืนยิงไล่หลังเพื่อป้องกันทรัพย์สิน", "คนร้ายเงื้อมีดดาบจะฟันเราในระยะประชิด จึงใช้ไม้ตีสวนเพื่อยับยั้ง"], answerKey: 1 },
+                { title: "ข้อใดเป็นคุณสมบัติทางเคมีพื้นฐานของสารโพแทสเซียมไซยาไนด์ (Potassium Cyanide) ที่คนร้ายมักใช้ลอบสังหารในอนิเมะโคนัน?", branches: ["ขัดขวางการหายใจระดับเซลล์ของระบบขนส่งอิเล็กตรอนส่งผลให้เสียชีวิตเฉียบพลัน", "เป็นสารกรดรุนแรงกัดทะลุกระเพาะอาหารภายในเวลา 4 ชั่วโมง"], answerKey: 0 }
             ],
-
-            startTest() {
-                this.currentQuestionIdx = 0;
-                document.getElementById("quiz-activation-btn").style.display = "none";
-                this.loadQuestion();
+            bootQuizSession() {
+                this.activeQuizIndex = 0;
+                document.getElementById("quiz-master-control-btn").style.display = "none";
+                this.dispatchNextQuestionNode();
+                SystemAudioSFX.success();
             },
+            dispatchNextQuestionNode() {
+                const promptNode = document.getElementById("quiz-question-presenter");
+                const optionsNode = document.getElementById("quiz-options-anchor");
+                optionsNode.innerHTML = "";
 
-            loadQuestion() {
-                if (this.currentQuestionIdx >= this.questionsData.length) {
-                    document.getElementById("quiz-question-node").innerText = "🏆 การประเมินคดีเสร็จสิ้นแล้ว! คุณได้แสดงทักษะการจับสังเกตจับพิรุธได้อย่างเหมาะสมในฐานะนักสืบสายรหัสลับ";
-                    document.getElementById("quiz-options-wrapper").innerHTML = "";
-                    document.getElementById("quiz-activation-btn").style.display = "block";
-                    document.getElementById("quiz-activation-btn").innerText = "🔄 เริ่มทำการทดสอบใหม่อีกครั้ง";
-                    
-                    ProfileState.rankPoints += 30;
-                    CoreEngine.updateHUD();
+                if (this.activeQuizIndex >= this.questionPool.length) {
+                    promptNode.innerText = "🎉 ยินดีด้วยโฮมี่! คุณผ่านการทดสอบแบบวัดประเมินความรู้คดีวิเคราะห์นักสืบและนิติวิทยาศาสตร์ทั้งหมดเรียบร้อยแล้ว!";
+                    document.getElementById("quiz-master-control-btn").style.display = "block";
+                    document.getElementById("quiz-master-control-btn").innerText = "🔄 เริ่มทำข้อสอบใหม่อีกครั้ง";
+                    CoreEngine.syncTelemetryHUD();
                     return;
                 }
 
-                const currentData = this.questionsData[this.currentQuestionIdx];
-                document.getElementById("quiz-question-node").innerText = `คดีที่ ${this.currentQuestionIdx + 1}: ${currentData.q}`;
-                
-                const wrapper = document.getElementById("quiz-options-wrapper");
-                wrapper.innerHTML = "";
+                const currentData = this.questionPool[this.activeQuizIndex];
+                promptNode.innerText = `คำถามข้อที่ ${this.activeQuizIndex + 1}: ${currentData.title}`;
 
-                currentData.options.forEach((optText, index) => {
+                currentData.branches.forEach((branchTxt, branchIdx) => {
                     const btn = document.createElement("button");
-                    btn.className = "option-node-btn";
-                    btn.innerText = `${index + 1}. ${optText}`;
-                    btn.setAttribute("onclick", `QuizGame.selectAnswer(${index})`);
-                    wrapper.appendChild(btn);
+                    btn.className = "interrogation-btn-node";
+                    btn.innerText = branchTxt;
+                    btn.onclick = () => this.evaluateUserSelection(branchIdx);
+                    optionsNode.appendChild(btn);
                 });
             },
-
-            selectAnswer(chosenIdx) {
-                const currentData = this.questionsData[this.currentQuestionIdx];
-                if (chosenIdx === currentData.correctIdx) {
-                    SoundBox.success();
-                    alert("🎯 ถูกต้อง! การวิเคราะห์แยกแยะและตรรกะของคุณมองเห็นความจริงที่ซ่อนอยู่เบื้องหลังหลักฐานแวดล้อมได้เฉียบคมมาก");
+            evaluateUserSelection(selectedAnswerIdx) {
+                const data = this.questionPool[this.activeQuizIndex];
+                UserProfileState.stats.quizTotal++;
+                
+                if (selectedAnswerIdx === data.answerKey) {
+                    SystemAudioSFX.success();
+                    UserProfileState.stats.quizCorrect++;
+                    UserProfileState.rankPoints += 20;
+                    alert("ถูกต้อง! การวิเคราะห์หลักฐานเฉียบคมสมเป็นศิษย์โคนัน");
                 } else {
-                    SoundBox.playNote(220, 0.2, "sawtooth");
-                    alert("❌ ผิดพลาด! คำวิเคราะห์ของคุณคลาดเคลื่อนไปจากความจริง คนร้ายแอบใช้จุดนี้หลบหนีไปได้");
+                    SystemAudioSFX.failure();
+                    alert("คำตอบผิดพลาด! หลักฐานชิ้นนี้ชี้ไปหาข้อเท็จจริงอีกอย่างหนึ่ง");
                 }
-
-                this.currentQuestionIdx++;
-                this.loadQuestion();
+                
+                this.activeQuizIndex++;
+                this.dispatchNextQuestionNode();
+                CoreEngine.syncTelemetryHUD();
             }
         };
 
-        /**
-         * GLOBAL CHAT SIMULATOR REAL-TIME MESSAGE ENGINE WITH SIRI VOICE SPEECH
-         */
-        const ChatEngine = {
-            simulatorInterval: null,
-            siriActive: true, 
-            botNames: ["Conan_Fan", "Kaito_Kid99", "Mori_Kogoro", "Ayumi_Alpha", "Inspector_Megure", "Heiji_Osaka"],
-            botPhrases: [
-                "ใครกู้ระเบิดสายสีแดงผ่านบ้างวะ ตึงจัดบึ้มใส่หน้าไปสามรอบละ 💣",
-                "แอดเพื่อนมาได้นะทุกคน UID ผมคือ 549321 แอดมาสืบคดีร่วมกันได้เลย",
-                "เกมสุ่มเลขปริศนา ได้รหัสเลขอะไรกันบ้าง ใบ้หน่วยสิโฮมี่",
-                "โหมดตอบคำถามคดีน้ำแข็งละลายโคตรหักมุม นึกไม่ถึงเลยจริงๆ 👁️",
-                "เพิ่งเติมแพ็กเพชร 500 ไปเมื่อกี้ ระบบรันไวจัด ลุยด่านต่อชิลๆ ✨",
-                "ความจริงมีเพียงหนึ่งเดียวเท่านั้น! อย่าปล่อยให้คนร้ายลอยนวลคุณนักสืบ"
-            ],
+        /* ==========================================================================
+           🔋 DIY BATTERY ANALYSIS & POWER BOX LAB CONFIGURATION
+           ========================================================================== */
+        const BatteryLab = {
+            recalculate() {
+                const type = document.getElementById("bat-type").value;
+                const circuit = document.getElementById("bat-circuit").value;
+                const count = Math.max(1, parseInt(document.getElementById("bat-count").value) || 1);
+                const load = document.getElementById("bat-load").value;
 
-            initSimulator() {
-                this.appendMessage("System_Server", "ระบบทำการเชื่อมต่อเครือข่ายความปลอดภัยแชทโลกนักสืบสำเร็จ ยินดีต้อนรับผู้เล่นทุกคน", true);
-                
-                this.simulatorInterval = setInterval(() => {
-                    const randomName = this.botNames[Math.floor(Math.random() * this.botNames.length)];
-                    const randomText = this.botPhrases[Math.floor(Math.random() * this.botPhrases.length)];
-                    this.appendMessage(randomName, randomText);
-                }, 7000);
+                let baseVolt = 12; let baseAh = 5; let chemistryName = "Lead-Acid";
+                if (type === 'li-18650') { baseVolt = 3.7; baseAh = 2.5; chemistryName = "Lithium-Ion 18650"; }
+                else if (type === 'lifepo4') { baseVolt = 3.2; baseAh = 6.0; chemistryName = "LiFePO4 Cell"; }
 
-                document.getElementById("chat-message-field").addEventListener("keypress", function(e) {
-                    if (e.key === "Enter") {
-                        ChatEngine.sendUserMessage();
-                    }
-                });
-            },
-
-            toggleSiri() {
-                SoundBox.click();
-                this.siriActive = !this.siriActive;
-                const statusTxt = document.getElementById("siri-status-text");
-                const toggleBtn = document.getElementById("siri-toggle-btn");
-                
-                if (this.siriActive) {
-                    statusTxt.innerText = "เปิดใช้งาน";
-                    statusTxt.style.color = "var(--emerald)";
-                    toggleBtn.style.borderColor = "var(--gold-main)";
+                let finalVolt = baseVolt; let finalAh = baseAh;
+                if (circuit === 'parallel') {
+                    finalAh = baseAh * count;
                 } else {
-                    statusTxt.innerText = "ปิดใช้งาน";
-                    statusTxt.style.color = "var(--crimson)";
-                    toggleBtn.style.borderColor = "rgba(255,255,255,0.1)";
-                    window.speechSynthesis.cancel();
+                    finalVolt = baseVolt * count;
+                }
+
+                let loadAmp = 1.0; let loadName = "PAM8403";
+                if (load === 'sensor-h206') { loadAmp = 0.05; loadName = "H206 Sensor"; }
+                else if (load === 'tpa3116d2') { loadAmp = 3.0; loadName = "TPA3116D2 Amp"; }
+
+                // Total watt-hour calculations
+                let totalWh = finalVolt * finalAh;
+                let estimatedRuntimeHrs = totalWh / (finalVolt * loadAmp);
+
+                // Safe threshold warning for PAM8403 (Requires 5V max)
+                let warningLog = "";
+                if (load === 'pam8403' && finalVolt > 5.5) {
+                    warningLog = `<span class="text-crimson"><br>⚠️ [คำเตือนวิศวกรรม] แรงดันโวลต์ระบบสูงเกินไปสำหรับบอร์ด PAM8403 (ต้องการ 5V) ชิปอาจไหม้พังได้! ต้องต่อบอร์ดลดแรงดัน Step-down Buck Converter!</span>`;
+                }
+
+                const outNode = document.getElementById("bat-telemetry-result");
+                outNode.innerHTML = `
+                    ⚙️ เคมีเซลล์: <b>${chemistryName}</b><br>
+                    🔀 ระบบวงจร: <b>${circuit === 'parallel' ? 'ต่อขนาน (Parallel)' : 'ต่ออนุกรม (Series)'}</b><br>
+                    📦 ขนาดแบตเตอรี่รวม: <b>${count} ก้อน</b><br>
+                    ⚡ แรงดันไฟฟ้ารวม (Voltage): <span class="text-gold"><b>${finalVolt.toFixed(2)} V</b></span><br>
+                    🔋 ความจุกระแสรวม (Capacity): <span class="text-cyan"><b>${finalAh.toFixed(2)} Ah</b></span><br>
+                    🔌 พลังงานสะสมทั้งหมด (Watt-Hour): <b>${totalWh.toFixed(2)} Wh</b><br>
+                    ───────────────────<br>
+                    🎯 เชื่อมต่อโหลด: <b>${loadName} (กินกระแส ${loadAmp}A)</b><br>
+                    ⏱️ ประมาณการเปิดใช้งานต่อเนื่อง: <span class="text-emerald"><b>${estimatedRuntimeHrs.toFixed(2)} ชั่วโมง</b></span>
+                    ${warningLog}
+                `;
+            }
+        };
+
+        /* ==========================================================================
+           🎛️ WAVEFORM SYNTHESIZER OSCILLATOR SYSTEM LOGIC
+           ========================================================================== */
+        const AudioLab = {
+            audioCtx: null,
+            oscNode: null,
+            gainNode: null,
+            isGeneratingSound: false,
+
+            initEngine() {
+                if (!this.audioCtx) {
+                    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 }
             },
+            updateParams() {
+                const freq = document.getElementById("synth-freq-slider").value;
+                const gainPct = document.getElementById("synth-gain-slider").value;
+                
+                document.getElementById("lbl-synth-freq").innerText = freq;
+                document.getElementById("lbl-synth-gain").innerText = gainPct;
 
-            speakSiri(text) {
-                if (!this.siriActive || !('speechSynthesis' in window)) return;
+                if (this.isGeneratingSound && this.oscNode && this.gainNode) {
+                    this.oscNode.frequency.setValueAtTime(freq, this.audioCtx.currentTime);
+                    this.gainNode.gain.setValueAtTime((gainPct / 100) * 0.15, this.audioCtx.currentTime);
+                }
+            },
+            triggerToneStart() {
+                this.initEngine();
+                if (this.isGeneratingSound) return;
+                
+                try {
+                    this.oscNode = this.audioCtx.createOscillator();
+                    this.gainNode = this.audioCtx.createGain();
+                    
+                    const waveType = document.getElementById("synth-wave-type").value;
+                    const freq = document.getElementById("synth-freq-slider").value;
+                    const gainPct = document.getElementById("synth-gain-slider").value;
 
-                window.speechSynthesis.cancel();
+                    this.oscNode.type = waveType;
+                    this.oscNode.frequency.setValueAtTime(freq, this.audioCtx.currentTime);
+                    
+                    this.gainNode.gain.setValueAtTime((gainPct / 100) * 0.15, this.audioCtx.currentTime);
+                    
+                    this.oscNode.connect(this.gainNode);
+                    this.gainNode.connect(this.audioCtx.destination);
+                    
+                    this.oscNode.start();
+                    this.isGeneratingSound = true;
+                    SystemAudioSFX.success();
+                } catch (e) {
+                    console.error(e);
+                }
+            },
+            triggerToneStop() {
+                if (!this.isGeneratingSound) return;
+                try {
+                    this.oscNode.stop();
+                    this.oscNode.disconnect();
+                    this.gainNode.disconnect();
+                } catch(e) {}
+                this.isGeneratingSound = false;
+            }
+        };
 
-                // กรองอีโมจิออกเพื่อให้เสียงอ่านสมูทขึ้นไม่ติดขัด
-                let cleanText = text.replace(/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF]/g, "");
+        /* ==========================================================================
+           🌐 CHANNEL WORLD CHAT ENGINE SOFTWARE INTERFACING WITH SMART BOT AI
+           ========================================================================== */
+        const ChatEngine = {
+            isSiriTTSActive: true,
+            botCharacterPool: [
+                { name: "Conan_Edogawa 🕵️", rank: "แอดมินระบบ", texts: ["ความจริงมีเพียงหนึ่งเดียวเท่านั้น!", "สายชนวนระเบิดด่าน Hard ท้าทายมากครับโฮมี่", "ลองสุ่มกาชหายา APTX กันหรือยังครับ?"] },
+                { name: "Kaito_Kid 🃏", rank: "จอมโจรมายา", texts: ["คืนนี้ผมจะไปขโมยเพชรทดสอบในระบบคลาวด์", "แฮกรหัสเลขฆาตกรตัวเลขมันง่ายเกินไปนะ", "ยินดีที่ได้รู้จักเหล่านักสืบเจนอัลฟ่า"] },
+                { name: "Ai_Haibara 🧪", rank: "นักเคมีวิทยา", texts: ["สูตรผสมแบตเตอรี่ในบอร์ดแล็บวิเคราะห์ได้แม่นยำดีนะ", "ระวังตัวให้ดี ยา APTX-4869 มันมีผลข้างเคียง", "พวกนายกู้ระเบิดพังไปกี่รอบแล้วล่ะ?"] },
+                { name: "Mouri_Kogoro 🚬", rank: "นักสืบนิทรา", texts: ["ฮ้าาา คดีไหนยากๆ ส่งมาให้ท่านโคโกโร่คนนี้จัดการสิ!", "ระบบเสียงเครื่องไซเรนเสียงแหลมหนวกหูชะมัด", "ขอเพชรฟรีสัก 500 เม็ดไปเติมเกมหน่อยสิแอดมิน"] }
+            ],
 
+            bootWorldChatSimulator() {
+                // Seed initial history lines
+                this.dispatchIncomingMessage("System_Server", "ยินดีต้อนรับเข้าสู่ช่องแชทโลก ยินดีต้อนรับนักสืบสาย DIY อิเล็กทรอนิกส์ทุกคน!", "เซิร์ฟเวอร์");
+                
+                setInterval(() => {
+                    const character = this.botCharacterPool[Math.floor(Math.random() * this.botCharacterPool.length)];
+                    const phrase = character.texts[Math.floor(Math.random() * character.texts.length)];
+                    this.dispatchIncomingMessage(character.name, phrase, character.rank);
+                }, 9000);
+            },
+            flipSiriActivationSwitch() {
+                this.isSiriTTSActive = !this.isSiriTTSActive;
+                document.getElementById("siri-status-lbl").innerText = this.isSiriTTSActive ? "เปิดใช้งาน" : "ปิดระบบ";
+                document.getElementById("siri-status-lbl").style.color = this.isSiriTTSActive ? "var(--emerald)" : "var(--crimson)";
+                SystemAudioSFX.click();
+            },
+            dispatchIncomingMessage(senderName, textString, rankTitle = "ผู้เล่น") {
+                const scroller = document.getElementById("chat-scroller-view");
+                const envelope = document.createElement("div");
+                envelope.className = "chat-msg-envelope";
+                
+                envelope.innerHTML = `
+                    <div class="msg-sender-metadata">
+                        <span>${senderName}</span>
+                        <span class="badge-rank">[${rankTitle}]</span>
+                    </div>
+                    <div>${textString}</div>
+                `;
+                
+                scroller.appendChild(envelope);
+                scroller.scrollTop = scroller.scrollHeight;
+
+                // Handle Speech synthesis Siri logic triggers
+                if (this.isSiriTTSActive && senderName !== UserProfileState.codename) {
+                    this.triggerSiriVoiceSynthesizer(`${senderName.split(' ')[0]} กล่าวว่า ${textString}`);
+                }
+            },
+            triggerSiriVoiceSynthesizer(cleanText) {
+                if (!('speechSynthesis' in window)) return;
+                window.speechSynthesis.cancel(); // Stop current speech
                 const utterance = new SpeechSynthesisUtterance(cleanText);
-                utterance.lang = 'th-TH'; 
-                utterance.rate = 1.1;     
-                utterance.pitch = 1.0;    
-
+                utterance.lang = 'th-TH';
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
                 window.speechSynthesis.speak(utterance);
             },
+            handleUserMessageDispatch() {
+                const node = document.getElementById("chat-input-node");
+                const text = node.value.trim();
+                if (!text) return;
 
-            appendMessage(sender, text, isSystem = false) {
-                const monitor = document.getElementById("global-chat-monitor");
-                const bubble = document.createElement("div");
-                bubble.className = "chat-bubble";
+                this.dispatchIncomingMessage(UserProfileState.codename, text, "นักสืบ");
+                node.value = "";
+
+                // Micro AI Bot interaction reply mapping logic
+                setTimeout(() => {
+                    this.processBotResponseTrigger(text);
+                }, 1200);
+            },
+            processBotResponseTrigger(userRawText) {
+                const lowerTxt = userRawText.toLowerCase();
+                let reply = "";
                 
-                if (isSystem) {
-                    bubble.style.borderColor = "var(--gold-main)";
-                    bubble.innerHTML = `<div class="chat-sender-meta" style="color:var(--gold-main);">📢 ${sender}</div><div style="color:var(--text-sub); font-style:italic;">${text}</div>`;
-                } else {
-                    const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                    bubble.innerHTML = `
-                        <div class="chat-sender-meta">
-                            <span>👤 ${sender}</span>
-                            <span style="color:var(--text-sub); font-size:0.7rem; font-weight:normal;">${timestamp}</span>
-                        </div>
-                        <div>${text}</div>
-                    `;
-                    
-                    // สั่งให้สิริออกเสียงแชทที่อัปเดตใหม่
-                    this.speakSiri(`${sender} พูดว่า ${text}`);
+                if (lowerTxt.includes("ระเบิด")) {
+                    reply = "ระเบิดกู้ไม่ยากครับโฮมี่ แค่จับจุดตัดสายฟิวส์คอร์หลักให้ตรงด่านความยากความตึง!";
+                } else if (lowerTxt.includes("แบต") || lowerTxt.includes("ไฟ")) {
+                    reply = "ถ้าจะทำ Power Box แนะนำคำนวณค่าโวลต์ให้แมตช์แอมป์ขยายเสียง PAM8403 ไม่งั้นชิปพังพินาศแน่ครับพี่บ่าว!";
+                } else if (lowerTxt.includes("ตึง") || lowerTxt.includes("alpha")) {
+                    reply = "ตึงจัดเลยครับโฮมี่! สเกลโค้ดตัวนี้อัปเดตคลีนเรียบร้อย รันเว็บลื่นจัดสไตล์เด็กเทคแน่นอน";
+                } else if (lowerTxt.includes("แจกเพชร") || lowerTxt.includes("ขอเพชร")) {
+                    reply = "กดคลิกเมนูแผงร้านค้ามืดด้านซ้าย เติมฟรีรัวๆ ทดสอบบัลลังก์กาชาได้เลยจ้า!";
                 }
 
-                monitor.appendChild(bubble);
-                monitor.scrollTop = monitor.scrollHeight;
-                SoundBox.playNote(900, 0.01, "sine", 0.02); 
-            },
-
-            sendUserMessage() {
-                const inputField = document.getElementById("chat-message-field");
-                const txt = inputField.value.trim();
-
-                if (txt === "") return;
-
-                this.appendMessage(`${ProfileState.username}`, txt);
-                inputField.value = ""; 
+                if (reply) {
+                    this.dispatchIncomingMessage("Conan_Edogawa 🕵️", reply, "แอดมินระบบ");
+                }
             }
         };
 
-        window.addEventListener("DOMContentLoaded", () => {
-            NumberGame.initGame();
-        });
+        // Window startup fallback routines
+        window.onload = () => {
+            UserProfileState.loadFromLocal();
+            document.getElementById("num-guess-field").onkeydown = (e) => {
+                if(e.key === 'Enter') NumberGame.processUserGuess();
+            };
+            NumberGame.generateNewTarget();
+        };
     </script>
 </body>
 </html>
