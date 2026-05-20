@@ -3,1059 +3,1234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🕵️ Mystery Detective Project | The Truth in Shadows</title>
+    <title>🕵️ Detective Bomb & Mystery Games Project</title>
     <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ==========================================================================
-           1. CSS VARIABLES & THEME (MIDNIGHT GOLD LUXURY)
+           1. CORE VARIABLES & THEME SETUP (MIDNIGHT GOLD LUXURY)
            ========================================================================== */
         :root {
-            --bg-main: #0a0c10;
-            --bg-panel: #12161f;
-            --bg-terminal: #07090d;
-            --gold-pure: #d4af37;
-            --gold-bright: #f3e5ab;
-            --gold-dim: #aa8c2c;
-            --gold-trans: rgba(212, 175, 55, 0.15);
-            --text-light: #f1f5f9;
-            --text-gray: #94a3b8;
-            --text-dark: #0f172a;
+            --bg-deep: #080a0f;
+            --bg-card: #111522;
+            --bg-darker: #05060a;
+            --gold-main: #d4af37;
+            --gold-glow: #f5e093;
+            --gold-dark: #aa8c2c;
+            --gold-trans: rgba(212, 175, 55, 0.12);
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
             --crimson: #ef4444;
-            --crimson-dim: #991b1b;
+            --crimson-glow: #f87171;
             --emerald: #10b981;
-            --emerald-dim: #065f46;
             --cyan: #06b6d4;
-            --font-main: 'Anuphan', sans-serif;
-            --transition-speed: 0.25s;
+            --font-stack: 'Anuphan', sans-serif;
+            --anim-speed: 0.25s;
         }
 
         /* ==========================================================================
-           2. GENERAL & RESET STYLES
+           2. RESET & GLOBAL COMPONENT STYLES
            ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-main);
+            font-family: var(--font-stack);
             user-select: none;
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-light);
+            background-color: var(--bg-deep);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 50% 20%, #1e2638 0%, var(--bg-main) 75%),
-                linear-gradient(rgba(212, 175, 55, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 20px 20px, 20px 20px;
+                radial-gradient(circle at 50% 25%, #1b2236 0%, var(--bg-deep) 70%),
+                linear-gradient(rgba(212, 175, 55, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 25px 25px, 25px 25px;
         }
 
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--bg-main);
+            background: var(--bg-deep);
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--gold-dim);
+            background: var(--gold-dark);
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--gold-pure);
+            background: var(--gold-main);
         }
 
         /* ==========================================================================
-           3. LAYOUT COMPONENT
+           3. LOGIN / REGISTRATION MODAL HUD OVERLAY
            ========================================================================== */
-        .app-header {
-            background: linear-gradient(to bottom, #111520, var(--bg-panel));
-            border-bottom: 2px solid var(--gold-pure);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 25px rgba(212, 175, 55, 0.15);
-            position: relative;
-        }
-
-        .header-title {
-            color: var(--gold-pure);
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        #auth-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(5, 6, 10, 0.95);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            padding: 20px;
+            backdrop-filter: blur(8px);
         }
 
-        .header-subtitle {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-            font-style: italic;
-            margin-top: 5px;
+        .auth-card {
+            background: var(--bg-card);
+            border: 2px solid var(--gold-main);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 480px;
+            padding: 35px;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.25);
+            text-align: center;
+            animation: modalScaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalScaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .auth-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .auth-input {
+            width: 100%;
+            background: var(--bg-darker);
+            border: 1px solid var(--gold-dark);
+            border-radius: 8px;
+            padding: 14px;
+            color: var(--text-main);
+            font-size: 1rem;
+            text-align: center;
+            margin: 20px 0;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .auth-input:focus {
+            border-color: var(--gold-main);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ==========================================================================
+           4. SYSTEM HEADER LAYOUT
+           ========================================================================== */
+        .app-header {
+            background: linear-gradient(to bottom, #121829, var(--bg-card));
+            border-bottom: 2px solid var(--gold-main);
+            padding: 15px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+        }
+
+        @media (min-width: 768px) {
+            .app-header {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .header-brand h1 {
+            color: var(--gold-main);
+            font-size: 1.6rem;
+            font-weight: 700;
             letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
 
-        .main-wrapper {
+        .header-brand p {
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .user-hud-profile {
+            background: var(--bg-darker);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 0.9rem;
+        }
+
+        .profile-stat span {
+            color: var(--gold-glow);
+            font-weight: 600;
+        }
+
+        .uid-badge {
+            background: var(--gold-trans);
+            color: var(--gold-main);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* ==========================================================================
+           5. MAIN CORE APPARATUS LAYOUT INTERFACE
+           ========================================================================== */
+        .main-container {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 24px;
-            padding: 25px;
-            max-width: 1400px;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1440px;
             width: 100%;
             margin: 0 auto;
             flex-grow: 1;
         }
 
         @media (min-width: 1024px) {
-            .main-wrapper {
-                grid-template-columns: 1.8fr 1.2fr;
+            .main-container {
+                grid-template-columns: 320px 1fr 340px;
             }
         }
 
-        /* ==========================================================================
-           4. PANELS & CONTAINERS
-           ========================================================================== */
-        .panel {
-            background: var(--bg-panel);
-            border: 1px solid rgba(212, 175, 55, 0.25);
+        .panel-wrapper {
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 14px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            display: flex;
-            flex-direction: column;
-            transition: border-color var(--transition-speed);
-        }
-
-        .panel:hover {
-            border-color: rgba(212, 175, 55, 0.45);
-        }
-
-        .panel-title {
-            color: var(--gold-pure);
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 18px;
-            border-left: 4px solid var(--gold-pure);
-            padding-left: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* ==========================================================================
-           5. GAME TERMINAL SCREEN
-           ========================================================================== */
-        .terminal-container {
-            position: relative;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-        }
-
-        .terminal-screen {
-            background-color: var(--bg-terminal);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 8px;
             padding: 20px;
-            height: 320px;
-            overflow-y: auto;
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text-light);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-        }
-
-        .terminal-row {
-            margin-bottom: 10px;
-            animation: textFadeIn 0.3s ease-out forwards;
-        }
-
-        @keyframes textFadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-right: 8px;
-        }
-
-        .badge-system { background: var(--gold-trans); color: var(--gold-bright); border: 1px solid var(--gold-dim); }
-        .badge-danger { background: rgba(239, 68, 68, 0.15); color: var(--crimson); border: 1px solid var(--crimson-dim); }
-        .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid var(--emerald-dim); }
-        .badge-location { background: rgba(6, 182, 212, 0.15); color: var(--cyan); border: 1px solid var(--cyan); }
-
-        /* ==========================================================================
-           6. CONTROLS & NAVIGATION BUTTONS
-           ========================================================================== */
-        .controls-section {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            max-height: 820px;
         }
 
-        .control-group-title {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .grid-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 12px;
-        }
-
-        .action-btn {
-            background: linear-gradient(135deg, #171d2a, #111622);
-            color: var(--gold-pure);
-            border: 1px solid var(--gold-pure);
-            padding: 14px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.95rem;
-            text-align: left;
-            transition: all var(--transition-speed) ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .action-btn:hover:not(:disabled) {
-            background: var(--gold-pure);
-            color: var(--text-dark);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        .panel-header-title {
+            color: var(--gold-main);
+            font-size: 1.15rem;
             font-weight: 600;
-            transform: translateY(-2px);
-        }
-
-        .action-btn:active:not(:disabled) {
-            transform: translateY(0);
-        }
-
-        .action-btn:disabled {
-            opacity: 0.35;
-            cursor: not-allowed;
-            border-color: var(--text-gray);
-            color: var(--text-gray);
-        }
-
-        .btn-crimson {
-            border-color: var(--crimson);
-            color: var(--crimson);
-        }
-        .btn-crimson:hover:not(:disabled) {
-            background: var(--crimson) !important;
-            color: var(--text-light) !important;
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important;
-        }
-
-        /* ==========================================================================
-           7. NOTEBOOK & NOTEBOOK TABS
-           ========================================================================== */
-        .notebook-tabs {
-            display: flex;
-            background: #0b0d13;
-            border-radius: 8px;
-            padding: 4px;
             margin-bottom: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-left: 3px solid var(--gold-main);
+            padding-left: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .tab-trigger {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--text-gray);
-            padding: 10px;
+        /* Generic Core Buttons */
+        .primary-btn {
+            background: linear-gradient(135deg, #1b233a, #131829);
+            color: var(--gold-main);
+            border: 1px solid var(--gold-main);
+            padding: 12px 16px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
             font-weight: 500;
-            border-radius: 6px;
-            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+            transition: all var(--anim-speed);
+            outline: none;
             text-align: center;
         }
 
-        .tab-trigger.active {
-            background: var(--gold-pure);
-            color: var(--text-dark);
+        .primary-btn:hover:not(:disabled) {
+            background: var(--gold-main);
+            color: var(--bg-darker);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
             font-weight: 600;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+            transform: translateY(-1px);
         }
 
-        .tab-content {
-            display: none;
-            flex-grow: 1;
-            overflow-y: auto;
-            max-height: 480px;
-            padding-right: 4px;
+        .primary-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
         }
 
-        .tab-content.active {
-            display: block;
+        /* ==========================================================================
+           6. LEFT SIDEBAR PANEL: MENU NAVIGATION & TOPUP STORE
+           ========================================================================== */
+        .navigation-menu-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        /* Item Lists Card Custom */
-        .card-item {
+        .nav-item-btn {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(212, 175, 55, 0.1);
+            color: var(--text-main);
+            padding: 12px 15px;
             border-radius: 8px;
-            padding: 14px;
-            margin-bottom: 12px;
-            transition: all var(--transition-speed);
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .card-item:hover {
-            background: rgba(212, 175, 55, 0.04);
-            border-color: rgba(212, 175, 55, 0.25);
+        .nav-item-btn:hover, .nav-item-btn.active {
+            border-color: var(--gold-main);
+            background: var(--gold-trans);
+            color: var(--gold-glow);
         }
 
-        .card-header-flex {
+        /* Store Component UI Structure */
+        .store-shelf {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 2px;
+        }
+
+        .product-card {
+            background: var(--bg-darker);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: 8px;
+            padding: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
         }
 
-        .card-title {
-            color: var(--gold-bright);
-            font-weight: 600;
-            font-size: 1rem;
+        .product-info h4 {
+            color: var(--gold-glow);
+            font-size: 0.9rem;
         }
 
-        .card-desc {
-            color: var(--text-gray);
-            font-size: 0.88rem;
-            line-height: 1.5;
+        .product-info p {
+            color: var(--text-sub);
+            font-size: 0.75rem;
         }
 
-        .card-meta {
+        .price-tag-btn {
+            background: var(--gold-main);
+            color: var(--bg-darker);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .price-tag-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 8px var(--gold-main);
+        }
+
+        /* ==========================================================================
+           7. CENTER CORE PANEL: MAIN MULTI-STAGE MINI GAME APPARATUS
+           ========================================================================== */
+        .game-stage-view {
+            display: none;
+            flex-grow: 1;
+            flex-direction: column;
+        }
+
+        .game-stage-view.active-stage {
+            display: flex;
+        }
+
+        /* Dashboard Mode Overview Text styling */
+        .dashboard-banner {
+            background: linear-gradient(135deg, #161d33, #090c15);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px dashed rgba(212,175,55,0.2);
+            margin-bottom: 20px;
+        }
+
+        .dashboard-banner h3 {
+            color: var(--gold-main);
+            margin-bottom: 8px;
+        }
+
+        .dashboard-grid-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        /* 💣 BOMB DEFUSE SUB-STAGE SYSTEM VIEW CSS */
+        .bomb-workspace {
+            background: #040508;
+            border: 2px solid var(--crimson);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: inset 0 0 30px rgba(239,68,68,0.15);
+        }
+
+        .bomb-ticker-display {
+            font-family: monospace;
+            font-size: 3.5rem;
+            color: var(--crimson);
+            text-shadow: 0 0 20px var(--crimson);
+            font-weight: bold;
+            margin: 15px 0;
+            background: #000;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(239,68,68,0.3);
+        }
+
+        .bomb-wires-grid {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .wire-element-pack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .wire-rope {
+            width: 14px;
+            height: 100px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: opacity 0.2s;
+        }
+
+        .wire-rope.cut-off {
+            opacity: 0.15;
+            height: 45px;
+            margin-bottom: 55px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .wire-blue { background: #2563eb; }
+        .wire-red { background: #dc2626; }
+        .wire-yellow { background: #ca8a04; }
+        .wire-green { background: #16a34a; }
+
+        .wire-label {
             margin-top: 8px;
             font-size: 0.8rem;
-            color: var(--gold-pure);
+            color: var(--text-sub);
+        }
+
+        /* 🎲 MYSTERY NUMBER STAGE CSS */
+        .mystery-workspace {
+            background: #090c14;
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .clue-log-monitor {
+            background: var(--bg-darker);
+            border-radius: 8px;
+            padding: 15px;
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            min-height: 180px;
+            border: 1px solid rgba(212,175,55,0.1);
+        }
+
+        .clue-row-item {
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            padding-bottom: 4px;
+        }
+
+        .number-input-row {
             display: flex;
             gap: 10px;
         }
 
-        .btn-inspect {
-            background: var(--gold-trans);
-            border: 1px solid var(--gold-dim);
-            color: var(--gold-bright);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
+        /* ❓ QUIZ GAME STAGE CSS */
+        .quiz-workspace {
+            background: #0d111a;
+            border-radius: 10px;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .quiz-question-box {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--gold-glow);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            background: var(--bg-darker);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--gold-main);
+        }
+
+        .quiz-options-cluster {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-node-btn {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(212,175,55,0.2);
+            color: var(--text-main);
+            padding: 14px 20px;
+            border-radius: 8px;
             cursor: pointer;
+            text-align: left;
+            font-size: 0.95rem;
             transition: all 0.2s;
         }
 
-        .btn-inspect:hover {
-            background: var(--gold-pure);
-            color: var(--text-dark);
-        }
-
-        .empty-placeholder {
-            text-align: center;
-            color: var(--text-gray);
-            padding: 40px 20px;
-            font-style: italic;
-            font-size: 0.9rem;
+        .option-node-btn:hover {
+            background: var(--gold-trans);
+            border-color: var(--gold-main);
+            padding-left: 25px;
         }
 
         /* ==========================================================================
-           8. HUD PROGRESS BAR
+           8. RIGHT SIDEBAR PANEL: LIVE GLOBAL CHAT ENGINE SIMULATOR
            ========================================================================== */
-        .hud-container {
-            background: rgba(0,0,0,0.2);
+        .chat-history-container {
+            background: var(--bg-darker);
+            border: 1px solid rgba(212,175,55,0.1);
             border-radius: 8px;
-            padding: 12px 16px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.1);
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 450px;
+        }
+
+        .chat-bubble {
+            background: rgba(255,255,255,0.02);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            animation: bubbleFadeUp 0.25s ease-out;
+        }
+
+        @keyframes bubbleFadeUp {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-sender-meta {
+            font-weight: bold;
+            color: var(--gold-main);
+            margin-bottom: 2px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            gap: 15px;
         }
 
-        .hud-label {
-            font-size: 0.85rem;
-            color: var(--gold-bright);
-            font-weight: 500;
-            white-space: nowrap;
+        .chat-input-dock {
+            display: flex;
+            gap: 8px;
         }
 
-        .progress-bar-bg {
-            background: #090b10;
-            height: 10px;
-            border-radius: 5px;
+        .chat-field-input {
             flex-grow: 1;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: var(--bg-darker);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 6px;
+            padding: 10px;
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.88rem;
         }
 
-        .progress-bar-fill {
-            background: linear-gradient(90deg, var(--gold-dim), var(--gold-pure));
-            height: 100%;
-            width: 0%;
-            transition: width 0.4s ease;
-            box-shadow: 0 0 8px var(--gold-pure);
+        .chat-field-input:focus {
+            border-color: var(--gold-main);
         }
 
         /* ==========================================================================
-           9. FOOTER
+           9. SYSTEM APP FOOTER STYLING
            ========================================================================== */
         .app-footer {
+            background: var(--bg-darker);
+            border-top: 1px solid rgba(212,175,55,0.1);
+            padding: 15px;
             text-align: center;
-            padding: 20px;
-            color: var(--text-gray);
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            font-size: 0.8rem;
+            color: var(--text-sub);
             margin-top: auto;
-            background: #080a0f;
-        }
-
-        .app-footer a {
-            color: var(--gold-pure);
-            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
     <!-- ==========================================================================
-       BODY HTML STRUCTURE
+       AUTHENTICATION / CREATION ID INITIAL MODAL OVERLAY SCREEN
+       ========================================================================== -->
+    <div id="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-icon">🕵️</div>
+            <h2 style="color: var(--gold-main); margin-bottom: 8px;">สร้างบัญชีผู้ให้บริการนักสืบ</h2>
+            <p style="color: var(--text-sub); font-size: 0.88rem;">กรุณาตั้งชื่อโค้ดเนมของคุณ ระบบจะจับคู่หมายเลข UID อัตโนมัติเพื่อใช้ระบุตัวตนและเพิ่มเพื่อนในเกม</p>
+            
+            <input type="text" id="auth-username-field" class="auth-input" placeholder="ระบุชื่อรหัสนักสืบของคุณ..." maxlength="14" autocomplete="off">
+            
+            <button class="primary-btn" style="width: 100%; padding: 14px;" onclick="CoreEngine.registerAccount()">
+                📥 ยืนยันการลงทะเบียนเข้าสู่ระบบ
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       MAIN SYSTEM APPLICATION TOP HEADER NAVIGATION SECTION
        ========================================================================== -->
     <header class="app-header">
-        <div class="header-title">🕵️ MYSTERY DETECTIVE PROJECT</div>
-        <div class="header-subtitle">คดีฆาตกรรมปริศนาเลขาและหุ้นส่วนลับ • "The truth is hidden in the shadows."</div>
+        <div class="header-brand">
+            <h1>🕵️ Detective Bomb & Mystery Games</h1>
+            <p>ความกดดัน ไวพริบ และคำใบ้ปริศนาจำลองเอาชีวิตรอด</p>
+        </div>
+
+        <div class="user-hud-profile">
+            <div class="profile-stat">นักสืบ: <span id="hud-name">Yuri_Alpha</span> <span class="uid-badge" id="hud-uid">UID: ------</span></div>
+            <div class="profile-stat">แรงค์คะแนน: <span id="hud-rank">0 RP</span></div>
+            <div class="profile-stat">💎 เพชรทดสอบ: <span id="hud-diamonds" style="color:var(--cyan);">0</span></div>
+        </div>
     </header>
 
-    <main class="main-wrapper">
+    <!-- ==========================================================================
+       MAIN CONTENT COMBINATOR APPARATUS GRID BLOCK
+       ========================================================================== -->
+    <div class="main-container">
         
-        <!-- LEFT PANEL: CASE CONTROLS AND MONITOR -->
-        <section class="panel">
-            <div class="panel-title">
-                <span>🌃 แดชบอร์ดการสืบสวนคดี</span>
-                <span id="current-location-text" style="color: var(--cyan); font-size: 0.95rem;">📍 สถานที่: ตรอกมืดโกดังร้าง</span>
-            </div>
+        <!-- LEFT PANEL: NAVIGATION DIRECTORY MENU & CASH SHOP MOCKUP -->
+        <aside class="panel-wrapper">
+            <div class="panel-header-title">📁 โหมดภารกิจสืบสวน</div>
+            <nav class="navigation-menu-box">
+                <button class="nav-item-btn active" id="nav-dash" onclick="CoreEngine.switchStage('dashboard')">🏠 หน้าแรกข้อมูลโปรเจกต์ <span>➔</span></button>
+                <button class="nav-item-btn" id="nav-bomb" onclick="CoreEngine.switchStage('stage-bomb')">💣 โหมดกู้ระเบิดกู้วิกฤต <span>➔</span></button>
+                <button class="nav-item-btn" id="nav-number" onclick="CoreEngine.switchStage('stage-number')">🎲 ถอดรหัสลับตัวเลขฆาตกร <span>➔</span></button>
+                <button class="nav-item-btn" id="nav-quiz" onclick="CoreEngine.switchStage('stage-quiz')">❓ ทำแบบทดสอบจับพิรุธคดี <span>➔</span></button>
+            </nav>
 
-            <!-- HUD Summary Progress -->
-            <div class="hud-container">
-                <span class="hud-label">ความคืบหน้าของคดี: <span id="progress-percent">0%</span></span>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="progress-fill"></div>
-                </div>
-                <span class="hud-label" id="evidence-count-text">หลักฐาน: 0/4</span>
-            </div>
-
-            <!-- Monitor Terminal Screen -->
-            <div class="terminal-container">
-                <div class="terminal-screen" id="terminal-screen">
-                    <!-- Rows will dynamically inject here -->
-                </div>
-            </div>
-
-            <!-- Dynamic Buttons Section -->
-            <div class="controls-section">
-                
-                <!-- Action Controls Group -->
-                <div>
-                    <div class="control-group-title">การดำเนินการในพื้นที่</div>
-                    <div class="grid-buttons" id="area-actions-box">
-                        <!-- Dynamic Buttons -->
+            <div class="panel-header-title" style="margin-top: 10px;">🛒 เติมเกม / ร้านค้าทดสอบ</div>
+            <div class="store-shelf">
+                <div class="product-card">
+                    <div class="product-info">
+                        <h4>💎 150 Diamonds Pack</h4>
+                        <p>แพ็กเกจเพชรเริ่มต้นสัญญานักสืบ</p>
                     </div>
+                    <button class="price-tag-btn" onclick="CoreEngine.mockupTopup(150, 49)">49 ฿</button>
                 </div>
-
-                <!-- Move Location Group -->
-                <div style="margin-top: 5px;">
-                    <div class="control-group-title">เดินทางไปยังสถานที่อื่น</div>
-                    <div class="grid-buttons">
-                        <button class="action-btn" onclick="GameEngine.moveLocation('crime_scene')">📍 ตรอกมืดโกดังร้าง <span>→</span></button>
-                        <button class="action-btn" onclick="GameEngine.moveLocation('office')">📍 สำนักงานเลขานุการ <span>→</span></button>
-                        <button class="action-btn" onclick="GameEngine.moveLocation('mansion')">📍 คฤหาสน์คุณบี <span>→</span></button>
-                        <button class="action-btn" onclick="GameEngine.moveLocation('neon_bar')">📍 บาร์นีออนใต้ดิน <span>→</span></button>
+                <div class="product-card">
+                    <div class="product-info">
+                        <h4>💎 500 Diamonds Pack</h4>
+                        <p>แพ็กเกจเพชรยอดนิยมตระกูลสืบคดี</p>
                     </div>
+                    <button class="price-tag-btn" onclick="CoreEngine.mockupTopup(500, 149)">149 ฿</button>
                 </div>
-
-                <!-- Final Solution Accusation Group -->
-                <div style="margin-top: 10px; border-top: 1px dashed rgba(212,175,55,0.2); padding-top: 15px;">
-                    <div class="control-group-title" style="color: var(--crimson);">ศาลและการสรุปสำนวน (ต้องการความคืบหน้าคดีอย่างน้อย 60%)</div>
-                    <div class="grid-buttons">
-                        <button class="action-btn btn-crimson" id="btn-accuse-b" onclick="GameEngine.accuseTarget('B')" disabled>⚖️ สรุปสำนวนจับกุม "นาย บี"</button>
-                        <button class="action-btn btn-crimson" id="btn-accuse-c" onclick="GameEngine.accuseTarget('C')" disabled>⚖️ สรุปสำนวนจับกุม "นางสาว ซี"</button>
+                <div class="product-card">
+                    <div class="product-info">
+                        <h4>🎟️ บัตรข้ามปริศนาพิเศษ</h4>
+                        <p>ใช้ผ่านด่านสืบคดีแบบข้ามด่วน</p>
                     </div>
+                    <button class="price-tag-btn" onclick="CoreEngine.buySpecialTicket()" style="background: var(--cyan); color: #fff;">120 💎</button>
                 </div>
-
             </div>
-        </section>
+        </aside>
 
-        <!-- RIGHT PANEL: DETECTIVE NOTEBOOK SYSTEM -->
-        <section class="panel">
-            <div class="panel-title">📁 สมุดบันทึกนักสืบพกพา</div>
+        <!-- CENTER PANEL: INTERACTIVE MULTI-GAME WORKSPACE VIEWSTAGE -->
+        <main class="panel-wrapper" style="max-height: none;">
             
-            <!-- Tabs Menu Navbar -->
-            <div class="notebook-tabs">
-                <button class="tab-trigger active" onclick="GameEngine.switchTab('tab-evidence', this)">🔍 คลังหลักฐาน</button>
-                <button class="tab-trigger" onclick="GameEngine.switchTab('tab-suspects', this)">👤 ผู้ต้องสงสัย</button>
-                <button class="tab-trigger" onclick="GameEngine.switchTab('tab-case-summary', this)">📖 ข้อมูลคดี</button>
+            <!-- STAGE 0: DASHBOARD INTERFACE VIEW OVERVIEW -->
+            <div class="game-stage-view active-stage" id="stage-dashboard">
+                <div class="dashboard-banner">
+                    <h3>🕵️ ยินดีต้อนรับสู่อาณาจักร Mystery Console!</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-sub); line-height: 1.6;">
+                        โปรเจกต์นี้เป็นการรวมมินิเกมนักสืบขนาดสั้นที่มีความตึงเครียดสูง ท้าทายกระบวนการคิดวิเคราะห์อย่างมีตรรกะ เลือกหมวดหมู่เกมที่คุณต้องการท้าทายจากแถบเมนูด้านซ้ายเพื่อเริ่มสืบคดีได้ทันทีโฮมี่!
+                    </p>
+                </div>
+
+                <div class="panel-header-title">🚧 สถานะการอัปเดตโมดูลระบบระบบ (Development Status)</div>
+                <p style="font-size: 0.88rem; color: var(--text-sub); line-height: 1.6; margin-bottom: 15px;">
+                    🛠️ <strong>Currently In Development:</strong> ระบบคำนวณทศนิยมถอยหลัง, ฟังก์ชันสุ่มตัวเลขแบบพลวัต, อาร์เรย์เก็บคลังคดีความมั่นคงสูง และโมดูลวิเคราะห์พฤติกรรมผู้ต้องสงสัยแบบเรียลไทม์
+                </p>
+
+                <div class="panel-header-title">🔮 แผนการอัปเกรดในอนาคต (Future Plans)</div>
+                <ul style="font-size: 0.88rem; color: var(--text-sub); margin-left: 20px; line-height: 1.7;">
+                    <li>Online Multiplayer Detective Mode (ระบบท้าดวลสืบคดีห้องเดียวแบบหลายคน)</li>
+                    <li>Random Crime Situation Generator (ระบบสุ่มสร้างคดีอาชญากรรมไม่ซ้ำซาก)</li>
+                    <li>Ranked Match System & Story Mode ปลดล็อกความลับ</li>
+                </ul>
             </div>
 
-            <!-- Tab Content 1: Evidence Library -->
-            <div class="tab-content active" id="tab-evidence">
-                <div id="evidence-list-container">
-                    <div class="empty-placeholder">ยังไม่มีหลักฐานที่ได้รับการจัดเก็บในขณะนี้...</div>
+            <!-- STAGE 1: 💣 BOMB DEFUSE WORKSPACE INTERFACE -->
+            <div class="game-stage-view" id="stage-bomb">
+                <div class="panel-header-title">
+                    <span>💣 Bomb Defuse Mode: ตัดสายไฟกู้วิกฤตตึกร้าง</span>
+                    <span style="color: var(--crimson); font-size: 0.85rem;" id="bomb-status-indicator">⚠️ สถานะ: รอกระตุ้นระเบิด</span>
+                </div>
+                
+                <div class="bomb-workspace">
+                    <p style="font-size: 0.9rem; color: var(--text-sub);">
+                        ระเบิดเวลาชนิดแสวงเครื่องถูกเปิดใช้งานแล้ว! มีสายไฟหลักอยู่ 4 เส้น มีเพียงเส้นเดียวที่เป็นเส้นตัดชนวนระเบิดให้หยุดทำงาน ส่วนเส้นอื่นๆ จะกระตุ้นให้ระเบิดทำงานทันที!
+                    </p>
+
+                    <div class="bomb-ticker-display" id="bomb-timer-clock">00:30</div>
+
+                    <div class="bomb-wires-grid">
+                        <div class="wire-element-pack" onclick="BombGame.cutWire('blue')">
+                            <div class="wire-rope wire-blue" id="wire-blue"></div>
+                            <span class="wire-label">สายสีน้ำเงิน</span>
+                        </div>
+                        <div class="wire-element-pack" onclick="BombGame.cutWire('red')">
+                            <div class="wire-rope wire-red" id="wire-red"></div>
+                            <span class="wire-label">สายสีแดง</span>
+                        </div>
+                        <div class="wire-element-pack" onclick="BombGame.cutWire('yellow')">
+                            <div class="wire-rope wire-yellow" id="wire-yellow"></div>
+                            <span class="wire-label">สายสีเหลือง</span>
+                        </div>
+                        <div class="wire-element-pack" onclick="BombGame.cutWire('green')">
+                            <div class="wire-rope wire-green" id="wire-green"></div>
+                            <span class="wire-label">สายสีเขียว</span>
+                        </div>
+                    </div>
+
+                    <button class="primary-btn" id="bomb-start-btn" onclick="BombGame.startMatch()" style="border-color: var(--crimson); color: var(--crimson);">
+                        ⚡ เริ่มสับสวิตช์เปิดระเบิดกู้ภัยเวลา
+                    </button>
                 </div>
             </div>
 
-            <!-- Tab Content 2: Suspect Profiles -->
-            <div class="tab-content" id="tab-suspects">
-                <!-- Suspect Profile 1: Mr. B -->
-                <div class="card-item">
-                    <div class="card-header-flex">
-                        <span class="card-title" style="color: #f43f5e;">👤 นาย บี (หุ้นส่วนผู้ร่วมทุน)</span>
-                        <span class="status-badge badge-danger">ผู้ต้องสงสัยหลัก</span>
-                    </div>
-                    <p class="card-desc"><strong>ความสัมพันธ์:</strong> เป็นหุ้นส่วนธุรกิจร่วมกับผู้ตาย ทะเลาะกันเรื่องการยักยอกเงินในบริษัทบ่อยครั้งในระยะหลัง</p>
-                    <p class="card-desc" style="margin-top: 6px;" id="alibi-b-text"><strong>คำให้การ:</strong> "ตอนเกิดเหตุผมนอนหลับอยู่บ้านเมียหลวงสิครับ จะไปอยู่ที่คลังสินค้าทำไมล่ะ?"</p>
-                    <div class="card-meta">
-                        <span>ระดับความน่าสงสัย: <strong id="suspect-b-rate">50%</strong></span>
-                    </div>
+            <!-- STAGE 2: 🎲 MYSTERY NUMBER CRACKER VIEW -->
+            <div class="game-stage-view" id="stage-number">
+                <div class="panel-header-title">
+                    <span>🎲 Mystery Number: ถอดเลขรหัสลับจากกระดาษฆาตกร</span>
                 </div>
+                
+                <div class="mystery-workspace">
+                    <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 10px;">
+                        ฆาตกรทิ้งเบาะแสเลขปริศนาที่เป็นรหัสลับปลดล็อกตู้เซฟเอาไว้ <strong>(เลขระหว่าง 1 ถึง 100)</strong> จงป้อนตัวเลขเพื่อทำการส่งหน่วยตรวจวิเคราะห์ ตรรกะของผลลัพธ์จะแจ้งให้ทราบทันทีว่าเลขของคุณคลาดเคลื่อนอย่างไร
+                    </p>
 
-                <!-- Suspect Profile 2: Miss C -->
-                <div class="card-item">
-                    <div class="card-header-flex">
-                        <span class="card-title" style="color: #38bdf8;">👤 นางสาว ซี (เลขานุการส่วนตัว)</span>
-                        <span class="status-badge badge-danger">ผู้ต้องสงสัยหลัก</span>
+                    <div class="clue-log-monitor" id="number-log-monitor">
+                        <div class="clue-row-item" style="color: var(--gold-main); font-style: italic;">[ระบบข้อมูล] เริ่มต้นภารกิจ... รอการส่งข้อมูลวิเคราะห์ตัวเลขแรกของคุณ...</div>
                     </div>
-                    <p class="card-desc"><strong>ความสัมพันธ์:</strong> เลขาส่วนตัวของผู้ตาย รู้จักความเคลื่อนไหวทางการเงินและเอกสารสัญญาลับทุกอย่าง</p>
-                    <p class="card-desc" style="margin-top: 6px;" id="alibi-c-text"><strong>คำให้การ:</strong> "ฉันนั่งเคลียร์เอกสารภาษีอยู่ที่สำนักงานใหญ่คนเดียวจนถึงเช้าค่ะ มีกล้องวงจรปิดบันทึกไว้ได้นะคะ"</p>
-                    <div class="card-meta">
-                        <span>ระดับความน่าสงสัย: <strong id="suspect-c-rate">45%</strong></span>
+
+                    <div class="number-input-row">
+                        <input type="number" id="mystery-digit-input" class="auth-input" style="margin: 0; text-align: left; padding: 10px;" placeholder="ป้อนตัวเลขสุ่ม (1-100)...">
+                        <button class="primary-btn" onclick="NumberGame.submitGuess()">ส่งตรวจพิสูจน์รหัส</button>
+                        <button class="primary-btn" style="border-color: var(--text-sub); color: var(--text-sub);" onclick="NumberGame.initGame()">รีเซ็ต</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Tab Content 3: Overview Summary Case -->
-            <div class="tab-content" id="tab-case-summary">
-                <div class="card-item" style="border-left: 3px solid var(--gold-pure);">
-                    <h3 class="card-title" style="margin-bottom: 8px;">📋 บันทึกเบื้องต้นของกรมตำรวจ</h3>
-                    <p class="card-desc"><strong>ผู้ตาย:</strong> นาย สมศักดิ์ (ประธานบริษัทโลจิสติกส์รายใหญ่)</p>
-                    <p class="card-desc" style="margin-top: 6px;"><strong>สภาพศพ:</strong> ถูกแทงด้วยอาวุธมีคมบริเวณช่องท้อง เสียชีวิตจากการเสียเลือดมากในตรอกมืดหลังคลังสินค้าเก่า</p>
-                    <p class="card-desc" style="margin-top: 6px;"><strong>เวลาเสียชีวิตคาดการณ์:</strong> เมื่อคืนนี้ ช่วงเวลาประมาณ 23:00 น. ถึง 01:00 น.</p>
-                    <p class="card-desc" style="margin-top: 6px;"><strong>ปมปริศนา:</strong> เงินสดจำนวน 10 ล้านบาทที่จะนำไปส่งมอบให้บุคคลลึกลับหายไปจากกระเป๋าเอกสารของผู้ตายอย่างไร้ร่องรอย</p>
+            <!-- STAGE 3: ❓ DETECTIVE QUIZ EXAMINATION STAGE -->
+            <div class="game-stage-view" id="stage-quiz">
+                <div class="panel-header-title">
+                    <span>❓ Detective Quiz: คลี่คลายปมจับพิรุธคดีหักมุม</span>
+                </div>
+
+                <div class="quiz-workspace">
+                    <div class="quiz-question-box" id="quiz-question-node">
+                        กำลังเตรียมความพร้อมของชุดคำถามจำลองสถานการณ์อาชญากรรมจริง... กดปุ่มด้านล่างเพื่อเริ่มการทดสอบจับโกหก
+                    </div>
+
+                    <div class="quiz-options-cluster" id="quiz-options-wrapper">
+                        <!-- Dynamic Options elements injection -->
+                    </div>
+
+                    <button class="primary-btn" id="quiz-activation-btn" onclick="QuizGame.startTest()" style="margin-top: 15px;">
+                        📝 เริ่มทำการทดสอบวัดระดับสมองนักสืบ
+                    </button>
                 </div>
             </div>
 
-        </section>
-    </main>
+        </main>
 
+        <!-- RIGHT PANEL: MEMBRANE GLOBAL CHAT ENGINE AND ROOM MATES -->
+        <aside class="panel-wrapper">
+            <div class="panel-header-title">
+                <span>🌐 ระบบเชื่อมต่อแชทโลก</span>
+                <span style="color: var(--emerald); font-size: 0.75rem;">● Online Live</span>
+            </div>
+
+            <div class="chat-history-container" id="global-chat-monitor">
+                <!-- Text lines append point -->
+            </div>
+
+            <div class="chat-input-dock">
+                <input type="text" id="chat-message-field" class="chat-input-dock chat-field-input" placeholder="พิมพ์ข้อความคุยในแชทโลก..." maxlength="70">
+                <button class="primary-btn" onclick="ChatEngine.sendUserMessage()" style="padding: 10px 14px;">ส่ง</button>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- ==========================================================================
+       SYSTEM FOOTER BRAND SIGNATURE TERMINAL
+       ========================================================================== -->
     <footer class="app-footer">
-        <p>&copy; 2026 Mystery Detective Project Engine • พัฒนาด้วยความตึงระบบขั้นสูงบน GitHub</p>
+        <p>&copy; 2026 Detective Bomb & Mystery Games Project Engine | Verified Complete GitHub Single Layer Architecture</p>
     </footer>
 
     <!-- ==========================================================================
-       10. CORE JAVASCRIPT GAME ENGINE
+       10. COMPLETE LOGIC CONTROLLER SYSTEM ENGINE (JAVASCRIPT)
        ========================================================================== -->
     <script>
         /**
-         * AUDIO SYNTHESIZER SOUND SYSTEM (Web Audio API)
-         * สร้างเสียงจำลองโดยใช้ Code สด โดยไม่ต้องดึง Resource จากภายนอก
+         * WEB AUDIO API AUDIO SYNTH GENERATOR
          */
-        const SoundFX = {
-            ctx: null,
+        const SoundBox = {
+            audioContext: null,
             init() {
-                if (!this.ctx) {
-                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                if (!this.audioContext) {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 }
             },
-            playBeep(freq = 600, duration = 0.04, type = "sine") {
+            playNote(freq, dur, type="sine", gainVal=0.06) {
                 this.init();
                 try {
-                    let osc = this.ctx.createOscillator();
-                    let gain = this.ctx.createGain();
+                    let osc = this.audioContext.createOscillator();
+                    let gainNode = this.audioContext.createGain();
                     osc.type = type;
-                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-                    gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.00001, this.ctx.currentTime + duration);
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
+                    osc.frequency.setValueAtTime(freq, this.audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(gainVal, this.audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.00001, this.audioContext.currentTime + dur);
+                    osc.connect(gainNode);
+                    gainNode.connect(this.audioContext.destination);
                     osc.start();
-                    osc.stop(this.ctx.currentTime + duration);
-                } catch(e) { console.log("Audio contexts blocked or unsupported"); }
+                    osc.stop(this.audioContext.currentTime + dur);
+                } catch(e) { console.log("Sound blocker active"); }
             },
-            triggerSuccess() {
-                this.playBeep(523.25, 0.1, "triangle"); // C5
-                setTimeout(() => this.playBeep(659.25, 0.12, "triangle"), 80); // E5
-                setTimeout(() => this.playBeep(783.99, 0.2, "triangle"), 160); // G5
+            click() { this.playNote(700, 0.03, "sine", 0.05); },
+            success() {
+                this.playNote(550, 0.08, "triangle");
+                setTimeout(() => this.playNote(700, 0.12, "triangle"), 70);
             },
-            triggerDanger() {
-                this.playBeep(220, 0.15, "sawtooth");
-                setTimeout(() => this.playBeep(180, 0.2, "sawtooth"), 120);
-            },
-            triggerMove() {
-                this.playBeep(400, 0.05, "sine");
-                setTimeout(() => this.playBeep(500, 0.05, "sine"), 50);
+            boom() {
+                this.playNote(120, 0.4, "sawtooth", 0.25);
+                this.playNote(80, 0.6, "triangle", 0.3);
             }
         };
 
         /**
-         * GAME STATE DATABASE STORAGE
+         * GLOBAL CONFIGURATION GAME DATABASE STATE
          */
-        const GameData = {
-            currentLocation: "crime_scene",
-            caseProgress: 0,
-            gameOver: false,
-            
-            // Database master list of existing items
-            evidences: {
-                knife: {
-                    id: "knife",
-                    name: "มีดพกเปื้อนเลือดลายสลัก",
-                    shortDesc: "พบซุกซ่อนอยู่ใต้ถังขยะเก่าที่เกิดเหตุ มีคราบเลือดแห้งกรัง",
-                    deepDesc: "เมื่อส่องดูด้วยแว่นขยายอย่างละเอียด พบตัวอักษรสลักย่อว่า 'B.รุ่งเรือง' ซึ่งตรงกับชื่อบริษัทส่วนตัวเก่าของนาย บี หุ้นส่วนใหญ่!",
-                    inspected: false,
-                    collected: false,
-                    progressValue: 20
-                },
-                letter: {
-                    id: "letter",
-                    name: "จดหมายขู่รีดไถฉีกขาด",
-                    shortDesc: "ตกอยู่ในกองใบไม้เปียกชื้นหลังโกดังร้าง มีรอยพิมพ์ดีด",
-                    deepDesc: "เนื้อความขู่แบล็กเมล์เรียกเงิน 10 ล้านบาท แลกกับการไม่เปิดโปงคดีทุจริต เมื่อดูลักษณะฟอนต์อักษร พบว่าหัวแป้นพิมพ์ตัว 'ม' มีรอยบิ่นเฉพาะตัว ซึ่งตรงกับเครื่องพิมพ์ดีดโบราณในห้องทำงานของนางสาว ซี เลขา!",
-                    inspected: false,
-                    collected: false,
-                    progressValue: 20
-                },
-                ledger: {
-                    id: "ledger",
-                    name: "สมุดบัญชีสองเล่มลับ",
-                    shortDesc: "ถูกซ่อนไว้ใต้แผ่นฝ้าเพดานในสำนักงานเลขานุการ ซี",
-                    deepDesc: "บันทึกข้อมูลการโยกย้ายเงินสดออกไปยังบัญชีต่างประเทศอย่างผิดกฎหมาย โดยระบุผู้รับผลประโยชน์สูงสุดคือ นาย บี และมีลายเซ็นรับรองปลอมของประธานผู้ตาย!",
-                    inspected: false,
-                    collected: false,
-                    progressValue: 25
-                },
-                glass_trace: {
-                    id: "glass_trace",
-                    name: "แก้วเหล้าหรูวิสกี้ราดสารพิษสลบ",
-                    shortDesc: "แก้วเหล้าที่ล้างแล้วครึ่งๆ กลางๆ ในบาร์นีออนใต้ดิน",
-                    deepDesc: "พบคราบสารเคมีกล่อมประสาทชนิดร้ายแรงติดอยู่ที่ขอบแก้ว จากการสืบพยานบาร์เทนเดอร์ยืนยันว่า เลขา ซี เป็นคนสั่งแก้วนี้ไปเสิร์ฟให้ท่านประธานในคืนเกิดเหตุ ก่อนที่ท่านประธานจะประคองสติไม่อยู่แล้วเดินออกไปทางตรอกด้านหลัง!",
-                    inspected: false,
-                    collected: false,
-                    progressValue: 20
+        const ProfileState = {
+            username: "Anonymous",
+            uid: "000000",
+            rankPoints: 0,
+            diamonds: 0,
+            hasSpecialTicket: false
+        };
+
+        /**
+         * APPLICATION CONTROL ENGINE HUB
+         */
+        const CoreEngine = {
+            registerAccount() {
+                const input = document.getElementById("auth-username-field").value.trim();
+                if (input === "") {
+                    alert("กรุณาระบุโค้ดเนมชื่อของคุณก่อนเข้าเล่นครับคุณนักสืบ!");
+                    return;
+                }
+
+                ProfileState.username = input;
+                // Generate a persistent random game UID for identification
+                ProfileState.uid = Math.floor(100000 + Math.random() * 900000).toString();
+                
+                // Update UI Node components
+                document.getElementById("hud-name").innerText = ProfileState.username;
+                document.getElementById("hud-uid").innerText = `UID: ${ProfileState.uid}`;
+                
+                // Audio signal trigger
+                SoundBox.success();
+
+                // Hide registration panel layout
+                document.getElementById("auth-overlay").style.display = "none";
+                
+                // Boot global simulator lines chat
+                ChatEngine.initSimulator();
+            },
+
+            switchStage(stageId) {
+                SoundBox.click();
+                
+                // Toggle navbar buttons state view active
+                const buttons = document.querySelectorAll(".nav-item-btn");
+                buttons.forEach(btn => btn.classList.remove("active"));
+                
+                // Map control id markers selection triggers to bind class toggle
+                if(stageId === 'dashboard') document.getElementById('nav-dash').classList.add('active');
+                if(stageId === 'stage-bomb') document.getElementById('nav-bomb').classList.add('active');
+                if(stageId === 'stage-number') document.getElementById('nav-number').classList.add('active');
+                if(stageId === 'stage-quiz') document.getElementById('nav-quiz').classList.add('active');
+
+                // Switch workspace view block containers layout
+                const views = document.querySelectorAll(".game-stage-view");
+                views.forEach(v => v.classList.remove("active-stage"));
+
+                document.getElementById(stageId).classList.add("active-stage");
+
+                // If leaving the bomb game, make sure to safely cancel old running timers to protect system thread performance
+                if (stageId !== 'stage-bomb') {
+                    BombGame.forceStopTimer();
                 }
             },
 
-            // Interrogations state trackers
-            interrogations: {
-                b_questioned_count: 0,
-                c_questioned_count: 0
+            updateHUD() {
+                document.getElementById("hud-rank").innerText = `${ProfileState.rankPoints} RP`;
+                document.getElementById("hud-diamonds").innerText = ProfileState.diamonds;
             },
 
-            // Location configuration lists
-            locations: {
-                crime_scene: {
-                    name: "ตรอกมืดหลังโกดังร้าง",
-                    initMsg: "ฝนตกเทกระหน่ำสาดใส่กองขยะเก่าสะท้อนแสงไฟถนนสีเหลืองนวล... ที่นี่คือจุดพบศพประธานสมศักดิ์ สายสืบกั้นพื้นที่ห้ามคนนอกเข้าแล้ว บรรยากาศเงียบสงัดชวนขนลุก"
-                },
-                office: {
-                    name: "สำนักงานเลขานุการ",
-                    initMsg: "ห้องทำงานสุดหรูของนางสาว ซี แฟ้มเอกสารวางเรียงรายจัดระเบียบอย่างประณีต บนโต๊ะมีเครื่องคอมพิวเตอร์เปิดค้างไว้ และมีกลิ่นหอมน้ำหอมราคาแพงลอยจางๆ ในอากาศ"
-                },
-                mansion: {
-                    name: "คฤหาสน์หรูของคุณบี",
-                    initMsg: "บ้านพักตระกูลผู้ลากมากดี ตกแต่งด้วยเฟอร์นิเจอร์สีทองหรูหรา นาย บี กำลังนั่งสูบซิการ์หน้านิ่งอยู่บนโซฟาหนังกำมะหยี่ สายตาจับจ้องมองคุณอย่างไม่เป็นมิตร"
-                },
-                neon_bar: {
-                    name: "บาร์นีออนใต้ดินดนตรีแจ๊ส",
-                    initMsg: "สถานที่พักผ่อนแห่งสุดท้ายที่ผู้ตายมาปรากฏตัวก่อนเสียชีวิต แสงไฟสีม่วงอมชมพูสลับคลื่นความถี่ บาร์เทนเดอร์กำลังเช็ดแก้วเงียบๆ ท่ามกลางเสียงเพลงเบาๆ"
+            mockupTopup(amount, price) {
+                SoundBox.success();
+                ProfileState.diamonds += amount;
+                this.updateHUD();
+                alert(`🎯 [ระบบทดสอบเติมเงินสำเร็จ]\nระบบทำการเติมจำนวน ${amount} เพชร เข้าบัญชี UID ${ProfileState.uid} ของคุณเรียบร้อยแล้ว (การหักเงินจำนวน ${price} บาท เป็นเพียงการจำลองทดสอบโหมดระบบภายนอกเท่านั้น)`);
+            },
+
+            buySpecialTicket() {
+                if (ProfileState.diamonds < 120) {
+                    SoundBox.playNote(250, 0.15, "sawtooth");
+                    alert("❌ จำนวนเพชรทดสอบของคุณไม่เพียงพอ! กรุณากดเติมเงินที่ตู้จำลองด้านบนก่อนครับวัยรุ่น");
+                    return;
+                }
+                SoundBox.success();
+                ProfileState.diamonds -= 120;
+                ProfileState.hasSpecialTicket = true;
+                this.updateHUD();
+                alert("🎟️ ซื้อบัตรข้ามปริศนาพิเศษสำเร็จแล้ว! บัญชีของคุณได้รับสถานะสิทธิประโยชน์สูงสุด");
+            }
+        };
+
+        /**
+         * MINIGAME 1: 💣 BOMB DEFUSE MECHANICS SYSTEM
+         */
+        const BombGame = {
+            correctWire: "blue",
+            timerInterval: null,
+            timeLeft: 30,
+            matchRunning: false,
+
+            startMatch() {
+                if (this.matchRunning) return;
+                SoundBox.success();
+                
+                this.matchRunning = true;
+                this.timeLeft = 30;
+                document.getElementById("bomb-timer-clock").innerText = "00:30";
+                document.getElementById("bomb-status-indicator").innerText = "🔴 สถานะ: มีกระแสไฟวิ่งผ่าน ชนวนกำลังทำงาน!";
+                document.getElementById("bomb-status-indicator").style.color = "var(--crimson)";
+                document.getElementById("bomb-start-btn").setAttribute("disabled", "true");
+
+                // Reset physical layout view cords
+                const ropes = document.querySelectorAll(".wire-rope");
+                ropes.forEach(r => r.classList.remove("cut-off"));
+
+                // Randomize correct solution targets string wire array keys
+                const wiresList = ["blue", "red", "yellow", "green"];
+                this.correctWire = wiresList[Math.floor(Math.random() * wiresList.length)];
+                
+                // Boot counting interval execution loops
+                this.timerInterval = setInterval(() => {
+                    this.timeLeft--;
+                    
+                    let secondsStr = this.timeLeft < 10 ? `0${this.timeLeft}` : this.timeLeft;
+                    document.getElementById("bomb-timer-clock").innerText = `00:${secondsStr}`;
+                    
+                    // Warning sound feedback ticker
+                    SoundBox.playNote(880, 0.02, "sine", 0.04);
+
+                    if (this.timeLeft <= 0) {
+                        this.triggerExplosion("เวลาหมดลงก่อนที่คุณจะตัดสินใจได้สำเร็จ!");
+                    }
+                }, 1000);
+            },
+
+            cutWire(color) {
+                if (!this.matchRunning) {
+                    alert("คุณต้องกดเริ่มระบบสับสวิตช์ชนวนระเบิดเวลาก่อนลงมือตัดสายไฟซิวับรุ่น!");
+                    return;
+                }
+
+                const targetWire = document.getElementById(`wire-${color}`);
+                if (targetWire.classList.contains("cut-off")) return; // already cut
+
+                targetWire.classList.add("cut-off");
+                SoundBox.playNote(400, 0.05, "sawtooth");
+
+                if (color === this.correctWire) {
+                    // Success closure
+                    this.clearMatchState();
+                    document.getElementById("bomb-status-indicator").innerText = "🟢 สถานะ: กู้สำเร็จ ระบบถอดชนวนแล้วอย่างปลอดภัย!";
+                    document.getElementById("bomb-status-indicator").style.color = "var(--emerald)";
+                    
+                    ProfileState.rankPoints += 35;
+                    CoreEngine.updateHUD();
+                    
+                    SoundBox.success();
+                    alert("🎉 ยินดีด้วยคุณนักสืบ! ไหวพริบของคุณยอดเยี่ยมมาก ตัดสายชนวนหลักระเบิดหยุดทำงานทันเวลาอย่างหวุดหวิด! (+35 RP)");
+                } else {
+                    // Wrong choice explosion
+                    this.triggerExplosion(`คุณตัดผิดเส้น! สายสี${color} กระตุ้นโวลต์ไฟส่งสัญญาณตรงหาแกนชนวนทันที!`);
+                }
+            },
+
+            triggerExplosion(reasonText) {
+                this.clearMatchState();
+                SoundBox.boom();
+
+                document.getElementById("bomb-timer-clock").innerText = "💥 B00M!!";
+                document.getElementById("bomb-status-indicator").innerText = "💀 สถานะ: ระเบิดบึ้ม ตึกถล่มพังพินาศแล้ว!";
+                
+                ProfileState.rankPoints = Math.max(0, ProfileState.rankPoints - 20);
+                CoreEngine.updateHUD();
+
+                alert(`❌ [GAME OVER - เกิดการระเบิด]\n${reasonText}\nแรงระเบิดทำให้คุณสูญเสียสถานะเอาชีวิตรอดในด่านนี้ไปทันที (-20 RP)`);
+            },
+
+            clearMatchState() {
+                this.forceStopTimer();
+                this.matchRunning = false;
+                document.getElementById("bomb-start-btn").removeAttribute("disabled");
+            },
+
+            forceStopTimer() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                    this.timerInterval = null;
                 }
             }
         };
 
         /**
-         * GAME ACTION IMPLEMENTATION CORE ENGINE
+         * MINIGAME 2: 🎲 MYSTERY NUMBER CRACKING LOGIC
          */
-        const GameEngine = {
-            
-            // Initialization Logic Launcher
-            init() {
-                this.printRow("SYSTEM", "ยินดีต้อนรับสู่ระบบตรวจวิเคราะห์คดีอาชญากรรมอัตโนมัติ... กรุณาออกสำรวจเพื่อค้นหาความจริงชวนหักมุม!");
-                this.printRow("LOCATION", GameData.locations[GameData.currentLocation].initMsg);
-                this.updateUI();
+        const NumberGame = {
+            secretDigit: 42,
+            attempts: 0,
+
+            initGame() {
+                this.secretDigit = Math.floor(1 + Math.random() * 100);
+                this.attempts = 0;
+                document.getElementById("number-log-monitor").innerHTML = `<div class="clue-row-item" style="color: var(--gold-main); font-style: italic;">[ระบบข้อมูล] ตัวเลขปริศนาชุดใหม่ถูกสุ่มสร้างสำเร็จแล้ว (1-100) ส่งค่ารหัสของคุณเพื่อสืบร่องรอยได้เลย</div>`;
+                document.getElementById("mystery-digit-input").value = "";
             },
 
-            // Custom Print Engine to Terminal Monitor View
-            printRow(type, text) {
-                const screen = document.getElementById("terminal-screen");
-                let badgeClass = "badge-system";
-                let typeText = "INFO";
+            submitGuess() {
+                const inputElement = document.getElementById("mystery-digit-input");
+                const currentVal = parseInt(inputElement.value);
 
-                switch(type) {
-                    case "SYSTEM": badgeClass = "badge-system"; typeText = "ระบบ"; break;
-                    case "DANGER": badgeClass = "badge-danger"; typeText = "คำเตือน"; SoundFX.triggerDanger(); break;
-                    case "SUCCESS": badgeClass = "badge-success"; typeText = "เบาะแส"; SoundFX.triggerSuccess(); break;
-                    case "LOCATION": badgeClass = "badge-location"; typeText = "สำรวจ"; SoundFX.playBeep(440, 0.06); break;
-                }
-
-                const row = document.createElement("div");
-                row.className = "terminal-row";
-                row.innerHTML = `<span class="status-badge ${badgeClass}">${typeText}</span> ${text}`;
-                screen.appendChild(row);
-                screen.scrollTop = screen.scrollHeight;
-                
-                // Add minor click typewriter feedback sound simulation
-                SoundFX.playBeep(650, 0.02);
-            },
-
-            // Navigation handler to move location spaces
-            moveLocation(locKey) {
-                if (GameData.gameOver) return;
-                if (GameData.currentLocation === locKey) {
-                    this.printRow("DANGER", `คุณอยู่ที่นี่อยู่แล้ว: ${GameData.locations[locKey].name}`);
-                    return;
-                }
-                
-                GameData.currentLocation = locKey;
-                SoundFX.triggerMove();
-                
-                const loc = GameData.locations[locKey];
-                this.printRow("LOCATION", `เดินทางเข้าสู่พื้นที่ [${loc.name}]...`);
-                this.printRow("SYSTEM", loc.initMsg);
-                
-                this.updateUI();
-            },
-
-            // Core UI Refresh and State Rendering Mapping
-            updateUI() {
-                // Render location header name
-                document.getElementById("current-location-text").innerText = `📍 สถานที่: ${GameData.locations[GameData.currentLocation].name}`;
-                
-                // Progress Bar Evaluation calculate
-                let calculatedProgress = 0;
-                let collectCount = 0;
-                for (let key in GameData.evidences) {
-                    if (GameData.evidences[key].collected) {
-                        collectCount++;
-                        calculatedProgress += GameData.evidences[key].progressValue;
-                    }
-                    if (GameData.evidences[key].inspected) {
-                        calculatedProgress += 5; // Extra bonus progress points for checking detail!
-                    }
-                }
-                
-                // Normalize limits maximum cap 100%
-                if (calculatedProgress > 100) calculatedProgress = 100;
-                GameData.caseProgress = calculatedProgress;
-
-                document.getElementById("progress-percent").innerText = `${calculatedProgress}%`;
-                document.getElementById("progress-fill").style.width = `${calculatedProgress}%`;
-                document.getElementById("evidence-count-text").innerText = `หลักฐาน: ${collectCount}/4`;
-
-                // Calculate Suspect rates modifiers based on clues gathered
-                let b_sus = 50;
-                let c_sus = 45;
-                if (GameData.evidences.knife.collected) b_sus += 15;
-                if (GameData.evidences.ledger.collected) b_sus += 20;
-                if (GameData.evidences.letter.collected) c_sus += 20;
-                if (GameData.evidences.glass_trace.collected) c_sus += 25;
-
-                document.getElementById("suspect-b-rate").innerText = `${b_sus}%`;
-                document.getElementById("suspect-c-rate").innerText = `${c_sus}%`;
-
-                // Update Alibi quotes descriptions dynamically based on evidence status
-                if (GameData.evidences.knife.inspected) {
-                    document.getElementById("alibi-b-text").innerHTML = `<strong>คำให้การ:</strong> "พวกคุณเจอมีดนั่นได้ไง?! ใช่... ผมเคยเป็นเจ้าของ แต่ผมทำมันหายไปนานหลายเดือนแล้วนะ! มีคนจงใจป้ายความผิดให้ผมชัดๆ!"`;
-                }
-                if (GameData.evidences.glass_trace.inspected) {
-                    document.getElementById("alibi-c-text").innerHTML = `<strong>คำให้การ:</strong> "เรื่องแก้ววิสกี้นั่น... ฉันแค่ยกไปเสิร์ฟตามหน้าที่ปกติค่ะ! ใครจะไปรู้ว่ามีสารพิษผสมอยู่กันแน่ อย่ามากล่าวหากันลอยๆ สิคะคุณนักสืบ!"`;
-                }
-
-                // Court button lock evaluation activation toggle validation check
-                if (calculatedProgress >= 60 && !GameData.gameOver) {
-                    document.getElementById("btn-accuse-b").removeAttribute("disabled");
-                    document.getElementById("btn-accuse-c").removeAttribute("disabled");
-                } else {
-                    document.getElementById("btn-accuse-b").setAttribute("disabled", "true");
-                    document.getElementById("btn-accuse-c").setAttribute("disabled", "true");
-                }
-
-                // Render dynamic operational controller action buttons layout
-                this.renderActionButtons();
-                this.renderEvidenceNotebook();
-            },
-
-            // Render action buttons based on current location
-            renderActionButtons() {
-                const box = document.getElementById("area-actions-box");
-                box.innerHTML = ""; // Clear content layout safely
-
-                if (GameData.gameOver) {
-                    box.innerHTML = `<div class="empty-placeholder" style="padding:10px; color:var(--crimson);">🔒 คดีสิ้นสุดลงแล้ว ไม่สามารถดำเนินการได้</div>`;
+                if (isNaN(currentVal) || currentVal < 1 || currentVal > 100) {
+                    alert("กรุณากรอกตัวเลขเดาช่วงระหว่างเลข 1 ถึง 100 ให้ถูกต้องด้วยนะครับ!");
                     return;
                 }
 
-                const loc = GameData.currentLocation;
+                this.attempts++;
+                SoundBox.click();
+                const logMonitor = document.getElementById("number-log-monitor");
 
-                if (loc === "crime_scene") {
-                    box.appendChild(this.createActionButton("🔍 ค้นตู้คอนเทนเนอร์หลังถังขยะ", "GameEngine.triggerSearchAction('knife')"));
-                    box.appendChild(this.createActionButton("🔍 ค้นเศษใบไม้และกองขยะเก่า", "GameEngine.triggerSearchAction('letter')"));
-                } else if (loc === "office") {
-                    box.appendChild(this.createActionButton("🔍 รื้อค้นโต๊ะทำงานและแผ่นฝ้าเพดาน", "GameEngine.triggerSearchAction('ledger')"));
-                    box.appendChild(this.createActionButton("💬 เค้นถามเลขา ซี เรื่องความสัมพันธ์", "GameEngine.interrogateSuspect('C')"));
-                } else if (loc === "mansion") {
-                    box.appendChild(this.createActionButton("💬 ซักไซ้ถามจี้ไทม์ไลน์ นาย บี", "GameEngine.interrogateSuspect('B')"));
-                    box.appendChild(this.createActionButton("🔍 แอบค้นกระเป๋าเอกสารลับบนโต๊ะรับแขก", "GameEngine.triggerSearchAction('mansion_briefcase')"));
-                } else if (loc === "neon_bar") {
-                    box.appendChild(this.createActionButton("🔍 ตรวจสอบเคาน์เตอร์เครื่องดื่มหลังบาร์", "GameEngine.triggerSearchAction('glass_trace')"));
-                    box.appendChild(this.createActionButton("💬 ถามบาร์เทนเดอร์เกี่ยวกับคืนเกิดเหตุ", "GameEngine.interrogateSuspect('bartender')"));
-                }
-            },
-
-            // Helper creator logic generator for functional action buttons elements
-            createActionButton(label, clickScript) {
-                const btn = document.createElement("button");
-                btn.className = "action-btn";
-                btn.setAttribute("onclick", clickScript);
-                btn.innerHTML = `${label} <span>⚡</span>`;
-                return btn;
-            },
-
-            // Search execution interaction processes
-            triggerSearchAction(actionKey) {
-                if (GameData.gameOver) return;
-
-                // Scenario mapping logic branches
-                if (actionKey === "knife") {
-                    const item = GameData.evidences.knife;
-                    if (item.collected) {
-                        this.printRow("DANGER", "บริเวณหลังถังขยะว่างเปล่า คุณได้หยิบมีดพกเปื้อนเลือดออกไปแล้ว");
-                    } else {
-                        item.collected = true;
-                        this.printRow("SUCCESS", `เจอหลักฐานสำคัญ! [${item.name}]: ${item.shortDesc}`);
-                        this.updateUI();
-                    }
-                } 
-                else if (actionKey === "letter") {
-                    const item = GameData.evidences.letter;
-                    if (item.collected) {
-                        this.printRow("DANGER", "คุณพบร่องรอยใบไม้กระจุยกระจาย แต่ไม่มีเศษกระดาษจดหมายเหลืออยู่แล้ว");
-                    } else {
-                        item.collected = true;
-                        this.printRow("SUCCESS", `เจอหลักฐานสำคัญ! [${item.name}]: ${item.shortDesc}`);
-                        this.updateUI();
-                    }
-                } 
-                else if (actionKey === "ledger") {
-                    const item = GameData.evidences.ledger;
-                    if (item.collected) {
-                        this.printRow("DANGER", "ช่องเปิดแผ่นฝ้าเพดานปิดสนิท ไม่มีเอกสารอื่นซ่อนอยู่อีกต่อไป");
-                    } else {
-                        item.collected = true;
-                        this.printRow("SUCCESS", `เจอหลักฐานเด็ด! [${item.name}]: ${item.shortDesc}`);
-                        this.updateUI();
-                    }
-                } 
-                else if (actionKey === "glass_trace") {
-                    const item = GameData.evidences.glass_trace;
-                    if (item.collected) {
-                        this.printRow("DANGER", "บนชั้นวางแก้วไม่มีแก้ววิสกี้ใบที่ปนเปื้อนสารเหลืออยู่อีกแล้ว");
-                    } else {
-                        item.collected = true;
-                        this.printRow("SUCCESS", `เจอหลักฐานวิทยาศาสตร์! [${item.name}]: ${item.shortDesc}`);
-                        this.updateUI();
-                    }
-                }
-                else if (actionKey === "mansion_briefcase") {
-                    this.printRow("LOCATION", "คุณแอบแง้มกระเป๋าเอกสารของนาย บี ในขณะที่เขาเผลอ... พบเพียงสัญญากู้ยืมเงินมูลค่ามหาศาลที่จวนจะล้มละลาย แต่ยังไม่พบหลักฐานเชื่อมโยงโดยตรงในกระเป๋านี้");
-                }
-            },
-
-            // Deep inspect view analysis method activation
-            inspectEvidenceItem(itemKey) {
-                const item = GameData.evidences[itemKey];
-                if (!item) return;
-
-                if (!item.inspected) {
-                    item.inspected = true;
-                    this.printRow("SUCCESS", `🔎 วิเคราะห์เจาะลึกสำเร็จ (+5% ความคืบหน้า): [${item.name}] -> ${item.deepDesc}`);
-                    this.updateUI();
+                if (currentVal === this.secretDigit) {
+                    SoundBox.success();
+                    logMonitor.innerHTML += `<div class="clue-row-item" style="color: var(--emerald);">🎯 ครั้งที่ ${this.attempts}: ป้อนเลข [${currentVal}] -> รหัสถูกต้องถอดล็อกตู้เซฟกระจุกข้อมูลคดีสำเร็จ!</div>`;
+                    
+                    ProfileState.rankPoints += 25;
+                    CoreEngine.updateHUD();
+                    
+                    alert(`🎉 โคดเนม ${ProfileState.username} ถอดรหัสสำเร็จ! ตัวเลขคือ ${this.secretDigit} ใช้เวลาไปทั้งหมด ${this.attempts} ครั้งความพยายาม (+25 RP)`);
+                    this.initGame();
+                } else if (currentVal < this.secretDigit) {
+                    logMonitor.innerHTML += `<div class="clue-row-item" style="color: var(--crimson);">❌ ครั้งที่ ${this.attempts}: ป้อนเลข [${currentVal}] -> เบาะแสบ่งบอกว่าตัวเลขจริง "มีค่ามากกว่านี้" ↑</div>`;
                 } else {
-                    this.printRow("SYSTEM", `🔍 รายละเอียดการตรวจสอบเดิม: ${item.deepDesc}`);
-                }
-            },
-
-            // Dynamic dialogue processing function branch mechanics
-            interrogateSuspect(suspectKey) {
-                if (GameData.gameOver) return;
-
-                if (suspectKey === "C") {
-                    GameData.interrogations.c_questioned_count++;
-                    if (GameData.evidences.letter.collected && GameData.evidences.ledger.collected) {
-                        this.printRow("LOCATION", "คุณยื่นจดหมายขู่และสมุดบัญชีสองเล่มลับใส่หน้าเลขา ซี! เธอนิ่งอึ้ง หน้าถอดสีทันที มือเริ่มสั่นเทาพยายามหลบสายตาอย่างเห็นได้ชัด!");
-                    } else if (GameData.evidences.letter.collected) {
-                        this.printRow("LOCATION", "คุณถามเรื่องเศษกระดาษพิมพ์ดีดที่เจอ... เลขา ซี อ้างว่า 'ใครๆ ในออฟฟิศก็ใช้เครื่องพิมพ์ดีดเครื่องเก่าตัวนั้นได้ค่ะ ไม่ใช่แค่ฉันหรอกนะ!'");
-                    } else {
-                        this.printRow("LOCATION", "เลขา ซี ยืนกรานคำเดิมอย่างสุภาพ: 'ฉันบริสุทธิ์ค่ะคุณนักสืบ คืนเกิดเหตุฉันนั่งทำงานเอกสารอยู่คนเดียวจนรุ่งสางจริงๆ ค่ะ คอนเฟิร์มจากกล้องหน้าออฟฟิศได้เลย'");
-                    }
-                } 
-                else if (suspectKey === "B") {
-                    GameData.interrogations.b_questioned_count++;
-                    if (GameData.evidences.knife.collected && GameData.evidences.ledger.collected) {
-                        this.printRow("LOCATION", "คุณกดดันถามจี้เรื่องมีดสลักชื่อและเส้นทางการเงินในสมุดลับ! นาย บี ตบโต๊ะเสียงดังสนั่นฉุนเฉียว: 'แกกำลังจะบอกว่าฉันร่วมมือกับเลขา ซี เพื่อฮุบบริษัทงั้นเหรอ?! เหลวไหลสิ้นดี!!'");
-                    } else if (GameData.evidences.knife.collected) {
-                        this.printRow("LOCATION", "คุณถามถึงมีดสลักชื่อ นาย บี พูดเสียงแข็งกระด้าง: 'ผมบอกไปแล้วไงว่าทำหาย! ใครจะบ้าเอาอาวุธสลักชื่อตัวเองไปฆ่าคนกันล่ะห๊ะ?! คิดดูดีๆ สิ!'");
-                    } else {
-                        this.printRow("LOCATION", "นาย บี พ่นควันซิการ์ใส่หน้าคุณ: 'เลิกมาเซ้าซี้ผมได้แล้ว มีปัญญาหาหลักฐานมัดตัวผมไหมล่ะ? ถ้าไม่มีก็เชิญไสหัวออกไปจากคฤหาสน์ของผมซะ!'");
-                    }
-                } 
-                else if (suspectKey === "bartender") {
-                    if (GameData.evidences.glass_trace.collected) {
-                        this.printRow("LOCATION", "บาร์เทนเดอร์กระซิบเบาๆ หลังดูรูปแก้ว: 'อ๋อ แก้วนี้แหละครับ... คืนนั้นผมเห็นคุณผู้หญิงเลขา ซี แอบหยดผงบางอย่างลงไป ก่อนจะเดินนำออกไปส่งท่านประธานที่ก้าวขาแทบไม่ไหวเลยครับ'");
-                    } else {
-                        this.printRow("LOCATION", "บาร์เทนเดอร์ให้ข้อมูลทั่วไป: 'คืนนั้นประธานสมศักดิ์มาดื่มวิสกี้ตามปกติครับ นั่งอยู่สักพักก็มีคนมาพบแกแล้วก็พากันออกไปทางประตูหลังร้านครับจำหน้าไม่ชัดเท่าไหร่'");
-                    }
-                }
-            },
-
-            // Renders the list items containing the collected tools clues inside Notebook View Panel Container
-            renderEvidenceNotebook() {
-                const container = document.getElementById("evidence-list-container");
-                container.innerHTML = ""; // Clear wrapper view
-
-                let hasAnyCollected = false;
-
-                for (let key in GameData.evidences) {
-                    const item = GameData.evidences[key];
-                    if (item.collected) {
-                        hasAnyCollected = true;
-                        
-                        const card = document.createElement("div");
-                        card.className = "card-item";
-                        
-                        let inspectBtnLabel = "🔎 ตรวจสอบเจาะลึกวัตถุ";
-                        if (item.inspected) {
-                            inspectBtnLabel = "✅ วิเคราะห์เรียบร้อยแล้ว";
-                        }
-
-                        card.innerHTML = `
-                            <div class="card-header-flex">
-                                <span class="card-title">📍 ${item.name}</span>
-                                <button class="btn-inspect" onclick="GameEngine.inspectEvidenceItem('${item.id}')">${inspectBtnLabel}</button>
-                            </div>
-                            <p class="card-desc">${item.shortDesc}</p>
-                            ${item.inspected ? `<p class="card-desc" style="margin-top:6px; color:var(--gold-bright); border-top:1px dashed rgba(212,175,55,0.2); padding-top:4px;"><strong>ผลวิเคราะห์แล็บ:</strong> ${item.deepDesc}</p>` : ''}
-                        `;
-                        container.appendChild(card);
-                    }
+                    logMonitor.innerHTML += `<div class="clue-row-item" style="color: var(--cyan);">❌ ครั้งที่ ${this.attempts}: ป้อนเลข [${currentVal}] -> เบาะแสบ่งบอกว่าตัวเลขจริง "มีค่าน้อยกว่านี้" ↓</div>`;
                 }
 
-                if (!hasAnyCollected) {
-                    container.innerHTML = `<div class="empty-placeholder">กระเป๋าว่างเปล่า... ออกเดินทางสำรวจพื้นที่จุดเกิดเหตุเพื่อเก็บหลักฐานเบาะแสมาวิเคราะห์เดี๋ยวนี้!</div>`;
-                }
-            },
-
-            // Tab Switching Navigation Layout logic control interface
-            switchTab(tabId, el) {
-                // Audio click response trigger
-                SoundFX.playBeep(500, 0.04, "sine");
-
-                // Clear active states variables configuration classes
-                const contents = document.querySelectorAll(".tab-content");
-                contents.forEach(c => c.classList.remove("active"));
-                
-                const triggers = document.querySelectorAll(".tab-trigger");
-                triggers.forEach(t => t.classList.remove("active"));
-
-                // Active targets
-                document.getElementById(tabId).classList.add("active");
-                el.classList.add("active");
-            },
-
-            // Accusation Judgement Engine System - Resolves Multi endings outcomes
-            accuseTarget(targetId) {
-                if (GameData.gameOver) return;
-                GameData.gameOver = true;
-                
-                // Clear monitor screens entirely before drawing endings outputs sequences
-                const screen = document.getElementById("terminal-screen");
-                screen.innerHTML = "";
-
-                this.printRow("DANGER", "=== เริ่มต้นขั้นตอนการพิจารณาคดีในชั้นศาลและสรุปสำนวนคดีขั้นสุดท้าย ===");
-
-                const hasKnife = GameData.evidences.knife.collected && GameData.evidences.knife.inspected;
-                const hasLetter = GameData.evidences.letter.collected && GameData.evidences.letter.inspected;
-                const hasLedger = GameData.evidences.ledger.collected && GameData.evidences.ledger.inspected;
-                const hasGlass = GameData.evidences.glass_trace.collected && GameData.evidences.glass_trace.inspected;
-
-                // Evaluator branch choices loop logic matrix conditions
-                if (targetId === "B") {
-                    // Accused Partner Mr B path lines options
-                    if (hasKnife && hasLedger && hasGlass && hasLetter) {
-                        // All clues verified perfectly! Plotted betrayal twist reveal
-                        this.printRow("SUCCESS", "🏆 [TRUE ENDING: การสมรู้ร่วมคิดที่สมบูรณ์แบบ] 🏆");
-                        this.printRow("SYSTEM", "ด้วยหลักฐานทั้งหมดที่มี คุณพิสูจน์ได้ว่า นาย บี และ นางสาว ซี ร่วมมือกัน! โดยนางสาว ซี เป็นคนวางยาสลบประธานในบาร์ และนาย บี รอรับช่วงต่อในตรอกมืดเพื่อใช้มีดแทงพกแทงฆาตกรรมและชิงเงิน 10 ล้านไปแบ่งกัน! ทั้งสองดิ้นไม่หลุดและต้องชดใช้กรรมในคุกตลอดชีวิต! คุณปิดคดีได้อย่างสมบูรณ์แบบไร้ที่ติประดุจนักสืบระดับตำนาน!");
-                    } else if (hasKnife && hasLedger) {
-                        // Partial truths success
-                        this.printRow("SUCCESS", "🥈 [GOOD ENDING: จับฆาตกรลงทัณฑ์] 🥈");
-                        this.printRow("SYSTEM", "หลักฐานมีดพกสลักชื่อและสมุดบัญชีลับ สามารถมัดตัว นาย บี ได้สำเร็จในฐานะผู้ลงมือฆาตกรรมและยักยอกทรัพย์ ศาลสั่งจำคุกตลอดชีวิต ทว่า นางสาว ซี เลขาตัวแสบสามารถใช้ช่องโหว่ทางกฎหมายและหลักฐานแก้วเหล้าที่ปนเปื้อนพิษที่ยังไม่ได้รับการวิเคราะห์ชัดเจนหลบหนีออกนอกประเทศไปพร้อมเงินบางส่วน... คดีคลี่คลายแต่ไม่สมบูรณ์ร้อยเปอร์เซ็นต์!");
-                    } else {
-                        // Failure bad decisions path 
-                        this.printRow("DANGER", "❌ [BAD ENDING: หลักฐานอ่อนเกินไป] ❌");
-                        this.printRow("SYSTEM", "คุณกล่าวหา นาย บี ทว่าทนายความฝ่ายจำเลยระดับท็อปของประเทศยื่นเอกสารคัดค้านเนื่องจากหลักฐานมีดพกและข้อมูลยังไม่มีน้ำหนักเชื่อมโยงเจตนาเพียงพอ นาย บี หลุดพ้นคดีลอยนวลหน้าตาเฉย และหันมาฟ้องร้องกลับจนคุณต้องสูญเสียใบอนุญาตนักสืบเอกชนไปตลอดกาล! ความจริงจมดิ่งลงสู่ก้นบึ้งของความมืดมิด...");
-                    }
-                } 
-                else if (targetId === "C") {
-                    // Accused Secretary Miss C path lines options
-                    if (hasKnife && hasLedger && hasGlass && hasLetter) {
-                        // True ending trigger again because user resolved everything excellently!
-                        this.printRow("SUCCESS", "🏆 [TRUE ENDING: ความจริงฉีกหน้ากากคู่หูทมิฬ] 🏆");
-                        this.printRow("SYSTEM", "สุดยอดมาก! คุณสืบพบความเชื่อมโยงอันน่าสะพรึงกลัว ทั้งคู่ร่วมมือกันโดยแบ่งงานชัดเจน ซี วางยา-บี ลงมือสังหาร! การชี้เป้าจับกุมนางสาว ซี นำไปสู่การซัดทอดกวาดล้างขบวนการฟอกเงินทุจริตทั้งหมดร่วมกับนาย บี ศาลตัดสินประหารชีวิตและจำคุกตลอดชีวิตตามลำดับ! ปิดคดีประวัติศาสตร์ได้อย่างสมศักดิ์ศรี!");
-                    } else if (hasLetter && hasGlass) {
-                        // Solved partial pathway options
-                        this.printRow("SUCCESS", "🥉 [SOLVED ENDING: ผู้บงการหลังม่าน] 🥉");
-                        this.printRow("SYSTEM", "จดหมายขู่และแก้วเหล้าผสมสารพิษมัดตัวเลขา ซี ได้หนาแน่นในฐานะผู้วางแผนสลบและแบล็กเมล์ แต่เธอยืนกรานปฏิเสธว่าไม่ได้ลงมือแทง! ทำให้ นาย บี หุ้นส่วนผู้เหี้ยมโหดยังคงลอยนวลเสวยสุขบนกองเงินกองทองในคฤหาสน์ต่อไปโดยที่กฎหมายเอื้อมไปไม่ถึงตัวเขาในตอนนี้ คดีถูกปิดลงแบบมีปมค้างคาใจ!");
-                    } else {
-                        // Misjudgment mistake path error 
-                        this.printRow("DANGER", "🚨 [MISTAKE ENDING: แพะรับบาปในเงามืด] 🚨");
-                        this.printRow("SYSTEM", "คุณรีบร้อนสรุปคดีจับกุมเลขา ซี โดยที่เบาะแสแวดล้อมยังคลุมเครือและขาดสมุดบัญชีลับมายืนยันเจตนาการโกง คดีโดนยกฟ้องในชั้นศาลเนื่องจากหลักฐานไม่เพียงพอ คนร้ายตัวจริงหัวเราะเยาะเย้ยหยันในมุมมืด ส่วนคุณต้องแบกรับความล้มเหลวครั้งใหญ่ที่สุดในชีวิตการทำงาน!");
-                    }
-                }
-
-                // Append game reset system option to test another branches loops endings setup
-                const resetBtn = document.createElement("button");
-                resetBtn.className = "action-btn";
-                resetBtn.style.marginTop = "20px";
-                resetBtn.style.borderColor = "var(--gold-bright)";
-                resetBtn.style.color = "var(--gold-bright)";
-                resetBtn.innerHTML = "🔄 เริ่มต้นไขคดีใหม่อีกครั้ง (Reset Case Analysis) <span>→</span>";
-                resetBtn.onclick = () => window.location.reload();
-                screen.appendChild(resetBtn);
-                screen.scrollTop = screen.scrollHeight;
-                
-                this.updateUI();
+                inputElement.value = "";
+                logMonitor.scrollTop = logMonitor.scrollHeight;
             }
         };
 
-        // Window Launch initialization loader binder setup
+        /**
+         * MINIGAME 3: ❓ DETECTIVE QUIZ DATA & CONTROL MATRIX
+         */
+        const QuizGame = {
+            currentQuestionIdx: 0,
+            
+            questionsData: [
+                {
+                    q: "คดีชายสวมแว่นตาดำ: ชายคนหนึ่งแจ้งความว่าโดนคนร้ายบุกเดี่ยวชิงทรัพย์ในห้องนอนยามวิกาลช่วงเที่ยงคืนไฟดับสนิท โดยเขาจำหน้าตาและรอยสักบนใบหน้าคนร้ายได้อย่างแม่นยำ คุณฐานะนักสืบพบบังพิรุธใดในคำให้การนี้?",
+                    options: [
+                        "เขาโกหก เพราะห้องนอนมืดและไฟดับสนิทไม่มีแสงสว่างพอที่จะมองเห็นลายรอยสักบนใบหน้าคนร้ายได้ชัดเจน",
+                        "เขาน่าจะสมรู้ร่วมคิดกับทนายความ",
+                        "คนร้ายจงใจเปิดไฟฉายคาดหัวพกพาบุกเข้าชิงทรัพย์",
+                        "คนร้ายจำสถานที่ผิดตำแหน่งพิกัด"
+                    ],
+                    correctIdx: 0
+                },
+                {
+                    q: "คดีน้ำแข็งละลายในแก้วน้ำ: พบศพเหยื่อโดนสารพิษร้ายแรงเสียชีวิตในห้องปิดตาย บนโต๊ะมีแก้วเครื่องดื่มชาเขียววางอยู่สองแก้ว เพื่อนของผู้ตายบอกว่าพวกเขาสั่งมาดื่มพร้อมกันตั้งแต่สองชั่วโมงก่อนหน้า แต่เพื่อนปลอดภัยดี ทำไมพิษถึงออกฤทธิ์ฆ่าเฉพาะเหยื่อผู้ตาย?",
+                    options: [
+                        "พิษถูกทาอยู่ที่ก้นแก้วด้านนอกเท่านั้น",
+                        "พิษถูกผสมแช่อยู่ภายในก้อนน้ำแข็ง เมื่อเวลาผ่านไปน้ำแข็งของเหยื่อละลายสารพิษจึงละลายเข้าสู่กระแสเลือด",
+                        "เหยื่อแอบกินยารักษาโรคแทรกซ้อน",
+                        "เพื่อนสลับแก้วระหว่างพูดคุยระเบิดเวลา"
+                    ],
+                    correctIdx: 1
+                }
+            ],
+
+            startTest() {
+                this.currentQuestionIdx = 0;
+                document.getElementById("quiz-activation-btn").style.display = "none";
+                this.loadQuestion();
+            },
+
+            loadQuestion() {
+                if (this.currentQuestionIdx >= this.questionsData.length) {
+                    // Completed quiz sequence
+                    document.getElementById("quiz-question-node").innerText = "🏆 การประเมินคดีเสร็จสิ้นแล้ว! คุณได้แสดงทักษะการจับสังเกตจับพิรุธได้อย่างเหมาะสมในฐานะนักสืบสายรหัสลับ";
+                    document.getElementById("quiz-options-wrapper").innerHTML = "";
+                    document.getElementById("quiz-activation-btn").style.display = "block";
+                    document.getElementById("quiz-activation-btn").innerText = "🔄 เริ่มทำการทดสอบใหม่อีกครั้ง";
+                    
+                    ProfileState.rankPoints += 30;
+                    CoreEngine.updateHUD();
+                    return;
+                }
+
+                const currentData = this.questionsData[this.currentQuestionIdx];
+                document.getElementById("quiz-question-node").innerText = `คดีที่ ${this.currentQuestionIdx + 1}: ${currentData.q}`;
+                
+                const wrapper = document.getElementById("quiz-options-wrapper");
+                wrapper.innerHTML = ""; // reset UI
+
+                currentData.options.forEach((optText, index) => {
+                    const btn = document.createElement("button");
+                    btn.className = "option-node-btn";
+                    btn.innerText = `${index + 1}. ${optText}`;
+                    btn.setAttribute("onclick", `QuizGame.selectAnswer(${index})`);
+                    wrapper.appendChild(btn);
+                });
+            },
+
+            selectAnswer(chosenIdx) {
+                const currentData = this.questionsData[this.currentQuestionIdx];
+                if (chosenIdx === currentData.correctIdx) {
+                    SoundBox.success();
+                    alert("🎯 ถูกต้อง! การวิเคราะห์แยกแยะและตรรกะของคุณมองเห็นความจริงที่ซ่อนอยู่เบื้องหลังหลักฐานแวดล้อมได้เฉียบคมมาก");
+                } else {
+                    SoundBox.playNote(220, 0.2, "sawtooth");
+                    alert("❌ ผิดพลาด! คำวิเคราะห์ของคุณคลาดเคลื่อนไปจากความจริง คนร้ายแอบใช้จุดนี้หลบหนีไปได้");
+                }
+
+                this.currentQuestionIdx++;
+                this.loadQuestion();
+            }
+        };
+
+        /**
+         * GLOBAL CHAT SIMULATOR REAL-TIME MESSAGE ENGINE
+         */
+        const ChatEngine = {
+            simulatorInterval: null,
+            botNames: ["Conan_Fan", "Kaito_Kid99", "Mori_Kogoro", "Ayumi_Alpha", "Inspector_Megure", "Heiji_Osaka"],
+            botPhrases: [
+                "ใครกู้ระเบิดสายสีแดงผ่านบ้างวะ ตึงจัดบึ้มใส่หน้าไปสามรอบละ 💣",
+                "แอดเพื่อนมาได้นะทุกคน UID ผมคือ 549321 แอดมาสืบคดีร่วมกันได้เลย",
+                "เกมสุ่มเลขปริศนา ได้รหัสเลขอะไรกันบ้าง ใบ้หน่วยสิโฮมี่",
+                "โหมดตอบคำถามคดีน้ำแข็งละลายโคตรหักมุม นึกไม่ถึงเลยจริงๆ 👁️",
+                "เพิ่งเติมแพ็กเพชร 500 ไปเมื่อกี้ ระบบรันไวจัด ลุยด่านต่อชิลๆ ✨",
+                "ความจริงมีเพียงหนึ่งเดียวเท่านั้น! อย่าปล่อยให้คนร้ายลอยนวลคุณนักสืบ"
+            ],
+
+            initSimulator() {
+                // Post initial warm up messages rows
+                this.appendMessage("System_Server", "ระบบทำการเชื่อมต่อเครือข่ายความปลอดภัยแชทโลกนักสืบสำเร็จ ยินดีต้อนรับผู้เล่นทุกคน", true);
+                
+                // Boot continuous loop simulation interval
+                this.simulatorInterval = setInterval(() => {
+                    const randomName = this.botNames[Math.floor(Math.random() * this.botNames.length)];
+                    const randomText = this.botPhrases[Math.floor(Math.random() * this.botPhrases.length)];
+                    this.appendMessage(randomName, randomText);
+                }, 6000);
+
+                // Add enter key trigger support on input element fields
+                document.getElementById("chat-message-field").addEventListener("keypress", function(e) {
+                    if (e.key === "Enter") {
+                        ChatEngine.sendUserMessage();
+                    }
+                });
+            },
+
+            appendMessage(sender, text, isSystem = false) {
+                const monitor = document.getElementById("global-chat-monitor");
+                const bubble = document.createElement("div");
+                bubble.className = "chat-bubble";
+                
+                if (isSystem) {
+                    bubble.style.borderColor = "var(--gold-main)";
+                    bubble.innerHTML = `<div class="chat-sender-meta" style="color:var(--gold-main);">📢 ${sender}</div><div style="color:var(--text-sub); font-style:italic;">${text}</div>`;
+                } else {
+                    const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    bubble.innerHTML = `
+                        <div class="chat-sender-meta">
+                            <span>👤 ${sender}</span>
+                            <span style="color:var(--text-sub); font-size:0.7rem; font-weight:normal;">${timestamp}</span>
+                        </div>
+                        <div>${text}</div>
+                    `;
+                }
+
+                monitor.appendChild(bubble);
+                monitor.scrollTop = monitor.scrollHeight;
+                SoundBox.playNote(900, 0.01, "sine", 0.02); // minor notification sound tick
+            },
+
+            sendUserMessage() {
+                const inputField = document.getElementById("chat-message-field");
+                const txt = inputField.value.trim();
+
+                if (txt === "") return;
+
+                // Append user profile identity node layout
+                this.appendMessage(`${ProfileState.username} (คุณ)`, txt);
+                inputField.value = ""; // flush clear
+            }
+        };
+
+        // Window load initial default constructor execution attachment
         window.addEventListener("DOMContentLoaded", () => {
-            GameEngine.init();
+            // Trigger target elements setup data variables defaults
+            NumberGame.initGame();
         });
     </script>
 </body>
