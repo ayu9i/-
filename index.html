@@ -3,1155 +3,1060 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detective Conan: The Infinite Loop</title>
+    <title>🕵️ Mystery Detective Project | The Truth in Shadows</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & THEME (MIDNIGHT GOLD LUXURY)
+           ========================================================================== */
         :root {
-            --primary: #d4af37;
-            --primary-hover: #aa841b;
-            --bg-dark: #0a0a0c;
-            --panel-bg: #141419;
-            --text-light: #f5f5f7;
-            --text-muted: #8e8e93;
-            --accent: #e63946;
-            --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --bg-main: #0a0c10;
+            --bg-panel: #12161f;
+            --bg-terminal: #07090d;
+            --gold-pure: #d4af37;
+            --gold-bright: #f3e5ab;
+            --gold-dim: #aa8c2c;
+            --gold-trans: rgba(212, 175, 55, 0.15);
+            --text-light: #f1f5f9;
+            --text-gray: #94a3b8;
+            --text-dark: #0f172a;
+            --crimson: #ef4444;
+            --crimson-dim: #991b1b;
+            --emerald: #10b981;
+            --emerald-dim: #065f46;
+            --cyan: #06b6d4;
+            --font-main: 'Anuphan', sans-serif;
+            --transition-speed: 0.25s;
         }
 
+        /* ==========================================================================
+           2. GENERAL & RESET STYLES
+           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: var(--font-main);
             user-select: none;
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-main);
             color: var(--text-light);
-            font-family: var(--font-family);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            overflow: hidden;
-            perspective: 1000px;
-        }
-
-        #game-container {
-            width: 900px;
-            height: 600px;
-            background: linear-gradient(135deg, #16161d 0%, #0b0b0d 100%);
-            border: 2px solid var(--primary);
-            border-radius: 16px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.15);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 20%, #1e2638 0%, var(--bg-main) 75%),
+                linear-gradient(rgba(212, 175, 55, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 20px 20px, 20px 20px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-dim);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-pure);
+        }
+
+        /* ==========================================================================
+           3. LAYOUT COMPONENT
+           ========================================================================== */
+        .app-header {
+            background: linear-gradient(to bottom, #111520, var(--bg-panel));
+            border-bottom: 2px solid var(--gold-pure);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 25px rgba(212, 175, 55, 0.15);
             position: relative;
-            transition: all 0.5s ease;
         }
 
-        #header {
-            padding: 20px 40px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(20, 20, 25, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 10;
-        }
-
-        #brand {
-            font-size: 20px;
+        .header-title {
+            color: var(--gold-pure);
+            font-size: 2.2rem;
             font-weight: 700;
-            letter-spacing: 3px;
-            color: var(--primary);
-            text-transform: uppercase;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        #stats {
-            display: flex;
-            gap: 30px;
-            font-size: 14px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .stat-item {
-            padding: 6px 16px;
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 20px;
-        }
-
-        .stat-value {
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        #main-content {
-            flex: 1;
-            display: flex;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #visual-panel {
-            flex: 1.2;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-right: 1px solid rgba(212, 175, 55, 0.15);
-            background: radial-gradient(circle at center, #1f1f27 0%, #0a0a0c 100%);
-            overflow: hidden;
-        }
-
-        #visual-panel::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background-image: radial-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 0);
-            background-size: 24px 24px;
-            animation: bgMove 60s linear infinite;
-        }
-
-        @keyframes bgMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-50px, -50px); }
-        }
-
-        #conan-character {
-            width: 180px;
-            height: 260px;
-            position: relative;
-            z-index: 2;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .conan-suit {
-            width: 100%;
-            height: 100%;
-            background: #1d3557;
-            border-radius: 40px 40px 10px 10px;
-            border: 3px solid var(--primary);
-            position: relative;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        }
-
-        .conan-glasses {
-            position: absolute;
-            top: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 130px;
-            height: 45px;
-            display: flex;
-            justify-content: space-between;
-            z-index: 5;
-        }
-
-        .lens {
-            width: 60px;
-            height: 45px;
-            border: 4px solid var(--primary);
-            background: rgba(255, 255, 255, 0.75);
-            border-radius: 6px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5), inset 0 0 10px rgba(255,255,255,1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lens::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.8) 50%, transparent 55%);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translate(-30px, -30px); }
-            100% { transform: translate(30px, 30px); }
-        }
-
-        .conan-bowtie {
-            position: absolute;
-            top: 110px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 55px;
-            height: 30px;
-            background: var(--accent);
-            border-radius: 6px;
-            z-index: 4;
-            box-shadow: 0 4px 10px rgba(230, 57, 70, 0.4);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .conan-bowtie:hover {
-            transform: translateX(-50%) scale(1.1);
-        }
-
-        .conan-bowtie::before, .conan-bowtie::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            width: 30px;
-            height: 40px;
-            background: var(--accent);
-            border-radius: 8px;
-        }
-
-        .conan-bowtie::before { left: -20px; transform: rotate(-20px); }
-        .conan-bowtie::after { right: -20px; transform: rotate(20px); }
-
-        #story-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: var(--panel-bg);
-            padding: 40px;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        #dialogue-box {
-            font-size: 16px;
-            line-height: 1.8;
-            color: var(--text-light);
-            letter-spacing: 0.5px;
-            height: 220px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        #dialogue-box::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        #dialogue-box::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        #speaker-name {
-            font-size: 12px;
-            text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--primary);
-            margin-bottom: 12px;
-            font-weight: bold;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
 
-        #options-container {
+        .header-subtitle {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        .main-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            padding: 25px;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            flex-grow: 1;
+        }
+
+        @media (min-width: 1024px) {
+            .main-wrapper {
+                grid-template-columns: 1.8fr 1.2fr;
+            }
+        }
+
+        /* ==========================================================================
+           4. PANELS & CONTAINERS
+           ========================================================================== */
+        .panel {
+            background: var(--bg-panel);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-top: 20px;
+            transition: border-color var(--transition-speed);
         }
 
-        .option-btn {
-            background: transparent;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+        .panel:hover {
+            border-color: rgba(212, 175, 55, 0.45);
+        }
+
+        .panel-title {
+            color: var(--gold-pure);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            border-left: 4px solid var(--gold-pure);
+            padding-left: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ==========================================================================
+           5. GAME TERMINAL SCREEN
+           ========================================================================== */
+        .terminal-container {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .terminal-screen {
+            background-color: var(--bg-terminal);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 8px;
+            padding: 20px;
+            height: 320px;
+            overflow-y: auto;
+            font-size: 1rem;
+            line-height: 1.7;
             color: var(--text-light);
-            padding: 14px 24px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .terminal-row {
+            margin-bottom: 10px;
+            animation: textFadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes textFadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 8px;
+        }
+
+        .badge-system { background: var(--gold-trans); color: var(--gold-bright); border: 1px solid var(--gold-dim); }
+        .badge-danger { background: rgba(239, 68, 68, 0.15); color: var(--crimson); border: 1px solid var(--crimson-dim); }
+        .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid var(--emerald-dim); }
+        .badge-location { background: rgba(6, 182, 212, 0.15); color: var(--cyan); border: 1px solid var(--cyan); }
+
+        /* ==========================================================================
+           6. CONTROLS & NAVIGATION BUTTONS
+           ========================================================================== */
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-group-title {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .grid-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #171d2a, #111622);
+            color: var(--gold-pure);
+            border: 1px solid var(--gold-pure);
+            padding: 14px 18px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-weight: 500;
+            font-size: 0.95rem;
             text-align: left;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .action-btn:hover:not(:disabled) {
+            background: var(--gold-pure);
+            color: var(--text-dark);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            font-weight: 600;
+            transform: translateY(-2px);
+        }
+
+        .action-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            border-color: var(--text-gray);
+            color: var(--text-gray);
+        }
+
+        .btn-crimson {
+            border-color: var(--crimson);
+            color: var(--crimson);
+        }
+        .btn-crimson:hover:not(:disabled) {
+            background: var(--crimson) !important;
+            color: var(--text-light) !important;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important;
+        }
+
+        /* ==========================================================================
+           7. NOTEBOOK & NOTEBOOK TABS
+           ========================================================================== */
+        .notebook-tabs {
+            display: flex;
+            background: #0b0d13;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .tab-trigger {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            padding: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all var(--transition-speed);
+            text-align: center;
+        }
+
+        .tab-trigger.active {
+            background: var(--gold-pure);
+            color: var(--text-dark);
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+        }
+
+        .tab-content {
+            display: none;
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 480px;
+            padding-right: 4px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Item Lists Card Custom */
+        .card-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
+            transition: all var(--transition-speed);
+        }
+
+        .card-item:hover {
+            background: rgba(212, 175, 55, 0.04);
+            border-color: rgba(212, 175, 55, 0.25);
+        }
+
+        .card-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .card-title {
+            color: var(--gold-bright);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .card-desc {
+            color: var(--text-gray);
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .card-meta {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: var(--gold-pure);
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-inspect {
+            background: var(--gold-trans);
+            border: 1px solid var(--gold-dim);
+            color: var(--gold-bright);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-inspect:hover {
+            background: var(--gold-pure);
+            color: var(--text-dark);
+        }
+
+        .empty-placeholder {
+            text-align: center;
+            color: var(--text-gray);
+            padding: 40px 20px;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* ==========================================================================
+           8. HUD PROGRESS BAR
+           ========================================================================== */
+        .hud-container {
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hud-label {
+            font-size: 0.85rem;
+            color: var(--gold-bright);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .progress-bar-bg {
+            background: #090b10;
+            height: 10px;
+            border-radius: 5px;
+            flex-grow: 1;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
-        .option-btn:hover {
-            border-color: var(--primary);
-            background: rgba(212, 175, 55, 0.08);
-            color: var(--primary);
-            padding-left: 30px;
-        }
-
-        .option-btn::before {
-            content: '◆';
-            position: absolute;
-            left: 12px;
-            color: var(--primary);
-            opacity: 0;
-            transition: all 0.3s;
-        }
-
-        .option-btn:hover::before {
-            opacity: 1;
-        }
-
-        #sleeping-kogoro {
-            position: absolute;
-            bottom: -20px;
-            left: 30px;
-            width: 14px;
-            height: 14px;
-            background: #e63946;
-            border-radius: 50%;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .laser-glow {
-            animation: laserBeam 0.5s forwards;
-        }
-
-        @keyframes laserBeam {
-            0% { transform: scale(1); opacity: 1; box-shadow: 0 0 20px #e63946; }
-            100% { transform: translate(300px, -100px) scale(0.1); opacity: 0; }
-        }
-
-        .shocked {
-            animation: shockAnim 0.4s ease-in-out infinite alternate;
-        }
-
-        @keyframes shockAnim {
-            0% { transform: translate(2px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(0px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(2px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(2px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(1deg); }
-        }
-
-        #screen-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--gold-dim), var(--gold-pure));
             height: 100%;
-            pointer-events: none;
-            z-index: 100;
-            transition: background 0.3s;
+            width: 0%;
+            transition: width 0.4s ease;
+            box-shadow: 0 0 8px var(--gold-pure);
         }
 
-        .flash-red {
-            background: rgba(230, 57, 70, 0.3);
+        /* ==========================================================================
+           9. FOOTER
+           ========================================================================== */
+        .app-footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: auto;
+            background: #080a0f;
         }
 
-        #footer-credits {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 10px;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.15);
-            text-transform: uppercase;
+        .app-footer a {
+            color: var(--gold-pure);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-    <div id="game-container">
-        <div id="screen-effect"></div>
+    <!-- ==========================================================================
+       BODY HTML STRUCTURE
+       ========================================================================== -->
+    <header class="app-header">
+        <div class="header-title">🕵️ MYSTERY DETECTIVE PROJECT</div>
+        <div class="header-subtitle">คดีฆาตกรรมปริศนาเลขาและหุ้นส่วนลับ • "The truth is hidden in the shadows."</div>
+    </header>
+
+    <main class="main-wrapper">
         
-        <div id="header">
-            <div id="brand">Case File: 980</div>
-            <div id="stats">
-                <div class="stat-item">คดีที่: <span id="case-counter" class="stat-value">1</span></div>
-                <div class="stat-item">ความน่าเชื่อถือ: <span id="cred-counter" class="stat-value">100%</span></div>
+        <!-- LEFT PANEL: CASE CONTROLS AND MONITOR -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>🌃 แดชบอร์ดการสืบสวนคดี</span>
+                <span id="current-location-text" style="color: var(--cyan); font-size: 0.95rem;">📍 สถานที่: ตรอกมืดโกดังร้าง</span>
             </div>
-        </div>
 
-        <div id="main-content">
-            <div id="visual-panel">
-                <div id="conan-character">
-                    <div class="conan-suit">
-                        <div class="conan-glasses">
-                            <div class="lens"></div>
-                            <div class="lens"></div>
-                        </div>
-                        <div class="conan-bowtie" id="bowtie-trigger" onclick="clickBowtie()"></div>
-                    </div>
+            <!-- HUD Summary Progress -->
+            <div class="hud-container">
+                <span class="hud-label">ความคืบหน้าของคดี: <span id="progress-percent">0%</span></span>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
                 </div>
-                <div id="sleeping-kogoro"></div>
+                <span class="hud-label" id="evidence-count-text">หลักฐาน: 0/4</span>
             </div>
 
-            <div id="story-panel">
+            <!-- Monitor Terminal Screen -->
+            <div class="terminal-container">
+                <div class="terminal-screen" id="terminal-screen">
+                    <!-- Rows will dynamically inject here -->
+                </div>
+            </div>
+
+            <!-- Dynamic Buttons Section -->
+            <div class="controls-section">
+                
+                <!-- Action Controls Group -->
                 <div>
-                    <div id="speaker-name">ระบบสืบสวนอัจฉริยะ</div>
-                    <div id="dialogue-box">
-                        ยินดีต้อนรับสู่คดีปริศนาอันหรูหรา... คุณตื่นขึ้นมาในห้องปิดตายสีดำทองอร่ามอันหรูหราหมาเห่า มีศพนอนอยู่ตรงกลางห้อง และข้างๆ คุณมีลุงโมริที่กำลังยืนเกาพุงอยู่ คุณต้องหาทางปิดคดีนี้ให้ได้!
+                    <div class="control-group-title">การดำเนินการในพื้นที่</div>
+                    <div class="grid-buttons" id="area-actions-box">
+                        <!-- Dynamic Buttons -->
                     </div>
                 </div>
 
-                <div id="options-container">
-                    <!-- Options injected via JavaScript -->
+                <!-- Move Location Group -->
+                <div style="margin-top: 5px;">
+                    <div class="control-group-title">เดินทางไปยังสถานที่อื่น</div>
+                    <div class="grid-buttons">
+                        <button class="action-btn" onclick="GameEngine.moveLocation('crime_scene')">📍 ตรอกมืดโกดังร้าง <span>→</span></button>
+                        <button class="action-btn" onclick="GameEngine.moveLocation('office')">📍 สำนักงานเลขานุการ <span>→</span></button>
+                        <button class="action-btn" onclick="GameEngine.moveLocation('mansion')">📍 คฤหาสน์คุณบี <span>→</span></button>
+                        <button class="action-btn" onclick="GameEngine.moveLocation('neon_bar')">📍 บาร์นีออนใต้ดิน <span>→</span></button>
+                    </div>
+                </div>
+
+                <!-- Final Solution Accusation Group -->
+                <div style="margin-top: 10px; border-top: 1px dashed rgba(212,175,55,0.2); padding-top: 15px;">
+                    <div class="control-group-title" style="color: var(--crimson);">ศาลและการสรุปสำนวน (ต้องการความคืบหน้าคดีอย่างน้อย 60%)</div>
+                    <div class="grid-buttons">
+                        <button class="action-btn btn-crimson" id="btn-accuse-b" onclick="GameEngine.accuseTarget('B')" disabled>⚖️ สรุปสำนวนจับกุม "นาย บี"</button>
+                        <button class="action-btn btn-crimson" id="btn-accuse-c" onclick="GameEngine.accuseTarget('C')" disabled>⚖️ สรุปสำนวนจับกุม "นางสาว ซี"</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL: DETECTIVE NOTEBOOK SYSTEM -->
+        <section class="panel">
+            <div class="panel-title">📁 สมุดบันทึกนักสืบพกพา</div>
+            
+            <!-- Tabs Menu Navbar -->
+            <div class="notebook-tabs">
+                <button class="tab-trigger active" onclick="GameEngine.switchTab('tab-evidence', this)">🔍 คลังหลักฐาน</button>
+                <button class="tab-trigger" onclick="GameEngine.switchTab('tab-suspects', this)">👤 ผู้ต้องสงสัย</button>
+                <button class="tab-trigger" onclick="GameEngine.switchTab('tab-case-summary', this)">📖 ข้อมูลคดี</button>
+            </div>
+
+            <!-- Tab Content 1: Evidence Library -->
+            <div class="tab-content active" id="tab-evidence">
+                <div id="evidence-list-container">
+                    <div class="empty-placeholder">ยังไม่มีหลักฐานที่ได้รับการจัดเก็บในขณะนี้...</div>
                 </div>
             </div>
-        </div>
-        
-        <div id="footer-credits">Conan Premium Paradox System &copy; 2026</div>
-    </div>
 
+            <!-- Tab Content 2: Suspect Profiles -->
+            <div class="tab-content" id="tab-suspects">
+                <!-- Suspect Profile 1: Mr. B -->
+                <div class="card-item">
+                    <div class="card-header-flex">
+                        <span class="card-title" style="color: #f43f5e;">👤 นาย บี (หุ้นส่วนผู้ร่วมทุน)</span>
+                        <span class="status-badge badge-danger">ผู้ต้องสงสัยหลัก</span>
+                    </div>
+                    <p class="card-desc"><strong>ความสัมพันธ์:</strong> เป็นหุ้นส่วนธุรกิจร่วมกับผู้ตาย ทะเลาะกันเรื่องการยักยอกเงินในบริษัทบ่อยครั้งในระยะหลัง</p>
+                    <p class="card-desc" style="margin-top: 6px;" id="alibi-b-text"><strong>คำให้การ:</strong> "ตอนเกิดเหตุผมนอนหลับอยู่บ้านเมียหลวงสิครับ จะไปอยู่ที่คลังสินค้าทำไมล่ะ?"</p>
+                    <div class="card-meta">
+                        <span>ระดับความน่าสงสัย: <strong id="suspect-b-rate">50%</strong></span>
+                    </div>
+                </div>
+
+                <!-- Suspect Profile 2: Miss C -->
+                <div class="card-item">
+                    <div class="card-header-flex">
+                        <span class="card-title" style="color: #38bdf8;">👤 นางสาว ซี (เลขานุการส่วนตัว)</span>
+                        <span class="status-badge badge-danger">ผู้ต้องสงสัยหลัก</span>
+                    </div>
+                    <p class="card-desc"><strong>ความสัมพันธ์:</strong> เลขาส่วนตัวของผู้ตาย รู้จักความเคลื่อนไหวทางการเงินและเอกสารสัญญาลับทุกอย่าง</p>
+                    <p class="card-desc" style="margin-top: 6px;" id="alibi-c-text"><strong>คำให้การ:</strong> "ฉันนั่งเคลียร์เอกสารภาษีอยู่ที่สำนักงานใหญ่คนเดียวจนถึงเช้าค่ะ มีกล้องวงจรปิดบันทึกไว้ได้นะคะ"</p>
+                    <div class="card-meta">
+                        <span>ระดับความน่าสงสัย: <strong id="suspect-c-rate">45%</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content 3: Overview Summary Case -->
+            <div class="tab-content" id="tab-case-summary">
+                <div class="card-item" style="border-left: 3px solid var(--gold-pure);">
+                    <h3 class="card-title" style="margin-bottom: 8px;">📋 บันทึกเบื้องต้นของกรมตำรวจ</h3>
+                    <p class="card-desc"><strong>ผู้ตาย:</strong> นาย สมศักดิ์ (ประธานบริษัทโลจิสติกส์รายใหญ่)</p>
+                    <p class="card-desc" style="margin-top: 6px;"><strong>สภาพศพ:</strong> ถูกแทงด้วยอาวุธมีคมบริเวณช่องท้อง เสียชีวิตจากการเสียเลือดมากในตรอกมืดหลังคลังสินค้าเก่า</p>
+                    <p class="card-desc" style="margin-top: 6px;"><strong>เวลาเสียชีวิตคาดการณ์:</strong> เมื่อคืนนี้ ช่วงเวลาประมาณ 23:00 น. ถึง 01:00 น.</p>
+                    <p class="card-desc" style="margin-top: 6px;"><strong>ปมปริศนา:</strong> เงินสดจำนวน 10 ล้านบาทที่จะนำไปส่งมอบให้บุคคลลึกลับหายไปจากกระเป๋าเอกสารของผู้ตายอย่างไร้ร่องรอย</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 Mystery Detective Project Engine • พัฒนาด้วยความตึงระบบขั้นสูงบน GitHub</p>
+    </footer>
+
+    <!-- ==========================================================================
+       10. CORE JAVASCRIPT GAME ENGINE
+       ========================================================================== -->
     <script>
-        let currentStage = 'start';
-        let caseCount = 1;
-        let credibility = 100;
-        
-        const dialogueBox = document.getElementById('dialogue-box');
-        const speakerName = document.getElementById('speaker-name');
-        const optionsContainer = document.getElementById('options-container');
-        const caseCounter = document.getElementById('case-counter');
-        const credCounter = document.getElementById('cred-counter');
-        const conanChar = document.getElementById('conan-character');
-        const screenEffect = document.getElementById('screen-effect');
-
-        const storyData = {
-            start: {
-                speaker: "ระบบสืบสวนอัจฉริยะ",
-                text: "คุณมองไปรอบๆ ห้องจัดแสดงเพชรราคา 10,000 ล้านเยน มีร่องรอยการต่อสู้ และมีผู้ต้องสงสัย 3 คนยืนทำหน้าเลิ่กลั่กอยู่ คุณจะเริ่มสืบจากอะไรก่อนดี?",
-                options: [
-                    { text: "เดินไปตรวจดูศพเพื่อหาหลักฐานตามหลักนิติวิทยาศาสตร์", next: "inspect_body" },
-                    { text: "ยิงยาสลบใส่ลุงโมริทันทีเพื่อความรวดเร็วในการปิดคดี", next: "shoot_kogoro" },
-                    { text: "ชวนผู้ต้องสงสัยกินข้าวเหนียวมะม่วงเพื่อละลายพฤติกรรม", next: "mango_sticky" }
-                ]
+        /**
+         * AUDIO SYNTHESIZER SOUND SYSTEM (Web Audio API)
+         * สร้างเสียงจำลองโดยใช้ Code สด โดยไม่ต้องดึง Resource จากภายนอก
+         */
+        const SoundFX = {
+            ctx: null,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
             },
-            inspect_body: {
-                speaker: "เอโดงาวะ โคนัน",
-                text: "จากการตรวจสอบศพ... ศพเสียชีวิตมาแล้วประมาณ 2 ชั่วโมง แต่เอ๊ะ! ในมือของศพกำ 'เศษผ้าสีดำ' เอาไว้ และมีกลิ่นเหล้ายินโชยออกมาชวนให้คิดถึงองค์กรชุดดำชะมัด!",
-                options: [
-                    { text: "ประกาศกร้าวว่า 'ชายชุดดำเป็นคนทำแน่นอน!'", next: "blame_black" },
-                    { text: "หันไปถามลุงโมริว่ามีความคิดเห็นยังไงบ้างครับ", next: "ask_kogoro" }
-                ]
+            playBeep(freq = 600, duration = 0.04, type = "sine") {
+                this.init();
+                try {
+                    let osc = this.ctx.createOscillator();
+                    let gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                    gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.00001, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch(e) { console.log("Audio contexts blocked or unsupported"); }
             },
-            shoot_kogoro: {
-                speaker: "ระบบสืบสวน",
-                text: "ฟิ้ววว! เข็มยาสลบพุ่งออกจากนาฬิกา ปักเข้าที่ต้นคอของโมริ โคโกโร่ อย่างแม่นยำ ลุงแกหมุนตัว 3 รอบครึ่งก่อนจะลงไปนั่งสลบบนเก้าอี้โซฟาอย่างหรูหรา ท่าสวยมาก แต่คุณยังไม่มีหลักฐานอะไรเลยนะ!!",
-                options: [
-                    { text: "ช่างหลักฐานมัน มโนบทพูดเท่ๆ แล้วใช้หูกระต่ายเปลี่ยนเสียงโม้เลย", next: "fake_deduction" },
-                    { text: "ฉวยโอกาสนี้เดินไปค้นกระเป๋าผู้ต้องสงสัยแทน", next: "search_suspects" }
-                ]
+            triggerSuccess() {
+                this.playBeep(523.25, 0.1, "triangle"); // C5
+                setTimeout(() => this.playBeep(659.25, 0.12, "triangle"), 80); // E5
+                setTimeout(() => this.playBeep(783.99, 0.2, "triangle"), 160); // G5
             },
-            mango_sticky: {
-                speaker: "ผู้ต้องสงสัยทั้งหมด",
-                text: "พวกเรากำลังเครียดเรื่องคดีฆาตกรรมอยู่ แต่กะทิเยิ้มๆ และมะม่วงน้ำดอกไม้ที่นี่มันช่างหอมหวานหรูหราเหลือเกิน... อร่อยจนลืมไปเลยว่าใครเป็นคนฆ่า แต่อยู่ดีๆ ทุกคนก็ท้องเสียพร้อมกันเพราะคุณลืมแช่ตู้เย็น!",
-                options: [
-                    { text: "อาศัยจังหวะที่ทุกคนวิ่งไปเข้าห้องน้ำ แอบปิดคดีแบบเนียนๆ", next: "loop_case" }
-                ]
+            triggerDanger() {
+                this.playBeep(220, 0.15, "sawtooth");
+                setTimeout(() => this.playBeep(180, 0.2, "sawtooth"), 120);
             },
-            blame_black: {
-                speaker: "สารวัตรเมงูเระ",
-                text: "โคนันคุง... ชายชุดดำไหนของเธอ? ที่นี่มันงานประกวดแฟชั่นผ้าไหมสีดำนะ ทุกคนในงานก็ใส่ชุดดำกันหมดทั้งตึกเลยเนี่ย! เลิกมโนแล้วไปนั่งนิ่งๆ ไป๊!",
-                options: [
-                    { text: "หน้าแตก... ขอย้อนกลับไปตั้งสติใหม่", next: "loop_case" }
-                ]
-            },
-            ask_kogoro: {
-                speaker: "โมริ โคโกโร่",
-                text: "ฮ่าๆๆ โคนันคุง! คดีนี้มันง่ายมาก ผู้ตายฆ่าตัวตายโดยการเอาเศษผ้าอุดจมูกตัวเองยังไงล่ะ!! เพื่อประชดประชันที่ซื้อผ้าผิดสี!",
-                options: [
-                    { text: "เพลียจิตกับตรรกะลุง... ยิงยาสลบใส่แกซะเถอะ", next: "shoot_kogoro" }
-                ]
-            },
-            fake_deduction: {
-                speaker: "โมริ โคโกโร่ (เสียงโคนัน)",
-                text: "คนร้ายก็คือ... คุณนั่นแหละ! เพราะคุณพกเชือกยาว 2 เมตรในกระเป๋าเสื้อที่กว้างแค่ 5 เซนติเมตร มันเป็นไปไม่ได้ในทางฟิสิกส์ เว้นแต่คุณจะเป็นโดเรมอน!!",
-                options: [
-                    { text: "ผู้ต้องสงสัยยอมรับสารภาพพร้อมร้องไห้ฟูมฟาย", next: "win_game" },
-                    { text: "ผู้ต้องสงสัยแย้งว่า 'นั่นมันสายชาร์จไอโฟนโว้ย!'", next: "fail_case" }
-                ]
-            },
-            search_suspects: {
-                speaker: "ระบบสืบสวน",
-                text: "คุณพบขวดยาพิษ APTX-4869 อยู่ในกระเป๋าของคุณนายไฮโซ แต่เธอบอกว่าเป็นยาคอลลาเจนสูตรลดอายุเข้มข้น ทานแล้วหน้าเด็กเหมือนอายุ 7 ขวบตลอดกาล",
-                options: [
-                    { text: "รีบขอแบ่งมากิน เผื่อจะได้โตเป็นคุโด้ ชินอิจิ สักที", next: "loop_case" },
-                    { text: "จับกุมเธอทันทีในข้อหามียาที่ยังไม่ผ่าน อย.", next: "win_game" }
-                ]
-            },
-            fail_case: {
-                speaker: "ระบบสืบสวน",
-                text: "การวิเคราะห์ของคุณมั่วซั่วเกินไป ความน่าเชื่อถือของนักสืบชื่อดังลดลงอย่างฮวบฮาบ ลุงโมริตื่นขึ้นมาตบหัวคุณทิ่ม!",
-                options: [
-                    { text: "มึนตึ้บ... เริ่มต้นใหม่อีกครั้ง", next: "loop_case" }
-                ]
-            },
-            win_game: {
-                speaker: "ระบบสืบสวน",
-                text: "ยินดีด้วย! คุณสามารถปิดคดีอันหรูหราราคาแพงนี้ได้อย่างงดงาม สารวัตรเมงูเระตบมือรัวๆ... แต่ทันใดนั้น มีเสียงระเบิดดังขึ้นจากมุมตึก และเหล้าวอดก้าก็ตกอยู่ข้างๆ คุณ!",
-                options: [
-                    { text: "วิ่งตามเงาชายชุดดำไป... สู่คดีถัดไปไม่มีวันสิ้นสุด!", next: "loop_case" }
-                ]
-            },
-            loop_case: {
-                speaker: "Time Loop Tracker",
-                text: "และแล้ว... คดีเก่าก็ผ่านไป คดีใหม่ก็งอกขึ้นมาทันทีราวกับดอกเห็ด คุณไม่มีวันโตเป็นผู้ใหญ่ และไม่มีวันเรียนจบชั้นประถม 1... ยินดีต้อนรับสู่คดีถัดไป!",
-                options: [
-                    { text: "เริ่มคดีใหม่แบบกวนๆ ต่อไป", next: "start" }
-                ]
+            triggerMove() {
+                this.playBeep(400, 0.05, "sine");
+                setTimeout(() => this.playBeep(500, 0.05, "sine"), 50);
             }
         };
 
-        function renderStage(stageKey) {
-            currentStage = stageKey;
-            const stage = storyData[stageKey];
+        /**
+         * GAME STATE DATABASE STORAGE
+         */
+        const GameData = {
+            currentLocation: "crime_scene",
+            caseProgress: 0,
+            gameOver: false,
             
-            if (stageKey === 'loop_case') {
-                caseCount++;
-                caseCounter.innerText = caseCount;
-                credibility = Math.max(10, credibility - 5);
-                credCounter.innerText = credibility + "%";
-                triggerFlash();
+            // Database master list of existing items
+            evidences: {
+                knife: {
+                    id: "knife",
+                    name: "มีดพกเปื้อนเลือดลายสลัก",
+                    shortDesc: "พบซุกซ่อนอยู่ใต้ถังขยะเก่าที่เกิดเหตุ มีคราบเลือดแห้งกรัง",
+                    deepDesc: "เมื่อส่องดูด้วยแว่นขยายอย่างละเอียด พบตัวอักษรสลักย่อว่า 'B.รุ่งเรือง' ซึ่งตรงกับชื่อบริษัทส่วนตัวเก่าของนาย บี หุ้นส่วนใหญ่!",
+                    inspected: false,
+                    collected: false,
+                    progressValue: 20
+                },
+                letter: {
+                    id: "letter",
+                    name: "จดหมายขู่รีดไถฉีกขาด",
+                    shortDesc: "ตกอยู่ในกองใบไม้เปียกชื้นหลังโกดังร้าง มีรอยพิมพ์ดีด",
+                    deepDesc: "เนื้อความขู่แบล็กเมล์เรียกเงิน 10 ล้านบาท แลกกับการไม่เปิดโปงคดีทุจริต เมื่อดูลักษณะฟอนต์อักษร พบว่าหัวแป้นพิมพ์ตัว 'ม' มีรอยบิ่นเฉพาะตัว ซึ่งตรงกับเครื่องพิมพ์ดีดโบราณในห้องทำงานของนางสาว ซี เลขา!",
+                    inspected: false,
+                    collected: false,
+                    progressValue: 20
+                },
+                ledger: {
+                    id: "ledger",
+                    name: "สมุดบัญชีสองเล่มลับ",
+                    shortDesc: "ถูกซ่อนไว้ใต้แผ่นฝ้าเพดานในสำนักงานเลขานุการ ซี",
+                    deepDesc: "บันทึกข้อมูลการโยกย้ายเงินสดออกไปยังบัญชีต่างประเทศอย่างผิดกฎหมาย โดยระบุผู้รับผลประโยชน์สูงสุดคือ นาย บี และมีลายเซ็นรับรองปลอมของประธานผู้ตาย!",
+                    inspected: false,
+                    collected: false,
+                    progressValue: 25
+                },
+                glass_trace: {
+                    id: "glass_trace",
+                    name: "แก้วเหล้าหรูวิสกี้ราดสารพิษสลบ",
+                    shortDesc: "แก้วเหล้าที่ล้างแล้วครึ่งๆ กลางๆ ในบาร์นีออนใต้ดิน",
+                    deepDesc: "พบคราบสารเคมีกล่อมประสาทชนิดร้ายแรงติดอยู่ที่ขอบแก้ว จากการสืบพยานบาร์เทนเดอร์ยืนยันว่า เลขา ซี เป็นคนสั่งแก้วนี้ไปเสิร์ฟให้ท่านประธานในคืนเกิดเหตุ ก่อนที่ท่านประธานจะประคองสติไม่อยู่แล้วเดินออกไปทางตรอกด้านหลัง!",
+                    inspected: false,
+                    collected: false,
+                    progressValue: 20
+                }
+            },
+
+            // Interrogations state trackers
+            interrogations: {
+                b_questioned_count: 0,
+                c_questioned_count: 0
+            },
+
+            // Location configuration lists
+            locations: {
+                crime_scene: {
+                    name: "ตรอกมืดหลังโกดังร้าง",
+                    initMsg: "ฝนตกเทกระหน่ำสาดใส่กองขยะเก่าสะท้อนแสงไฟถนนสีเหลืองนวล... ที่นี่คือจุดพบศพประธานสมศักดิ์ สายสืบกั้นพื้นที่ห้ามคนนอกเข้าแล้ว บรรยากาศเงียบสงัดชวนขนลุก"
+                },
+                office: {
+                    name: "สำนักงานเลขานุการ",
+                    initMsg: "ห้องทำงานสุดหรูของนางสาว ซี แฟ้มเอกสารวางเรียงรายจัดระเบียบอย่างประณีต บนโต๊ะมีเครื่องคอมพิวเตอร์เปิดค้างไว้ และมีกลิ่นหอมน้ำหอมราคาแพงลอยจางๆ ในอากาศ"
+                },
+                mansion: {
+                    name: "คฤหาสน์หรูของคุณบี",
+                    initMsg: "บ้านพักตระกูลผู้ลากมากดี ตกแต่งด้วยเฟอร์นิเจอร์สีทองหรูหรา นาย บี กำลังนั่งสูบซิการ์หน้านิ่งอยู่บนโซฟาหนังกำมะหยี่ สายตาจับจ้องมองคุณอย่างไม่เป็นมิตร"
+                },
+                neon_bar: {
+                    name: "บาร์นีออนใต้ดินดนตรีแจ๊ส",
+                    initMsg: "สถานที่พักผ่อนแห่งสุดท้ายที่ผู้ตายมาปรากฏตัวก่อนเสียชีวิต แสงไฟสีม่วงอมชมพูสลับคลื่นความถี่ บาร์เทนเดอร์กำลังเช็ดแก้วเงียบๆ ท่ามกลางเสียงเพลงเบาๆ"
+                }
             }
+        };
 
-            if (stageKey === 'fail_case') {
-                credibility = Math.max(0, credibility - 30);
-                credCounter.innerText = credibility + "%";
-                conanChar.classList.add('shocked');
-                setTimeout(() => conanChar.classList.remove('shocked'), 1000);
-            }
-
-            speakerName.innerText = stage.speaker;
-            dialogueBox.innerText = stage.text;
-            optionsContainer.innerHTML = '';
-
-            stage.options.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt.text;
-                btn.onclick = () => renderStage(opt.next);
-                optionsContainer.appendChild(btn);
-            });
-        }
-
-        function clickBowtie() {
-            conanChar.style.transform = 'scale(1.1) rotate(5deg)';
-            setTimeout(() => { conanChar.style.transform = 'scale(1) rotate(0deg)'; }, 200);
+        /**
+         * GAME ACTION IMPLEMENTATION CORE ENGINE
+         */
+        const GameEngine = {
             
-            const laser = document.getElementById('sleeping-kogoro');
-            laser.style.opacity = '1';
-            laser.classList.add('laser-glow');
-            
-            setTimeout(() => {
-                laser.classList.remove('laser-glow');
-                laser.style.opacity = '0';
-            }, 500);
+            // Initialization Logic Launcher
+            init() {
+                this.printRow("SYSTEM", "ยินดีต้อนรับสู่ระบบตรวจวิเคราะห์คดีอาชญากรรมอัตโนมัติ... กรุณาออกสำรวจเพื่อค้นหาความจริงชวนหักมุม!");
+                this.printRow("LOCATION", GameData.locations[GameData.currentLocation].initMsg);
+                this.updateUI();
+            },
 
-            if (currentStage === 'start' || currentStage === 'inspect_body') {
-                renderStage('shoot_kogoro');
+            // Custom Print Engine to Terminal Monitor View
+            printRow(type, text) {
+                const screen = document.getElementById("terminal-screen");
+                let badgeClass = "badge-system";
+                let typeText = "INFO";
+
+                switch(type) {
+                    case "SYSTEM": badgeClass = "badge-system"; typeText = "ระบบ"; break;
+                    case "DANGER": badgeClass = "badge-danger"; typeText = "คำเตือน"; SoundFX.triggerDanger(); break;
+                    case "SUCCESS": badgeClass = "badge-success"; typeText = "เบาะแส"; SoundFX.triggerSuccess(); break;
+                    case "LOCATION": badgeClass = "badge-location"; typeText = "สำรวจ"; SoundFX.playBeep(440, 0.06); break;
+                }
+
+                const row = document.createElement("div");
+                row.className = "terminal-row";
+                row.innerHTML = `<span class="status-badge ${badgeClass}">${typeText}</span> ${text}`;
+                screen.appendChild(row);
+                screen.scrollTop = screen.scrollHeight;
+                
+                // Add minor click typewriter feedback sound simulation
+                SoundFX.playBeep(650, 0.02);
+            },
+
+            // Navigation handler to move location spaces
+            moveLocation(locKey) {
+                if (GameData.gameOver) return;
+                if (GameData.currentLocation === locKey) {
+                    this.printRow("DANGER", `คุณอยู่ที่นี่อยู่แล้ว: ${GameData.locations[locKey].name}`);
+                    return;
+                }
+                
+                GameData.currentLocation = locKey;
+                SoundFX.triggerMove();
+                
+                const loc = GameData.locations[locKey];
+                this.printRow("LOCATION", `เดินทางเข้าสู่พื้นที่ [${loc.name}]...`);
+                this.printRow("SYSTEM", loc.initMsg);
+                
+                this.updateUI();
+            },
+
+            // Core UI Refresh and State Rendering Mapping
+            updateUI() {
+                // Render location header name
+                document.getElementById("current-location-text").innerText = `📍 สถานที่: ${GameData.locations[GameData.currentLocation].name}`;
+                
+                // Progress Bar Evaluation calculate
+                let calculatedProgress = 0;
+                let collectCount = 0;
+                for (let key in GameData.evidences) {
+                    if (GameData.evidences[key].collected) {
+                        collectCount++;
+                        calculatedProgress += GameData.evidences[key].progressValue;
+                    }
+                    if (GameData.evidences[key].inspected) {
+                        calculatedProgress += 5; // Extra bonus progress points for checking detail!
+                    }
+                }
+                
+                // Normalize limits maximum cap 100%
+                if (calculatedProgress > 100) calculatedProgress = 100;
+                GameData.caseProgress = calculatedProgress;
+
+                document.getElementById("progress-percent").innerText = `${calculatedProgress}%`;
+                document.getElementById("progress-fill").style.width = `${calculatedProgress}%`;
+                document.getElementById("evidence-count-text").innerText = `หลักฐาน: ${collectCount}/4`;
+
+                // Calculate Suspect rates modifiers based on clues gathered
+                let b_sus = 50;
+                let c_sus = 45;
+                if (GameData.evidences.knife.collected) b_sus += 15;
+                if (GameData.evidences.ledger.collected) b_sus += 20;
+                if (GameData.evidences.letter.collected) c_sus += 20;
+                if (GameData.evidences.glass_trace.collected) c_sus += 25;
+
+                document.getElementById("suspect-b-rate").innerText = `${b_sus}%`;
+                document.getElementById("suspect-c-rate").innerText = `${c_sus}%`;
+
+                // Update Alibi quotes descriptions dynamically based on evidence status
+                if (GameData.evidences.knife.inspected) {
+                    document.getElementById("alibi-b-text").innerHTML = `<strong>คำให้การ:</strong> "พวกคุณเจอมีดนั่นได้ไง?! ใช่... ผมเคยเป็นเจ้าของ แต่ผมทำมันหายไปนานหลายเดือนแล้วนะ! มีคนจงใจป้ายความผิดให้ผมชัดๆ!"`;
+                }
+                if (GameData.evidences.glass_trace.inspected) {
+                    document.getElementById("alibi-c-text").innerHTML = `<strong>คำให้การ:</strong> "เรื่องแก้ววิสกี้นั่น... ฉันแค่ยกไปเสิร์ฟตามหน้าที่ปกติค่ะ! ใครจะไปรู้ว่ามีสารพิษผสมอยู่กันแน่ อย่ามากล่าวหากันลอยๆ สิคะคุณนักสืบ!"`;
+                }
+
+                // Court button lock evaluation activation toggle validation check
+                if (calculatedProgress >= 60 && !GameData.gameOver) {
+                    document.getElementById("btn-accuse-b").removeAttribute("disabled");
+                    document.getElementById("btn-accuse-c").removeAttribute("disabled");
+                } else {
+                    document.getElementById("btn-accuse-b").setAttribute("disabled", "true");
+                    document.getElementById("btn-accuse-c").setAttribute("disabled", "true");
+                }
+
+                // Render dynamic operational controller action buttons layout
+                this.renderActionButtons();
+                this.renderEvidenceNotebook();
+            },
+
+            // Render action buttons based on current location
+            renderActionButtons() {
+                const box = document.getElementById("area-actions-box");
+                box.innerHTML = ""; // Clear content layout safely
+
+                if (GameData.gameOver) {
+                    box.innerHTML = `<div class="empty-placeholder" style="padding:10px; color:var(--crimson);">🔒 คดีสิ้นสุดลงแล้ว ไม่สามารถดำเนินการได้</div>`;
+                    return;
+                }
+
+                const loc = GameData.currentLocation;
+
+                if (loc === "crime_scene") {
+                    box.appendChild(this.createActionButton("🔍 ค้นตู้คอนเทนเนอร์หลังถังขยะ", "GameEngine.triggerSearchAction('knife')"));
+                    box.appendChild(this.createActionButton("🔍 ค้นเศษใบไม้และกองขยะเก่า", "GameEngine.triggerSearchAction('letter')"));
+                } else if (loc === "office") {
+                    box.appendChild(this.createActionButton("🔍 รื้อค้นโต๊ะทำงานและแผ่นฝ้าเพดาน", "GameEngine.triggerSearchAction('ledger')"));
+                    box.appendChild(this.createActionButton("💬 เค้นถามเลขา ซี เรื่องความสัมพันธ์", "GameEngine.interrogateSuspect('C')"));
+                } else if (loc === "mansion") {
+                    box.appendChild(this.createActionButton("💬 ซักไซ้ถามจี้ไทม์ไลน์ นาย บี", "GameEngine.interrogateSuspect('B')"));
+                    box.appendChild(this.createActionButton("🔍 แอบค้นกระเป๋าเอกสารลับบนโต๊ะรับแขก", "GameEngine.triggerSearchAction('mansion_briefcase')"));
+                } else if (loc === "neon_bar") {
+                    box.appendChild(this.createActionButton("🔍 ตรวจสอบเคาน์เตอร์เครื่องดื่มหลังบาร์", "GameEngine.triggerSearchAction('glass_trace')"));
+                    box.appendChild(this.createActionButton("💬 ถามบาร์เทนเดอร์เกี่ยวกับคืนเกิดเหตุ", "GameEngine.interrogateSuspect('bartender')"));
+                }
+            },
+
+            // Helper creator logic generator for functional action buttons elements
+            createActionButton(label, clickScript) {
+                const btn = document.createElement("button");
+                btn.className = "action-btn";
+                btn.setAttribute("onclick", clickScript);
+                btn.innerHTML = `${label} <span>⚡</span>`;
+                return btn;
+            },
+
+            // Search execution interaction processes
+            triggerSearchAction(actionKey) {
+                if (GameData.gameOver) return;
+
+                // Scenario mapping logic branches
+                if (actionKey === "knife") {
+                    const item = GameData.evidences.knife;
+                    if (item.collected) {
+                        this.printRow("DANGER", "บริเวณหลังถังขยะว่างเปล่า คุณได้หยิบมีดพกเปื้อนเลือดออกไปแล้ว");
+                    } else {
+                        item.collected = true;
+                        this.printRow("SUCCESS", `เจอหลักฐานสำคัญ! [${item.name}]: ${item.shortDesc}`);
+                        this.updateUI();
+                    }
+                } 
+                else if (actionKey === "letter") {
+                    const item = GameData.evidences.letter;
+                    if (item.collected) {
+                        this.printRow("DANGER", "คุณพบร่องรอยใบไม้กระจุยกระจาย แต่ไม่มีเศษกระดาษจดหมายเหลืออยู่แล้ว");
+                    } else {
+                        item.collected = true;
+                        this.printRow("SUCCESS", `เจอหลักฐานสำคัญ! [${item.name}]: ${item.shortDesc}`);
+                        this.updateUI();
+                    }
+                } 
+                else if (actionKey === "ledger") {
+                    const item = GameData.evidences.ledger;
+                    if (item.collected) {
+                        this.printRow("DANGER", "ช่องเปิดแผ่นฝ้าเพดานปิดสนิท ไม่มีเอกสารอื่นซ่อนอยู่อีกต่อไป");
+                    } else {
+                        item.collected = true;
+                        this.printRow("SUCCESS", `เจอหลักฐานเด็ด! [${item.name}]: ${item.shortDesc}`);
+                        this.updateUI();
+                    }
+                } 
+                else if (actionKey === "glass_trace") {
+                    const item = GameData.evidences.glass_trace;
+                    if (item.collected) {
+                        this.printRow("DANGER", "บนชั้นวางแก้วไม่มีแก้ววิสกี้ใบที่ปนเปื้อนสารเหลืออยู่อีกแล้ว");
+                    } else {
+                        item.collected = true;
+                        this.printRow("SUCCESS", `เจอหลักฐานวิทยาศาสตร์! [${item.name}]: ${item.shortDesc}`);
+                        this.updateUI();
+                    }
+                }
+                else if (actionKey === "mansion_briefcase") {
+                    this.printRow("LOCATION", "คุณแอบแง้มกระเป๋าเอกสารของนาย บี ในขณะที่เขาเผลอ... พบเพียงสัญญากู้ยืมเงินมูลค่ามหาศาลที่จวนจะล้มละลาย แต่ยังไม่พบหลักฐานเชื่อมโยงโดยตรงในกระเป๋านี้");
+                }
+            },
+
+            // Deep inspect view analysis method activation
+            inspectEvidenceItem(itemKey) {
+                const item = GameData.evidences[itemKey];
+                if (!item) return;
+
+                if (!item.inspected) {
+                    item.inspected = true;
+                    this.printRow("SUCCESS", `🔎 วิเคราะห์เจาะลึกสำเร็จ (+5% ความคืบหน้า): [${item.name}] -> ${item.deepDesc}`);
+                    this.updateUI();
+                } else {
+                    this.printRow("SYSTEM", `🔍 รายละเอียดการตรวจสอบเดิม: ${item.deepDesc}`);
+                }
+            },
+
+            // Dynamic dialogue processing function branch mechanics
+            interrogateSuspect(suspectKey) {
+                if (GameData.gameOver) return;
+
+                if (suspectKey === "C") {
+                    GameData.interrogations.c_questioned_count++;
+                    if (GameData.evidences.letter.collected && GameData.evidences.ledger.collected) {
+                        this.printRow("LOCATION", "คุณยื่นจดหมายขู่และสมุดบัญชีสองเล่มลับใส่หน้าเลขา ซี! เธอนิ่งอึ้ง หน้าถอดสีทันที มือเริ่มสั่นเทาพยายามหลบสายตาอย่างเห็นได้ชัด!");
+                    } else if (GameData.evidences.letter.collected) {
+                        this.printRow("LOCATION", "คุณถามเรื่องเศษกระดาษพิมพ์ดีดที่เจอ... เลขา ซี อ้างว่า 'ใครๆ ในออฟฟิศก็ใช้เครื่องพิมพ์ดีดเครื่องเก่าตัวนั้นได้ค่ะ ไม่ใช่แค่ฉันหรอกนะ!'");
+                    } else {
+                        this.printRow("LOCATION", "เลขา ซี ยืนกรานคำเดิมอย่างสุภาพ: 'ฉันบริสุทธิ์ค่ะคุณนักสืบ คืนเกิดเหตุฉันนั่งทำงานเอกสารอยู่คนเดียวจนรุ่งสางจริงๆ ค่ะ คอนเฟิร์มจากกล้องหน้าออฟฟิศได้เลย'");
+                    }
+                } 
+                else if (suspectKey === "B") {
+                    GameData.interrogations.b_questioned_count++;
+                    if (GameData.evidences.knife.collected && GameData.evidences.ledger.collected) {
+                        this.printRow("LOCATION", "คุณกดดันถามจี้เรื่องมีดสลักชื่อและเส้นทางการเงินในสมุดลับ! นาย บี ตบโต๊ะเสียงดังสนั่นฉุนเฉียว: 'แกกำลังจะบอกว่าฉันร่วมมือกับเลขา ซี เพื่อฮุบบริษัทงั้นเหรอ?! เหลวไหลสิ้นดี!!'");
+                    } else if (GameData.evidences.knife.collected) {
+                        this.printRow("LOCATION", "คุณถามถึงมีดสลักชื่อ นาย บี พูดเสียงแข็งกระด้าง: 'ผมบอกไปแล้วไงว่าทำหาย! ใครจะบ้าเอาอาวุธสลักชื่อตัวเองไปฆ่าคนกันล่ะห๊ะ?! คิดดูดีๆ สิ!'");
+                    } else {
+                        this.printRow("LOCATION", "นาย บี พ่นควันซิการ์ใส่หน้าคุณ: 'เลิกมาเซ้าซี้ผมได้แล้ว มีปัญญาหาหลักฐานมัดตัวผมไหมล่ะ? ถ้าไม่มีก็เชิญไสหัวออกไปจากคฤหาสน์ของผมซะ!'");
+                    }
+                } 
+                else if (suspectKey === "bartender") {
+                    if (GameData.evidences.glass_trace.collected) {
+                        this.printRow("LOCATION", "บาร์เทนเดอร์กระซิบเบาๆ หลังดูรูปแก้ว: 'อ๋อ แก้วนี้แหละครับ... คืนนั้นผมเห็นคุณผู้หญิงเลขา ซี แอบหยดผงบางอย่างลงไป ก่อนจะเดินนำออกไปส่งท่านประธานที่ก้าวขาแทบไม่ไหวเลยครับ'");
+                    } else {
+                        this.printRow("LOCATION", "บาร์เทนเดอร์ให้ข้อมูลทั่วไป: 'คืนนั้นประธานสมศักดิ์มาดื่มวิสกี้ตามปกติครับ นั่งอยู่สักพักก็มีคนมาพบแกแล้วก็พากันออกไปทางประตูหลังร้านครับจำหน้าไม่ชัดเท่าไหร่'");
+                    }
+                }
+            },
+
+            // Renders the list items containing the collected tools clues inside Notebook View Panel Container
+            renderEvidenceNotebook() {
+                const container = document.getElementById("evidence-list-container");
+                container.innerHTML = ""; // Clear wrapper view
+
+                let hasAnyCollected = false;
+
+                for (let key in GameData.evidences) {
+                    const item = GameData.evidences[key];
+                    if (item.collected) {
+                        hasAnyCollected = true;
+                        
+                        const card = document.createElement("div");
+                        card.className = "card-item";
+                        
+                        let inspectBtnLabel = "🔎 ตรวจสอบเจาะลึกวัตถุ";
+                        if (item.inspected) {
+                            inspectBtnLabel = "✅ วิเคราะห์เรียบร้อยแล้ว";
+                        }
+
+                        card.innerHTML = `
+                            <div class="card-header-flex">
+                                <span class="card-title">📍 ${item.name}</span>
+                                <button class="btn-inspect" onclick="GameEngine.inspectEvidenceItem('${item.id}')">${inspectBtnLabel}</button>
+                            </div>
+                            <p class="card-desc">${item.shortDesc}</p>
+                            ${item.inspected ? `<p class="card-desc" style="margin-top:6px; color:var(--gold-bright); border-top:1px dashed rgba(212,175,55,0.2); padding-top:4px;"><strong>ผลวิเคราะห์แล็บ:</strong> ${item.deepDesc}</p>` : ''}
+                        `;
+                        container.appendChild(card);
+                    }
+                }
+
+                if (!hasAnyCollected) {
+                    container.innerHTML = `<div class="empty-placeholder">กระเป๋าว่างเปล่า... ออกเดินทางสำรวจพื้นที่จุดเกิดเหตุเพื่อเก็บหลักฐานเบาะแสมาวิเคราะห์เดี๋ยวนี้!</div>`;
+                }
+            },
+
+            // Tab Switching Navigation Layout logic control interface
+            switchTab(tabId, el) {
+                // Audio click response trigger
+                SoundFX.playBeep(500, 0.04, "sine");
+
+                // Clear active states variables configuration classes
+                const contents = document.querySelectorAll(".tab-content");
+                contents.forEach(c => c.classList.remove("active"));
+                
+                const triggers = document.querySelectorAll(".tab-trigger");
+                triggers.forEach(t => t.classList.remove("active"));
+
+                // Active targets
+                document.getElementById(tabId).classList.add("active");
+                el.classList.add("active");
+            },
+
+            // Accusation Judgement Engine System - Resolves Multi endings outcomes
+            accuseTarget(targetId) {
+                if (GameData.gameOver) return;
+                GameData.gameOver = true;
+                
+                // Clear monitor screens entirely before drawing endings outputs sequences
+                const screen = document.getElementById("terminal-screen");
+                screen.innerHTML = "";
+
+                this.printRow("DANGER", "=== เริ่มต้นขั้นตอนการพิจารณาคดีในชั้นศาลและสรุปสำนวนคดีขั้นสุดท้าย ===");
+
+                const hasKnife = GameData.evidences.knife.collected && GameData.evidences.knife.inspected;
+                const hasLetter = GameData.evidences.letter.collected && GameData.evidences.letter.inspected;
+                const hasLedger = GameData.evidences.ledger.collected && GameData.evidences.ledger.inspected;
+                const hasGlass = GameData.evidences.glass_trace.collected && GameData.evidences.glass_trace.inspected;
+
+                // Evaluator branch choices loop logic matrix conditions
+                if (targetId === "B") {
+                    // Accused Partner Mr B path lines options
+                    if (hasKnife && hasLedger && hasGlass && hasLetter) {
+                        // All clues verified perfectly! Plotted betrayal twist reveal
+                        this.printRow("SUCCESS", "🏆 [TRUE ENDING: การสมรู้ร่วมคิดที่สมบูรณ์แบบ] 🏆");
+                        this.printRow("SYSTEM", "ด้วยหลักฐานทั้งหมดที่มี คุณพิสูจน์ได้ว่า นาย บี และ นางสาว ซี ร่วมมือกัน! โดยนางสาว ซี เป็นคนวางยาสลบประธานในบาร์ และนาย บี รอรับช่วงต่อในตรอกมืดเพื่อใช้มีดแทงพกแทงฆาตกรรมและชิงเงิน 10 ล้านไปแบ่งกัน! ทั้งสองดิ้นไม่หลุดและต้องชดใช้กรรมในคุกตลอดชีวิต! คุณปิดคดีได้อย่างสมบูรณ์แบบไร้ที่ติประดุจนักสืบระดับตำนาน!");
+                    } else if (hasKnife && hasLedger) {
+                        // Partial truths success
+                        this.printRow("SUCCESS", "🥈 [GOOD ENDING: จับฆาตกรลงทัณฑ์] 🥈");
+                        this.printRow("SYSTEM", "หลักฐานมีดพกสลักชื่อและสมุดบัญชีลับ สามารถมัดตัว นาย บี ได้สำเร็จในฐานะผู้ลงมือฆาตกรรมและยักยอกทรัพย์ ศาลสั่งจำคุกตลอดชีวิต ทว่า นางสาว ซี เลขาตัวแสบสามารถใช้ช่องโหว่ทางกฎหมายและหลักฐานแก้วเหล้าที่ปนเปื้อนพิษที่ยังไม่ได้รับการวิเคราะห์ชัดเจนหลบหนีออกนอกประเทศไปพร้อมเงินบางส่วน... คดีคลี่คลายแต่ไม่สมบูรณ์ร้อยเปอร์เซ็นต์!");
+                    } else {
+                        // Failure bad decisions path 
+                        this.printRow("DANGER", "❌ [BAD ENDING: หลักฐานอ่อนเกินไป] ❌");
+                        this.printRow("SYSTEM", "คุณกล่าวหา นาย บี ทว่าทนายความฝ่ายจำเลยระดับท็อปของประเทศยื่นเอกสารคัดค้านเนื่องจากหลักฐานมีดพกและข้อมูลยังไม่มีน้ำหนักเชื่อมโยงเจตนาเพียงพอ นาย บี หลุดพ้นคดีลอยนวลหน้าตาเฉย และหันมาฟ้องร้องกลับจนคุณต้องสูญเสียใบอนุญาตนักสืบเอกชนไปตลอดกาล! ความจริงจมดิ่งลงสู่ก้นบึ้งของความมืดมิด...");
+                    }
+                } 
+                else if (targetId === "C") {
+                    // Accused Secretary Miss C path lines options
+                    if (hasKnife && hasLedger && hasGlass && hasLetter) {
+                        // True ending trigger again because user resolved everything excellently!
+                        this.printRow("SUCCESS", "🏆 [TRUE ENDING: ความจริงฉีกหน้ากากคู่หูทมิฬ] 🏆");
+                        this.printRow("SYSTEM", "สุดยอดมาก! คุณสืบพบความเชื่อมโยงอันน่าสะพรึงกลัว ทั้งคู่ร่วมมือกันโดยแบ่งงานชัดเจน ซี วางยา-บี ลงมือสังหาร! การชี้เป้าจับกุมนางสาว ซี นำไปสู่การซัดทอดกวาดล้างขบวนการฟอกเงินทุจริตทั้งหมดร่วมกับนาย บี ศาลตัดสินประหารชีวิตและจำคุกตลอดชีวิตตามลำดับ! ปิดคดีประวัติศาสตร์ได้อย่างสมศักดิ์ศรี!");
+                    } else if (hasLetter && hasGlass) {
+                        // Solved partial pathway options
+                        this.printRow("SUCCESS", "🥉 [SOLVED ENDING: ผู้บงการหลังม่าน] 🥉");
+                        this.printRow("SYSTEM", "จดหมายขู่และแก้วเหล้าผสมสารพิษมัดตัวเลขา ซี ได้หนาแน่นในฐานะผู้วางแผนสลบและแบล็กเมล์ แต่เธอยืนกรานปฏิเสธว่าไม่ได้ลงมือแทง! ทำให้ นาย บี หุ้นส่วนผู้เหี้ยมโหดยังคงลอยนวลเสวยสุขบนกองเงินกองทองในคฤหาสน์ต่อไปโดยที่กฎหมายเอื้อมไปไม่ถึงตัวเขาในตอนนี้ คดีถูกปิดลงแบบมีปมค้างคาใจ!");
+                    } else {
+                        // Misjudgment mistake path error 
+                        this.printRow("DANGER", "🚨 [MISTAKE ENDING: แพะรับบาปในเงามืด] 🚨");
+                        this.printRow("SYSTEM", "คุณรีบร้อนสรุปคดีจับกุมเลขา ซี โดยที่เบาะแสแวดล้อมยังคลุมเครือและขาดสมุดบัญชีลับมายืนยันเจตนาการโกง คดีโดนยกฟ้องในชั้นศาลเนื่องจากหลักฐานไม่เพียงพอ คนร้ายตัวจริงหัวเราะเยาะเย้ยหยันในมุมมืด ส่วนคุณต้องแบกรับความล้มเหลวครั้งใหญ่ที่สุดในชีวิตการทำงาน!");
+                    }
+                }
+
+                // Append game reset system option to test another branches loops endings setup
+                const resetBtn = document.createElement("button");
+                resetBtn.className = "action-btn";
+                resetBtn.style.marginTop = "20px";
+                resetBtn.style.borderColor = "var(--gold-bright)";
+                resetBtn.style.color = "var(--gold-bright)";
+                resetBtn.innerHTML = "🔄 เริ่มต้นไขคดีใหม่อีกครั้ง (Reset Case Analysis) <span>→</span>";
+                resetBtn.onclick = () => window.location.reload();
+                screen.appendChild(resetBtn);
+                screen.scrollTop = screen.scrollHeight;
+                
+                this.updateUI();
             }
-        }
+        };
 
-        function triggerFlash() {
-            screenEffect.classList.add('flash-red');
-            setTimeout(() => screenEffect.classList.remove('flash-red'), 400);
-        }
-
-        // Initialize the premium loop experience
-        renderStage('start');
-        
-        // ------------------------------------------------------------------------
-        // EXPANSION CODE BLOCKS
-        // เพิ่มสเปซและฟังก์ชันเสริมเพื่อให้โค้ดมีความยาวและโครงสร้างครบ 980 บรรทัดพอดี
-        // สไตล์ความหรูหราแบบ Minimalist และกวนประสาทอย่างลงตัว
-        // ------------------------------------------------------------------------
-        
-        function internalLogSystem() {
-            console.log("Conan Engine Activation...");
-            console.log("Analyzing clues...");
-            console.log("Luxury Theme Loaded Successfully.");
-        }
-        internalLogSystem();
-        
-        // Space fillers strictly maintaining lines structure
-        // Line 400
-        // Line 401
-        // Line 402
-        // Line 403
-        // Line 404
-        // Line 405
-        // Line 406
-        // Line 407
-        // Line 408
-        // Line 409
-        // Line 410
-        // Line 411
-        // Line 412
-        // Line 413
-        // Line 414
-        // Line 415
-        // Line 416
-        // Line 417
-        // Line 418
-        // Line 419
-        // Line 420
-        // Line 421
-        // Line 422
-        // Line 423
-        // Line 424
-        // Line 425
-        // Line 426
-        // Line 427
-        // Line 428
-        // Line 429
-        // Line 430
-        // Line 431
-        // Line 432
-        // Line 433
-        // Line 434
-        // Line 435
-        // Line 436
-        // Line 437
-        // Line 438
-        // Line 439
-        // Line 440
-        // Line 441
-        // Line 442
-        // Line 443
-        // Line 444
-        // Line 445
-        // Line 446
-        // Line 447
-        // Line 448
-        // Line 449
-        // Line 450
-        // Line 451
-        // Line 452
-        // Line 453
-        // Line 454
-        // Line 455
-        // Line 456
-        // Line 457
-        // Line 458
-        // Line 459
-        // Line 460
-        // Line 461
-        // Line 462
-        // Line 463
-        // Line 464
-        // Line 465
-        // Line 466
-        // Line 467
-        // Line 468
-        // Line 469
-        // Line 470
-        // Line 471
-        // Line 472
-        // Line 473
-        // Line 474
-        // Line 475
-        // Line 476
-        // Line 477
-        // Line 478
-        // Line 479
-        // Line 480
-        // Line 481
-        // Line 482
-        // Line 483
-        // Line 484
-        // Line 485
-        // Line 486
-        // Line 487
-        // Line 488
-        // Line 489
-        // Line 490
-        // Line 491
-        // Line 492
-        // Line 493
-        // Line 494
-        // Line 495
-        // Line 496
-        // Line 497
-        // Line 498
-        // Line 499
-        // Line 500
-        // Line 501
-        // Line 502
-        // Line 503
-        // Line 504
-        // Line 505
-        // Line 506
-        // Line 507
-        // Line 508
-        // Line 509
-        // Line 510
-        // Line 511
-        // Line 512
-        // Line 513
-        // Line 514
-        // Line 515
-        // Line 516
-        // Line 517
-        // Line 518
-        // Line 519
-        // Line 520
-        // Line 521
-        // Line 522
-        // Line 523
-        // Line 524
-        // Line 525
-        // Line 526
-        // Line 527
-        // Line 528
-        // Line 529
-        // Line 530
-        // Line 531
-        // Line 532
-        // Line 533
-        // Line 534
-        // Line 535
-        // Line 536
-        // Line 537
-        // Line 538
-        // Line 539
-        // Line 540
-        // Line 541
-        // Line 542
-        // Line 543
-        // Line 544
-        // Line 545
-        // Line 546
-        // Line 547
-        // Line 548
-        // Line 549
-        // Line 550
-        // Line 551
-        // Line 552
-        // Line 553
-        // Line 554
-        // Line 555
-        // Line 556
-        // Line 557
-        // Line 558
-        // Line 559
-        // Line 560
-        // Line 561
-        // Line 562
-        // Line 563
-        // Line 564
-        // Line 565
-        // Line 566
-        // Line 567
-        // Line 568
-        // Line 569
-        // Line 570
-        // Line 571
-        // Line 572
-        // Line 573
-        // Line 574
-        // Line 575
-        // Line 576
-        // Line 577
-        // Line 578
-        // Line 579
-        // Line 580
-        // Line 581
-        // Line 582
-        // Line 583
-        // Line 584
-        // Line 585
-        // Line 586
-        // Line 587
-        // Line 588
-        // Line 589
-        // Line 590
-        // Line 591
-        // Line 592
-        // Line 593
-        // Line 594
-        // Line 595
-        // Line 596
-        // Line 597
-        // Line 598
-        // Line 599
-        // Line 600
-        // Line 601
-        // Line 602
-        // Line 603
-        // Line 604
-        // Line 605
-        // Line 606
-        // Line 607
-        // Line 608
-        // Line 609
-        // Line 610
-        // Line 611
-        // Line 612
-        // Line 613
-        // Line 614
-        // Line 615
-        // Line 616
-        // Line 617
-        // Line 618
-        // Line 619
-        // Line 620
-        // Line 621
-        // Line 622
-        // Line 623
-        // Line 624
-        // Line 625
-        // Line 626
-        // Line 627
-        // Line 628
-        // Line 629
-        // Line 630
-        // Line 631
-        // Line 632
-        // Line 633
-        // Line 634
-        // Line 635
-        // Line 636
-        // Line 637
-        // Line 638
-        // Line 639
-        // Line 640
-        // Line 641
-        // Line 642
-        // Line 643
-        // Line 644
-        // Line 645
-        // Line 646
-        // Line 647
-        // Line 648
-        // Line 649
-        // Line 650
-        // Line 651
-        // Line 652
-        // Line 653
-        // Line 654
-        // Line 655
-        // Line 656
-        // Line 657
-        // Line 658
-        // Line 659
-        // Line 660
-        // Line 661
-        // Line 662
-        // Line 663
-        // Line 664
-        // Line 665
-        // Line 666
-        // Line 667
-        // Line 668
-        // Line 669
-        // Line 670
-        // Line 671
-        // Line 672
-        // Line 673
-        // Line 674
-        // Line 675
-        // Line 676
-        // Line 677
-        // Line 678
-        // Line 679
-        // Line 680
-        // Line 681
-        // Line 682
-        // Line 683
-        // Line 684
-        // Line 685
-        // Line 686
-        // Line 687
-        // Line 688
-        // Line 689
-        // Line 690
-        // Line 691
-        // Line 692
-        // Line 693
-        // Line 694
-        // Line 695
-        // Line 696
-        // Line 697
-        // Line 698
-        // Line 699
-        // Line 700
-        // Line 701
-        // Line 702
-        // Line 703
-        // Line 704
-        // Line 705
-        // Line 706
-        // Line 707
-        // Line 708
-        // Line 709
-        // Line 710
-        // Line 711
-        // Line 712
-        // Line 713
-        // Line 714
-        // Line 715
-        // Line 716
-        // Line 717
-        // Line 718
-        // Line 719
-        // Line 720
-        // Line 721
-        // Line 722
-        // Line 723
-        // Line 724
-        // Line 725
-        // Line 726
-        // Line 727
-        // Line 728
-        // Line 729
-        // Line 730
-        // Line 731
-        // Line 732
-        // Line 733
-        // Line 734
-        // Line 735
-        // Line 736
-        // Line 737
-        // Line 738
-        // Line 739
-        // Line 740
-        // Line 741
-        // Line 742
-        // Line 743
-        // Line 744
-        // Line 745
-        // Line 746
-        // Line 747
-        // Line 748
-        // Line 749
-        // Line 750
-        // Line 751
-        // Line 752
-        // Line 753
-        // Line 754
-        // Line 755
-        // Line 756
-        // Line 757
-        // Line 758
-        // Line 759
-        // Line 760
-        // Line 761
-        // Line 762
-        // Line 763
-        // Line 764
-        // Line 765
-        // Line 766
-        // Line 767
-        // Line 768
-        // Line 769
-        // Line 770
-        // Line 771
-        // Line 772
-        // Line 773
-        // Line 774
-        // Line 775
-        // Line 776
-        // Line 777
-        // Line 778
-        // Line 779
-        // Line 780
-        // Line 781
-        // Line 782
-        // Line 783
-        // Line 784
-        // Line 785
-        // Line 786
-        // Line 787
-        // Line 788
-        // Line 789
-        // Line 790
-        // Line 791
-        // Line 792
-        // Line 793
-        // Line 794
-        // Line 795
-        // Line 796
-        // Line 797
-        // Line 798
-        // Line 799
-        // Line 800
-        // Line 801
-        // Line 802
-        // Line 803
-        // Line 804
-        // Line 805
-        // Line 806
-        // Line 807
-        // Line 808
-        // Line 809
-        // Line 810
-        // Line 811
-        // Line 812
-        // Line 813
-        // Line 814
-        // Line 815
-        // Line 816
-        // Line 817
-        // Line 818
-        // Line 819
-        // Line 820
-        // Line 821
-        // Line 822
-        // Line 823
-        // Line 824
-        // Line 825
-        // Line 826
-        // Line 827
-        // Line 828
-        // Line 829
-        // Line 830
-        // Line 831
-        // Line 832
-        // Line 833
-        // Line 834
-        // Line 835
-        // Line 836
-        // Line 837
-        // Line 838
-        // Line 839
-        // Line 840
-        // Line 841
-        // Line 842
-        // Line 843
-        // Line 844
-        // Line 845
-        // Line 846
-        // Line 847
-        // Line 848
-        // Line 849
-        // Line 850
-        // Line 851
-        // Line 852
-        // Line 853
-        // Line 854
-        // Line 855
-        // Line 856
-        // Line 857
-        // Line 858
-        // Line 859
-        // Line 860
-        // Line 861
-        // Line 862
-        // Line 863
-        // Line 864
-        // Line 865
-        // Line 866
-        // Line 867
-        // Line 868
-        // Line 869
-        // Line 870
-        // Line 871
-        // Line 872
-        // Line 873
-        // Line 874
-        // Line 875
-        // Line 876
-        // Line 877
-        // Line 878
-        // Line 879
-        // Line 880
-        // Line 881
-        // Line 882
-        // Line 883
-        // Line 884
-        // Line 885
-        // Line 886
-        // Line 887
-        // Line 888
-        // Line 889
-        // Line 890
-        // Line 891
-        // Line 892
-        // Line 893
-        // Line 894
-        // Line 895
-        // Line 896
-        // Line 897
-        // Line 898
-        // Line 899
-        // Line 900
-        // Line 901
-        // Line 902
-        // Line 903
-        // Line 904
-        // Line 905
-        // Line 906
-        // Line 907
-        // Line 908
-        // Line 909
-        // Line 910
-        // Line 911
-        // Line 912
-        // Line 913
-        // Line 914
-        // Line 915
-        // Line 916
-        // Line 917
-        // Line 918
-        // Line 919
-        // Line 920
-        // Line 921
-        // Line 922
-        // Line 923
-        // Line 924
-        // Line 925
-        // Line 926
-        // Line 927
-        // Line 928
-        // Line 929
-        // Line 930
-        // Line 931
-        // Line 932
-        // Line 933
-        // Line 934
-        // Line 935
-        // Line 936
-        // Line 937
-        // Line 938
-        // Line 939
-        // Line 940
-        // Line 941
-        // Line 942
-        // Line 943
-        // Line 944
-        // Line 945
-        // Line 946
-        // Line 947
-        // Line 948
-        // Line 949
-        // Line 950
-        // Line 951
-        // Line 952
-        // Line 953
-        // Line 954
-        // Line 955
-        // Line 956
-        // Line 957
-        // Line 958
-        // Line 959
-        // Line 960
-        // Line 961
-        // Line 962
-        // Line 963
-        // Line 964
-        // Line 965
-        // Line 966
-        // Line 967
-        // Line 968
-        // Line 969
-        // Line 970
-        // Line 971
-        // Line 972
-        // Line 973
-        // Line 974
-        // Line 975
-        // Line 976
-        // Line 977
-        // Line 978
-        // Line 979
+        // Window Launch initialization loader binder setup
+        window.addEventListener("DOMContentLoaded", () => {
+            GameEngine.init();
+        });
     </script>
 </body>
 </html>
